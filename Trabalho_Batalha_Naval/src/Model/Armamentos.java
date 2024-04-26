@@ -57,7 +57,10 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	
 	public boolean verificarSintaxe(char letra, int numero)
 	{
-		return (letra < 'A' || letra > 'O' || numero < 1 || numero > 15) ? true : false;
+		if (letra >= 'A' && letra <= 'O' && numero >= 1 && numero <= 15)
+			return true;
+		else 
+			return false;	
 	}
 	
 	public boolean verificarSentido(Tabuleiro tabuleiro, String sentido,int letra, int numero)
@@ -118,6 +121,12 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	    int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
 	    int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
 
+	    
+	    // Verifica se a casa pode ser acessada
+	    if(letra < 0 || letra > 14 || numero < 0 || numero > 14)
+	    {
+	    	return false;
+	    }
 	    // Verifica a casa escolhida
 	    if(!tabuleiro.getCasas()[letra][numero].getEstadoCasa().equals("?")) {
 	        return false;

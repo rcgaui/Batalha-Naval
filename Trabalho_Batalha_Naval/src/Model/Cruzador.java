@@ -17,7 +17,7 @@ public class Cruzador extends Armamentos {
 		char letraCh = casaTabuleiro.charAt(0);
 		int numero = Integer.parseInt(casaTabuleiro.substring(1)) - 1; // Pegar o segundo caracter da string
 		
-		if(casaTabuleiro.length() != 2 || !verificarSintaxe(letraCh, numero) || qntCruzadores >= 2) {
+		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3 || !verificarSintaxe(letraCh, numero) || qntCruzadores >= 2) {
 			System.out.println("Erro ao posicionar\n");
 			return false;
 		}
