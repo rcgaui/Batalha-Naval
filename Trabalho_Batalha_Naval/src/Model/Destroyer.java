@@ -1,7 +1,6 @@
 package Model;
 
 public class Destroyer extends Armamentos {
-	
 	public Destroyer()
 	{
 		this.armamentoPosicionado = false;
@@ -27,11 +26,14 @@ public class Destroyer extends Armamentos {
 			{
 				System.out.println("Sentido Verificado\n");
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
-					{
-						System.out.println("Destroyer Inserido com Sucesso!\n");
-						addDestroyer();
-						return true;
+				{
+					System.out.println("Destroyer Inserido com Sucesso!\n");
+					addDestroyer();
+					if(qntDestroyers == 3) {
+						this.armamentoPosicionado = true;
 					}
+					return true;
+				}
 				else return false;
 			}
 			else 

@@ -26,11 +26,14 @@ public class Hidroaviao extends Armamentos {
 			{
 				System.out.println("Sentido Verificado\n");
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
-					{
-						System.out.println("HidroAviao Inserido com Sucesso!\n");
-						addHidroaviao();
-						return true;
+				{
+					System.out.println("HidroAviao Inserido com Sucesso!\n");
+					addHidroaviao();
+					if(qntHidroAvioes == 5) {
+						this.armamentoPosicionado = true;
 					}
+					return true;
+				}
 				else return false;
 			}
 			else 

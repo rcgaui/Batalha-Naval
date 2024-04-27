@@ -26,11 +26,14 @@ public class Cruzador extends Armamentos {
 			{
 				System.out.println("Sentido Verificado\n");
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
-					{
-						System.out.println("Cruzador Inserido com Sucesso!\n");
-						addCruzador();
-						return true;
+				{
+					System.out.println("Cruzador Inserido com Sucesso!\n");
+					addCruzador();
+					if(qntCruzadores == 2) {
+						this.armamentoPosicionado = true;
 					}
+					return true;
+				}
 				else return false;
 			}
 			else 

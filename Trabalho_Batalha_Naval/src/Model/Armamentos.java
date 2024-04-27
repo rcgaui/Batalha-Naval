@@ -111,7 +111,6 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 			default:
 				return false;
 		}
-				
 	}
 	
 	public boolean verificarCasas(Tabuleiro tabuleiro, int letra, int numero) {

@@ -1,7 +1,6 @@
 package Model;
 
-public class Couracado extends Armamentos{
-	
+public class Couracado extends Armamentos {
 	public Couracado()
 	{
 		this.armamentoPosicionado = false;
@@ -27,11 +26,14 @@ public class Couracado extends Armamentos{
 			{
 				System.out.println("Sentido Verificado\n");
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
-					{
-						System.out.println("Couracado Inserido com Sucesso!\n");
-						addCouracado();
-						return true;
+				{
+					System.out.println("Couracado Inserido com Sucesso!\n");
+					addCouracado();
+					if(qntCouracados == 1) {
+						this.armamentoPosicionado = true;
 					}
+					return true;
+				}
 				else return false;
 			}
 			else 

@@ -26,11 +26,14 @@ public class Submarino extends Armamentos {
 			{
 				System.out.println("Sentido Verificado\n");
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
-					{
-						System.out.println("Submarino Inserido com Sucesso!\n");
-						addSubmarino();
-						return true;
+				{
+					System.out.println("Submarino Inserido com Sucesso!\n");
+					addSubmarino();
+					if(qntSubmarinos == 4) {
+						this.armamentoPosicionado = true;
 					}
+					return true;
+				}
 				else return false;
 			}
 			else 
