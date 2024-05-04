@@ -6,18 +6,14 @@ public class Hidroaviao extends Armamentos {
 		this.armamentoPosicionado = false;
 		this.tamanho = 3;	
 	}
+
 	
-	public static void addHidroaviao()
-	{
-		qntHidroAvioes++;
-	}
-	
-	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido) {
+	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador) {
 		int letra = casaTabuleiro.charAt(0) - 'A'; // Pegar o primeiro caracter da string
 		char letraCh = casaTabuleiro.charAt(0);
 		int numero = Integer.parseInt(casaTabuleiro.substring(1)) - 1; // Pegar o segundo caracter da string
 		
-		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3  || !verificarSintaxe(letraCh, numero) || qntHidroAvioes >= 5) {
+		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3  || !verificarSintaxe(letraCh, numero) || jogador.getQntHidroavioes() >= 5) {
 			System.out.println("Erro de verificacao\n");
 			return false;
 		}
@@ -28,8 +24,8 @@ public class Hidroaviao extends Armamentos {
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
 				{
 					System.out.println("HidroAviao Inserido com Sucesso!\n");
-					addHidroaviao();
-					if(qntHidroAvioes == 5) {
+					jogador.addHidroaviao();
+					if (jogador.getQntHidroavioes() == 5) {
 						this.armamentoPosicionado = true;
 					}
 					return true;

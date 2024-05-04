@@ -7,17 +7,12 @@ public class Couracado extends Armamentos {
 		this.tamanho = 5;	
 	}
 	
-	public static void addCouracado()
-	{
-		qntCouracados++;
-	}
-	
-	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido) {
+	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador) {
 		int letra = casaTabuleiro.charAt(0) - 'A'; // Pegar o primeiro caracter da string
 		char letraCh = casaTabuleiro.charAt(0);
 		int numero = Integer.parseInt(casaTabuleiro.substring(1)) - 1; // Pegar o segundo caracter da string
 		
-		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3 || !verificarSintaxe(letraCh, numero) || qntCouracados >= 1) {
+		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3 || !verificarSintaxe(letraCh, numero) || jogador.getQntCouracados() >= 1) {
 			System.out.println("Erro ao posicionar\n");
 			return false;
 		}
@@ -28,8 +23,8 @@ public class Couracado extends Armamentos {
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
 				{
 					System.out.println("Couracado Inserido com Sucesso!\n");
-					addCouracado();
-					if(qntCouracados == 1) {
+					jogador.addCouracado();
+					if (jogador.getQntCouracados() == 1) {	
 						this.armamentoPosicionado = true;
 					}
 					return true;

@@ -6,18 +6,14 @@ public class Submarino extends Armamentos {
 		this.armamentoPosicionado = false;
 		this.tamanho = 1;	
 	}
+
 	
-	public static void addSubmarino()
-	{
-		qntSubmarinos++;
-	}
-	
-	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido) {
+	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador) {
 		int letra = casaTabuleiro.charAt(0) - 'A'; // Pegar o primeiro caracter da string
 		char letraCh = casaTabuleiro.charAt(0);
 		int numero = Integer.parseInt(casaTabuleiro.substring(1)) - 1; // Pegar o segundo caracter da string
 		
-		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3 || !verificarSintaxe(letraCh, numero) || qntSubmarinos >= 4) {
+		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3 || !verificarSintaxe(letraCh, numero) || jogador.getQntSubmarinos() >= 4) {
 			System.out.println("Erro ao posicionar\n");
 			return false;
 		}
@@ -28,8 +24,8 @@ public class Submarino extends Armamentos {
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
 				{
 					System.out.println("Submarino Inserido com Sucesso!\n");
-					addSubmarino();
-					if(qntSubmarinos == 4) {
+					jogador.addSubmarino();
+					if (jogador.getQntSubmarinos() == 4) {
 						this.armamentoPosicionado = true;
 					}
 					return true;

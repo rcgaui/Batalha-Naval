@@ -25,7 +25,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		this.armamentoPosicionado = armamentoPosicionado;
 	}
 	
-	public abstract boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido);
+	public abstract boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador);
 	
 	public boolean inserirArmamento(Tabuleiro tabuleiro, int letra, int numero, String sentido)
 	{

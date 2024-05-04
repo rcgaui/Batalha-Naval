@@ -23,7 +23,7 @@ public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		return casas;
 	}
 
-	public void imprimeTabuleiro() {
+	public void imprimeTabuleiro(boolean mostrarDetalhes) {
 	    System.out.print("   ");
 	    
 	    for (int i = 1; i <= qntLetras; i++) {
@@ -35,18 +35,46 @@ public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	    for (int i = 1; i <= qntNumeros; i++) {
 	    	System.out.print((char)('A' + i - 1) + " ");
 	    	
-	        for (int j = 1; j <= qntLetras; j++) {
-	            if (casas[i - 1][j - 1].getEstadoCasa() == "?") {
-	                System.out.print(" X ");
-	            } else if(casas[i - 1][j - 1].getEstadoCasa() == "!") {
-	                System.out.print(" ! ");
-	            }
-	            else { // Água
-	            	System.out.print(" # ");
-	            }
-	        }
+	    	if (mostrarDetalhes) {
+		        for (int j = 1; j <= qntLetras; j++) {
+		        	
+		            if (casas[i - 1][j - 1].getEstadoCasa() == "?") {
+		                System.out.print(" . ");
+		            } else if(casas[i - 1][j - 1].getEstadoCasa() == "!") {
+		                System.out.print(" ! ");
+		            }
+		            else if(casas[i - 1][j - 1].getEstadoCasa() == "*") {
+		                System.out.print(" X ");
+		            }
+		            else if(casas[i - 1][j - 1].getEstadoCasa() == "~") {
+		                System.out.print(" ~ ");
+		            }
+		            else { // Água
+		            	System.out.print(" # ");
+		            }
+		        }
+	    	}
+	    	else {
+	    		for (int j = 1; j <= qntLetras; j++) {
+
+		            if(casas[i - 1][j - 1].getEstadoCasa() == "*") {
+		                System.out.print(" X ");
+		            }
+		            else if(casas[i - 1][j - 1].getEstadoCasa() == "~") {
+		                System.out.print(" ~ ");
+		            }
+		            else { // Água
+		            	System.out.print(" . ");
+		            }
+		        }
+	    	}
 	        
 	        System.out.println();
 	    }
 	}
+	
+	public String realizarTiro(int letra, int numero) {
+        Casas casaAlvo = casas[letra][numero];
+        return casaAlvo.atacarCasa();
+    }
 }

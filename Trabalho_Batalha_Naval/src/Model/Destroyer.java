@@ -7,17 +7,13 @@ public class Destroyer extends Armamentos {
 		this.tamanho = 2;	
 	}
 	
-	public static void addDestroyer()
-	{
-		qntDestroyers++;
-	}
 	
-	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido) {
+	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador) {
 		int letra = casaTabuleiro.charAt(0) - 'A'; // Pegar o primeiro caracter da string
 		char letraCh = casaTabuleiro.charAt(0);
 		int numero = Integer.parseInt(casaTabuleiro.substring(1)) - 1; // Pegar o segundo caracter da string
 		
-		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3 || !verificarSintaxe(letraCh, numero) || qntDestroyers >= 3) {
+		if(casaTabuleiro.length() < 2 || casaTabuleiro.length() > 3 || !verificarSintaxe(letraCh, numero) || jogador.getQntDestroyers() >= 3) {
 			System.out.println("Erro ao posicionar\n");
 			return false;
 		}
@@ -28,8 +24,8 @@ public class Destroyer extends Armamentos {
 				if(inserirArmamento(tabuleiro, letra, numero, sentido))
 				{
 					System.out.println("Destroyer Inserido com Sucesso!\n");
-					addDestroyer();
-					if(qntDestroyers == 3) {
+					jogador.addDestroyer();
+					if (jogador.getQntDestroyers() == 3) {
 						this.armamentoPosicionado = true;
 					}
 					return true;

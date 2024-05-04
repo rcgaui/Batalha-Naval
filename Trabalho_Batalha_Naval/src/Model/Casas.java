@@ -19,9 +19,15 @@ public class Casas { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		this.estadoCasa = estadoCasa;
 	}
 
-	public void atacarCasa() {
-        if (estadoCasa == "?") {
-        	// estadoCasa pode virar um armamento destruido ou água
+	public String atacarCasa() {
+		if (estadoCasa.equals("!")) {
+            estadoCasa = "*";  // Armamento atingido
+            return "Embarcação atingida!";
+        } else if (estadoCasa.equals("?")) {
+            estadoCasa = "~";  // Água atingida
+            return "Água!";
+        } else {
+            return "Já atingido!";
         }
     }
 }
