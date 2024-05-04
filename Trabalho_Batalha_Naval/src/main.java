@@ -58,18 +58,18 @@ public class main {
 					if(!submarinoArmamentoJogador1.isArmamentoPosicionado()) {
 	                    posicionarArmamento(turno, submarinoArmamentoJogador1, "submarino", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
 	                }
-	                //else if(!destroyerArmamentoJogador1.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, destroyerArmamentoJogador1, "destroyer", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
-	                //}
-	                //else if(!hidroAviaoArmamentoJogador1.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, hidroAviaoArmamentoJogador1, "hidro aviao", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
-	                //}
-	                //else if(!cruzadoreArmamentoJogador1.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, cruzadoreArmamentoJogador1, "cruzador", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
-	                //}
-	                //if(!couracadoArmamentoJogador1.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, couracadoArmamentoJogador1, "couracado", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
-	                //}
+	                else if(!destroyerArmamentoJogador1.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, destroyerArmamentoJogador1, "destroyer", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
+	                }
+	                else if(!hidroAviaoArmamentoJogador1.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, hidroAviaoArmamentoJogador1, "hidro aviao", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
+	                }
+	                else if(!cruzadoreArmamentoJogador1.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, cruzadoreArmamentoJogador1, "cruzador", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
+	                }
+	                else if(!couracadoArmamentoJogador1.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, couracadoArmamentoJogador1, "couracado", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1, writer);
+	                }
 	                else { // Jogar
 	                	System.out.println("\n===============================================");
 	                	System.out.println("Digite 'Sair' para parar de executar o programa.");
@@ -107,18 +107,18 @@ public class main {
 					if(!submarinoArmamentoJogador2.isArmamentoPosicionado()) {
 	                    posicionarArmamento(turno, submarinoArmamentoJogador2, "submarino", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
 	                }
-	                //else if(!destroyerArmamentoJogador2.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, destroyerArmamentoJogador2, "destroyer", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
-	                //}
-	                //else if(!hidroAviaoArmamentoJogador2.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, hidroAviaoArmamentoJogador2, "hidro aviao", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
-	                //}
-	                //else if(!cruzadoreArmamentoJogador2.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, cruzadoreArmamentoJogador2, "cruzador", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
-	                //}
-	                //if(!couracadoArmamentoJogador2.isArmamentoPosicionado()) {
-	                //    posicionarArmamento(turno, couracadoArmamentoJogador2, "couracado", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
-	                //}
+	                else if(!destroyerArmamentoJogador2.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, destroyerArmamentoJogador2, "destroyer", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
+	                }
+	                else if(!hidroAviaoArmamentoJogador2.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, hidroAviaoArmamentoJogador2, "hidro aviao", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
+	                }
+	                else if(!cruzadoreArmamentoJogador2.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, cruzadoreArmamentoJogador2, "cruzador", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
+	                }
+	                else if(!couracadoArmamentoJogador2.isArmamentoPosicionado()) {
+	                    posicionarArmamento(turno, couracadoArmamentoJogador2, "couracado", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2, writer);
+	                }
 					else {
 						System.out.println("Digite 'Sair' para parar de executar o programa.");
 						System.out.printf("Digite onde deseja atacar %s, por exemplo 'A1'.\n", jogador1.getNome());
