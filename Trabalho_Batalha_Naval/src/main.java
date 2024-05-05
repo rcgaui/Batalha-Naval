@@ -52,9 +52,9 @@ public class main {
 		Turno turno = new Turno();
 		turno.setVezJogar(jogador1.getNome());	
 		
-		/*turno.carregarJogo("Save da Partida", tabuleiroJogador1, tabuleiroJogador2);
+		turno.carregarJogo("Save da Partida", tabuleiroJogador1, tabuleiroJogador2);
 		tabuleiroJogador1.imprimeTabuleiro(true);
-		tabuleiroJogador2.imprimeTabuleiro(true);*/
+		tabuleiroJogador2.imprimeTabuleiro(true);
 		
 		// Isso provavelmente será passado para o pacote Controller em outra interação
 		while(turno.isJogoRodando()) {
@@ -65,18 +65,18 @@ public class main {
 				if(!submarinoArmamentoJogador1.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, submarinoArmamentoJogador1, "submarino", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1);
                 }
-                else if(!destroyerArmamentoJogador1.isArmamentoPosicionado()) {
+                /*else if(!destroyerArmamentoJogador1.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, destroyerArmamentoJogador1, "destroyer", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1);
-                }
+                }*/
                 else if(!hidroAviaoArmamentoJogador1.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, hidroAviaoArmamentoJogador1, "hidro aviao", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1);
                 }
-                else if(!cruzadoreArmamentoJogador1.isArmamentoPosicionado()) {
+                /*else if(!cruzadoreArmamentoJogador1.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, cruzadoreArmamentoJogador1, "cruzador", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1);
                 }
                 else if(!couracadoArmamentoJogador1.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, couracadoArmamentoJogador1, "couracado", tabuleiroJogador1, scanner, jogador2.getNome(), jogador1);
-                }
+                }*/
                 else { // Jogar
                 	System.out.println("\n===============================================");
                 	System.out.println("Digite 'Sair' para parar de executar o programa.");
@@ -112,18 +112,18 @@ public class main {
 				if(!submarinoArmamentoJogador2.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, submarinoArmamentoJogador2, "submarino", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2);
                 }
-                else if(!destroyerArmamentoJogador2.isArmamentoPosicionado()) {
+                /*else if(!destroyerArmamentoJogador2.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, destroyerArmamentoJogador2, "destroyer", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2);
-                }
+                }*/
                 else if(!hidroAviaoArmamentoJogador2.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, hidroAviaoArmamentoJogador2, "hidro aviao", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2);
                 }
-                else if(!cruzadoreArmamentoJogador2.isArmamentoPosicionado()) {
+                /*else if(!cruzadoreArmamentoJogador2.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, cruzadoreArmamentoJogador2, "cruzador", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2);
                 }
                 else if(!couracadoArmamentoJogador2.isArmamentoPosicionado()) {
                     posicionarArmamento(turno, couracadoArmamentoJogador2, "couracado", tabuleiroJogador2, scanner, jogador1.getNome(), jogador2);
-                }
+                }*/
 				else {
 					System.out.println("Digite 'Sair' para parar de executar o programa.");
 					System.out.printf("Digite onde deseja atacar %s, por exemplo 'A1'.\n", jogador1.getNome());
