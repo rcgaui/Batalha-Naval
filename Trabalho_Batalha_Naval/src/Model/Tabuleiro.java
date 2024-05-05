@@ -1,5 +1,9 @@
 package Model;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	private Casas casas[][];
 	private int qntNumeros;
@@ -71,6 +75,43 @@ public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	        
 	        System.out.println();
 	    }
+	}
+	
+	
+	public boolean salvaTabuleiro(String nome)
+	{
+		try
+		{
+			File arq = new File(nome + ".txt");
+			if(arq.createNewFile())
+			{
+				System.out.println("Arquivo Criado: " + arq.getName() + "\n");
+			}
+			else
+			{
+				System.out.println("Arquivo existente, sobreescrevendo: " + arq.getName() + "\n");
+			}
+			
+			FileWriter fw = new FileWriter(arq, false);
+			
+			for(int i = 0; i < qntNumeros; i++)
+			{
+				for(int j = 0; j < qntLetras; j++)
+				{
+					fw.write(casas[i][j].getEstadoCasa());
+				}
+			}
+			
+			System.out.println("Partida Salva!\n");
+			return true;
+			
+		}
+		catch(IOException e)
+		{
+			System.out.println("Erro ao abrir arquivo \n");
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	public String realizarTiro(int letra, int numero) {
