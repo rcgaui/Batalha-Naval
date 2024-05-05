@@ -1,5 +1,10 @@
 package Model;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	private boolean jogoRodando;
 	private String vezJogar;
@@ -23,5 +28,60 @@ public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 
 	public void setVezJogar(String vezJogar) {
 		this.vezJogar = vezJogar;
+	}
+	
+	public boolean salvaJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2)
+	{
+		try
+		{
+			File arq = new File(nome + ".txt");
+			if(arq.createNewFile())
+			{
+				System.out.println("Arquivo Criado: " + arq.getName() + "\n");
+			}
+			else
+			{
+				System.out.println("Arquivo existente, sobreescrevendo: " + arq.getName() + "\n");
+			}
+			
+			PrintWriter writer = new PrintWriter(new FileWriter(arq, false));
+			
+			for(int i = 0; i < 15; i++)
+			{
+				for(int j = 0; j < 15; j++)
+				{
+					writer.write("[" + tabuleiroJogador1.getCasas()[i][j].getEstadoCasa() + "]");
+					writer.flush();
+				}
+				
+				writer.write("\n");
+				writer.flush();
+			}
+			
+			writer.write("\n");
+			writer.flush();
+			
+			for(int i = 0; i < 15; i++)
+			{
+				for(int j = 0; j < 15; j++)
+				{
+					writer.write("[" + tabuleiroJogador2.getCasas()[i][j].getEstadoCasa() + "]");
+					writer.flush();
+				}
+				
+				writer.write("\n");
+				writer.flush();
+			}
+			
+			System.out.println("Partida Salva!\n");
+			return true;
+			
+		}
+		catch(IOException e)
+		{
+			System.out.println("Erro ao abrir arquivo \n");
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
