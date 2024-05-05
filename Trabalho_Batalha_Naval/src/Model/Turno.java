@@ -1,6 +1,8 @@
 package Model;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -50,11 +52,10 @@ public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 			{
 				for(int j = 0; j < 15; j++)
 				{
-					writer.write("[" + tabuleiroJogador1.getCasas()[i][j].getEstadoCasa() + "]");
+					writer.write( tabuleiroJogador1.getCasas()[i][j].getEstadoCasa());
 					writer.flush();
 				}
-				
-				writer.write("\n");
+			
 				writer.flush();
 			}
 			
@@ -65,11 +66,10 @@ public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 			{
 				for(int j = 0; j < 15; j++)
 				{
-					writer.write("[" + tabuleiroJogador2.getCasas()[i][j].getEstadoCasa() + "]");
+					writer.write(tabuleiroJogador2.getCasas()[i][j].getEstadoCasa());
 					writer.flush();
 				}
 				
-				writer.write("\n");
 				writer.flush();
 			}
 			
@@ -80,6 +80,46 @@ public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		catch(IOException e)
 		{
 			System.out.println("Erro ao abrir arquivo \n");
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean carregarJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2) {
+		try {
+			FileReader buffer= new FileReader(nome + ".txt");
+			int c = 0;
+			
+			for(int i = 0; i < 15; i++)
+			{
+				for(int j = 0; j < 15; j++)
+				{
+					c = buffer.read();
+					char character = (char) c;
+					tabuleiroJogador1.getCasas()[i][j].setEstadoCasa(Character.toString(character));
+					
+				}
+			}
+			
+			c = buffer.read();
+			
+			for(int i = 0; i < 15; i++)
+			{
+				for(int j = 0; j < 15; j++)
+				{
+					c = buffer.read();
+					char character = (char) c;
+					tabuleiroJogador2.getCasas()[i][j].setEstadoCasa(Character.toString(character));
+				}
+				
+			}
+			
+			System.out.println("Partida Carregada!\n");
+			return true;
+		}
+		catch(IOException e)
+		{
+			System.out.println("Erro ao Carregar arquivo \n");
 			e.printStackTrace();
 			return false;
 		}

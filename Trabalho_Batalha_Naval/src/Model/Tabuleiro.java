@@ -38,15 +38,15 @@ public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	    	if (mostrarDetalhes) {
 		        for (int j = 1; j <= qntLetras; j++) {
 		        	
-		            if (casas[i - 1][j - 1].getEstadoCasa() == "?") {
-		                System.out.print(" . ");
-		            } else if(casas[i - 1][j - 1].getEstadoCasa() == "!") {
+		            if (casas[i - 1][j - 1].getEstadoCasa().equals("?")) {
+		                System.out.print(" ? ");
+		            } else if(casas[i - 1][j - 1].getEstadoCasa().equals("!")) {
 		                System.out.print(" ! ");
 		            }
-		            else if(casas[i - 1][j - 1].getEstadoCasa() == "*") {
-		                System.out.print(" X ");
+		            else if(casas[i - 1][j - 1].getEstadoCasa().equals("*")) {
+		                System.out.print(" * ");
 		            }
-		            else if(casas[i - 1][j - 1].getEstadoCasa() == "~") {
+		            else if(casas[i - 1][j - 1].getEstadoCasa().equals("~")) {
 		                System.out.print(" ~ ");
 		            }
 		            else { // Água
@@ -57,14 +57,14 @@ public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	    	else {
 	    		for (int j = 1; j <= qntLetras; j++) {
 
-		            if(casas[i - 1][j - 1].getEstadoCasa() == "*") {
-		                System.out.print(" X ");
+		            if(casas[i - 1][j - 1].getEstadoCasa().equals("*")) {
+		                System.out.print(" * ");
 		            }
-		            else if(casas[i - 1][j - 1].getEstadoCasa() == "~") {
+		            else if(casas[i - 1][j - 1].getEstadoCasa().equals("~")) {
 		                System.out.print(" ~ ");
 		            }
 		            else { // Água
-		            	System.out.print(" . ");
+		            	System.out.print(" # ");
 		            }
 		        }
 	    	}
