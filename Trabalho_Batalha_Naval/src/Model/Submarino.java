@@ -34,7 +34,6 @@ public class Submarino extends Armamentos {
 			}
 			else 
 			{
-				System.out.println("Submarino nao pode ser inserido nesse sentido\n");
 				return false;
 			}
 		}

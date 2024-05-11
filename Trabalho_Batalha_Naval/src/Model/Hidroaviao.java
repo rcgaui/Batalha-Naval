@@ -34,7 +34,6 @@ public class Hidroaviao extends Armamentos {
 			}
 			else 
 			{
-				System.out.println("HidroAviao nao pode ser inserido nesse sentido\n");
 				return false;
 			}
 		}
@@ -56,6 +55,7 @@ public class Hidroaviao extends Armamentos {
 				return (verificarCasas(tabuleiro, letra, numero) && verificarCasas(tabuleiro, letra + 1, numero + 1) && 
 						verificarCasas(tabuleiro, letra - 1, numero + 1)) ? true : false;
 			default:
+				System.out.println("Sentido Invalido\n");
 				return false;
 		}
 				

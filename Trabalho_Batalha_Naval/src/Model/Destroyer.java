@@ -34,7 +34,6 @@ public class Destroyer extends Armamentos {
 			}
 			else 
 			{
-				System.out.println("Destroyer nao pode ser inserido nesse sentido\n");
 				return false;
 			}
 		}

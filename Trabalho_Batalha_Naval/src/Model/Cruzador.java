@@ -34,7 +34,6 @@ public class Cruzador extends Armamentos {
 			}
 			else 
 			{
-				System.out.println("Cruzador nao pode ser inserido nesse sentido\n");
 				return false;
 			}
 		}

@@ -57,7 +57,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	
 	public boolean verificarSintaxe(char letra, int numero)
 	{
-		if (letra >= 'A' && letra <= 'O' && numero >= 1 && numero <= 15)
+		if (letra >= 'A' && letra <= 'O' && numero >= 0 && numero <= 14)
 			return true;
 		else 
 			return false;	
@@ -68,7 +68,8 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		switch (sentido) {
 			case "Leste-Oeste":
 				// Verificar se posição com esse sentido sai do conjunto (A-O, 1-15)
-				if((numero - tamanho) < 1) {
+				if((numero  - tamanho) < -1) {
+					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
 				// Verificar casa escolhida e casas adjacentes
@@ -79,7 +80,8 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 				}
 				return true;
 			case "Norte-Sul":
-				if((letra + tamanho) > 'O') {
+				if((letra + tamanho) > 15) {
+					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
 				for (int i = 0; i < tamanho; i++) {
@@ -89,7 +91,8 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 				}
 			    return true;
 			case "Sul-Norte":
-				if((letra - tamanho) < 'A') {
+				if((letra - tamanho) < -1) {
+					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
 				for (int i = 0; i < tamanho; i++) {
@@ -100,6 +103,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 			    return true;
 			case "Oeste-Leste":
 				if((numero + tamanho) > 15) {
+					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
 				for (int i = 0; i < tamanho; i++) {
@@ -109,6 +113,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 				}
 			    return true;
 			default:
+				System.out.println("Sentido Inválido\n");
 				return false;
 		}
 	}
@@ -139,6 +144,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	        // Verifica se a nova posição está dentro do tabuleiro
 	        if(novaLetra >= 0 && novaLetra < 15 && novoNumero >= 0 && novoNumero < 15) {
 	            if(!tabuleiro.getCasas()[novaLetra][novoNumero].getEstadoCasa().equals("?")) {
+	            	System.out.println("A embarcação conflita com outras embarcacoes\n");
 	                return false;
 	            }
 	        }

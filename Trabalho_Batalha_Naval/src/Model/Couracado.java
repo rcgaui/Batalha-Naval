@@ -33,7 +33,6 @@ public class Couracado extends Armamentos {
 			}
 			else 
 			{
-				System.out.println("Couracado nao pode ser inserido nesse sentido\n");
 				return false;
 			}
 		}
