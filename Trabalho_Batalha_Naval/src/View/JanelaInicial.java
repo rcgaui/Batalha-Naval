@@ -16,7 +16,7 @@ public class JanelaInicial extends JFrame{
 	
 	
 	public JanelaInicial() {
-		setVisible(true);
+		
 		setTitle("Batalha Naval");
 		Toolkit tk=Toolkit.getDefaultToolkit();
 		Dimension screenSize=tk.getScreenSize();
@@ -48,7 +48,9 @@ public class JanelaInicial extends JFrame{
 			}
 		});
 		PainelInicio.setBorder(new EmptyBorder(new Insets(100, 100, 100, 100)));
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
 	}
 	
 }
