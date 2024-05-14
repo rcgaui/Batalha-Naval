@@ -6,7 +6,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JOptionPane;
 
-public abstract class Mouse extends Object implements MouseListener{
+public abstract class Mouse implements MouseListener{
 	Component c;
 	
 	public Mouse(Component x) {
