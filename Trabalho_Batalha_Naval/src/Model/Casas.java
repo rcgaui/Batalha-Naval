@@ -21,13 +21,15 @@ public class Casas { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 
 	public String atacarCasa() {
 		if (estadoCasa.equals("!")) {
-            estadoCasa = "*";  // Armamento atingido
+            estadoCasa = "*";
             return "Embarcação atingida!";
-        } else if (estadoCasa.equals("?")) {
-            estadoCasa = "~";  // Água atingida
+        } else if (estadoCasa.equals("?") || estadoCasa.equals("~")) {
+            estadoCasa = "~";
             return "Água!";
-        } else {
+        } else if (estadoCasa.equals("*")){
             return "Já atingido!";
+        }else {
+        	return "Ataque inválido!";
         }
     }
 }

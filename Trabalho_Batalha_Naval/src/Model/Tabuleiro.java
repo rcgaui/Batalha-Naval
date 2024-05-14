@@ -74,6 +74,9 @@ public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	}
 	
 	public String realizarTiro(int letra, int numero) {
+		if (letra < 0 || letra >= casas.length || numero < 0 || numero >= casas[letra].length) {
+	        return "Coordenadas inválidas, tente novamente";
+	    }
         Casas casaAlvo = casas[letra][numero];
         return casaAlvo.atacarCasa();
     }
