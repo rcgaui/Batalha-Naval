@@ -36,7 +36,6 @@ public class PainelPosicionarArmamento extends JFrame {
 	
 	public PainelPosicionarArmamento() {
 		setTitle("Batalha Naval");
-		setBackground(Color.lightGray);
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
 		Dimension resolucaoTela = toolkit.getScreenSize();
