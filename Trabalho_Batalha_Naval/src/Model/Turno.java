@@ -34,6 +34,7 @@ public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	
 	public boolean salvaJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2)
 	{
+		PrintWriter writer = null;
 		try
 		{
 			File arq = new File(nome + ".txt");
@@ -46,7 +47,7 @@ public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 				System.out.println("Arquivo existente, sobreescrevendo: " + arq.getName() + "\n");
 			}
 			
-			PrintWriter writer = new PrintWriter(new FileWriter(arq, false));
+			writer = new PrintWriter(new FileWriter(arq, false));
 			
 			for(int i = 0; i < 15; i++)
 			{
@@ -83,6 +84,11 @@ public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 			e.printStackTrace();
 			return false;
 		}
+		finally {
+            if (writer != null) {
+                writer.close();
+            }
+        }
 	}
 	
 	public boolean carregarJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2) {
