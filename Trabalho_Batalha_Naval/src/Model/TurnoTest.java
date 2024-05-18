@@ -59,12 +59,7 @@ public class TurnoTest{
 	
 	@Test
 	public void testSalvaJogo() {
-		tabuleiroJogador1 = new Tabuleiro();
-        tabuleiroJogador2 = new Tabuleiro();
-        
-        boolean resultado = turno.salvaJogo("testSave", tabuleiroJogador1, tabuleiroJogador2);
-
-        assertTrue("O jogo deve ser salvo corretamente", resultado);
+        assertTrue("O jogo deve ser salvo corretamente", turno.salvaJogo("testSave", tabuleiroJogador1, tabuleiroJogador2));
 
         File arquivo = new File("testSave.txt");
         assertTrue("O arquivo de salvamento deve existir", arquivo.exists());
@@ -80,5 +75,12 @@ public class TurnoTest{
         } catch (IOException e) {
             fail("Erro ao ler o arquivo de salvamento");
         }
+	}
+	
+	@Test
+	public void testCarregarJogo() {
+        testSalvaJogo();
+        assertTrue("O jogo deve ser carregado corretamente", turno.carregarJogo("testSave", tabuleiroJogador1, tabuleiroJogador2));
+        assertFalse("O jogo não deve ser carregado corretamente", turno.carregarJogo("arquivoInexistente", tabuleiroJogador1, tabuleiroJogador2));
 	}
 }
