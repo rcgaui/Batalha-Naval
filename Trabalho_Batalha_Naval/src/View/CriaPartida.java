@@ -40,6 +40,17 @@ public class CriaPartida extends JFrame{
 		
 		Inputs.setLayout(new BoxLayout(Inputs, BoxLayout.Y_AXIS));
 		
+		Jogador1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Jogador1.setAlignmentY(Component.CENTER_ALIGNMENT);
+		Jogador2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		Jogador2.setAlignmentY(Component.CENTER_ALIGNMENT);
+		inputJ1.setAlignmentX(Component.CENTER_ALIGNMENT);
+		inputJ1.setAlignmentY(Component.CENTER_ALIGNMENT);
+		inputJ2.setAlignmentX(Component.CENTER_ALIGNMENT);
+		inputJ2.setAlignmentY(Component.CENTER_ALIGNMENT);
+		comecar.setAlignmentX(Component.CENTER_ALIGNMENT);
+		comecar.setAlignmentY(Component.CENTER_ALIGNMENT);
+		
 		Inputs.add(Jogador1);
 		Inputs.add(inputJ1);
 		Inputs.add(Box.createRigidArea(new Dimension(0 ,10)));

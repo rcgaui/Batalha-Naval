@@ -4,13 +4,12 @@ import javax.swing.JFrame;
 
 public class Janela extends JFrame {
 	public Janela() {
-		//JanelaInicial inicio = new JanelaInicial();
+		// JanelaInicial inicio = new JanelaInicial();
 		
-		//CriaPartida cria = new CriaPartida();
+		// CriaPartida cria = new CriaPartida();
 		
-		// Precisa de alteração
-		//PainelVisaoBloqueada painelVisaoBloqueada = new PainelVisaoBloqueada();
+		// PainelVisaoBloqueada painelVisaoBloqueada = new PainelVisaoBloqueada();
 
-		PainelPosicionarArmamento painelPosicionarArmamento = new PainelPosicionarArmamento();
+		// PainelPosicionarArmamento painelPosicionarArmamento = new PainelPosicionarArmamento();
 	}
 }

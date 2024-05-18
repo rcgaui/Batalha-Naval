@@ -1,66 +1,32 @@
 package View;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
-import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class PainelVisaoBloqueada extends JPanel {
-	public void paintComponent(Graphics g) {
-		super.paintComponent(g);
-		setBackground(Color.lightGray);
+public class PainelVisaoBloqueada extends JFrame {
+	private final int LARGURA_PADRAO = 1000;
+	private final int ALTURA_PADRAO = 600;
+	
+	JPanel painel = new JPanel();
+	
+	public PainelVisaoBloqueada() {
+		setTitle("Batalha Naval");
 		
-		Graphics2D g2d = (Graphics2D) g;
+		Toolkit toolkit = Toolkit.getDefaultToolkit();
+		Dimension resolucaoTela = toolkit.getScreenSize();
+		int larguraDaResolucao = resolucaoTela.width;
+		int alturaDaResolucao = resolucaoTela.height;
+		int x = (larguraDaResolucao / 2) - (LARGURA_PADRAO / 2);
+		int y = (alturaDaResolucao / 2) - (ALTURA_PADRAO / 2);
+		setBounds(x, y, LARGURA_PADRAO, ALTURA_PADRAO);
 		
-		int qntNumeros = 15;
-		int qntLetras = 15;
-
-		double topY = 125.0;
-		double largura = 300.0;
-		double altura = 300.0;
+		PintarVisaoBloqueada pintarVisaoBloqueada = new PintarVisaoBloqueada();
+		getContentPane().add(pintarVisaoBloqueada);
 		
-		g.drawString("Tabuleiro Jogador 1", 225, 60);
-		
-		Rectangle2D tabuleiroJogador1 = new Rectangle2D.Double(125.0, topY, largura, altura);
-		g2d.setPaint(Color.darkGray);
-		g2d.fill(tabuleiroJogador1);
-		g2d.setPaint(Color.black);
-		
-		for (int i = 0; i < qntLetras; i++) {
-			char casa = (char)('A' + i);
-			g.drawString(Character.toString(casa), 110, 140 + 20 * i);
-			for (int j = 0; j < qntNumeros; j++) {
-				int num = 1 + j;
-				g.drawString(Integer.toString(num), 130 + 20 * j, 120);
-				Rectangle2D retangulosTabuleiro1 = new Rectangle2D.Double(125.0 + 20 * i, topY + 20 * j, largura / 15, altura / 15);
-				g2d.draw(retangulosTabuleiro1);
-			}
-		}
-		
-		g.drawString("Tabuleiro Jogador 2", 675, 60);
-		
-		Rectangle2D tabuleiroJogador2 = new Rectangle2D.Double(575.0, topY, largura, altura);
-		g2d.setPaint(Color.darkGray);
-		g2d.fill(tabuleiroJogador2);
-		g2d.setPaint(Color.black);
-		
-		for (int i = 0; i < qntLetras; i++) {
-			char casa = (char)('A' + i);
-			g.drawString(Character.toString(casa), 560, 140 + 20 * i);
-			for (int j = 0; j < qntNumeros; j++) {
-				int num = 1 + j;
-				g.drawString(Integer.toString(num), 580 + 20 * j, 120);
-				Rectangle2D retangulosTabuleiro2 = new Rectangle2D.Double(575.0 + 20 * i, topY + 20 * j, largura / 15, altura / 15);
-				g2d.draw(retangulosTabuleiro2);
-			}
-		}
-		
-		g.drawString("Visão bloqueada", 455, 470);
-		JButton botaoComecarJogo = new JButton("Começar Jogo!");
-		botaoComecarJogo.setBounds(440, 490, 120, 40);
-		add(botaoComecarJogo);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
 	}
 }
