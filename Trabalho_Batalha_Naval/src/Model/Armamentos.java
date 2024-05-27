@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Iterator;
 
-public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
+abstract class Armamentos {
 	protected String casaTabuleiro;
 	protected String sentido;
 	protected int tamanho;
@@ -12,11 +12,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	protected static int qntCruzadores = 0;
 	protected static int qntHidroAvioes = 0;
 	protected static int qntDestroyers = 0;
-	
-	public Armamentos() {
-		this.armamentoPosicionado = false;
-	}
-	
+		
 	public boolean isArmamentoPosicionado() {
 		return armamentoPosicionado;
 	}
@@ -25,9 +21,9 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		this.armamentoPosicionado = armamentoPosicionado;
 	}
 	
-	public abstract boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador);
+	protected abstract boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador);
 	
-	public boolean inserirArmamento(Tabuleiro tabuleiro, int letra, int numero, String sentido)
+	protected boolean inserirArmamento(Tabuleiro tabuleiro, int letra, int numero, String sentido)
 	{
 		switch (sentido) {
 			case "Leste-Oeste":
@@ -55,7 +51,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		}
 	}
 	
-	public boolean verificarSintaxe(char letra, int numero)
+	protected boolean verificarSintaxe(char letra, int numero)
 	{
 		if (letra >= 'A' && letra <= 'O' && numero >= 0 && numero <= 14)
 			return true;
@@ -118,7 +114,7 @@ public abstract class Armamentos { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 		}
 	}
 	
-	public boolean verificarCasas(Tabuleiro tabuleiro, int letra, int numero) {
+	protected boolean verificarCasas(Tabuleiro tabuleiro, int letra, int numero) {
 	    // Define os deslocamentos para as 8 direções possíveis
 		// Respectivamente de acordo com os índices dos vetores abaixo:
 		// (Norte, Nordeste, Leste, Sudeste, Sul, Sudoeste, Oeste, Noroeste)

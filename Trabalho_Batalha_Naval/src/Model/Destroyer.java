@@ -1,6 +1,6 @@
 package Model;
 
-public class Destroyer extends Armamentos {
+class Destroyer extends Armamentos {
 	public Destroyer()
 	{
 		this.armamentoPosicionado = false;

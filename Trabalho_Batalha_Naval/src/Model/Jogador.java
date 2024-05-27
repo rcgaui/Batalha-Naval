@@ -1,6 +1,6 @@
 package Model;
 
-public class Jogador { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
+class Jogador { 
 	private String nome;
     private int qntSubmarinos;
     private int qntCruzadores;

@@ -1,6 +1,6 @@
 package Model;
 
-public class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
+class Tabuleiro { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	private Casas casas[][];
 	private int qntNumeros;
 	private int qntLetras;

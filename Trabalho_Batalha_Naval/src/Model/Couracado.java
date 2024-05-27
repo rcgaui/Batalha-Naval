@@ -1,6 +1,6 @@
 package Model;
 
-public class Couracado extends Armamentos {
+class Couracado extends Armamentos {
 	public Couracado()
 	{
 		this.armamentoPosicionado = false;

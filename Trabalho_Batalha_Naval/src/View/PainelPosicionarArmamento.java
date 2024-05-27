@@ -7,32 +7,12 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import Model.Couracado;
-import Model.Cruzador;
-import Model.Destroyer;
-import Model.Hidroaviao;
-import Model.Submarino;
-import Model.Tabuleiro;
-
 public class PainelPosicionarArmamento extends JFrame {
 	private final int LARGURA_PADRAO = 1000;
 	private final int ALTURA_PADRAO = 600;
 	
 	JPanel painel = new JPanel();
 	
-	Tabuleiro tabuleiroJogador1 = new Tabuleiro();
-	Submarino submarinoArmamentoJogador1 = new Submarino();
-	Destroyer destroyerArmamentoJogador1 = new Destroyer();
-	Hidroaviao hidroAviaoArmamentoJogador1 = new Hidroaviao();
-	Cruzador cruzadoreArmamentoJogador1 = new Cruzador();
-	Couracado couracadoArmamentoJogador1 = new Couracado();
-	
-	Tabuleiro tabuleiroJogador2 = new Tabuleiro();
-	Submarino submarinoArmamentoJogador2 = new Submarino();
-	Destroyer destroyerArmamentoJogador2 = new Destroyer();
-	Hidroaviao hidroAviaoArmamentoJogador2 = new Hidroaviao();
-	Cruzador cruzadoreArmamentoJogador2 = new Cruzador();
-	Couracado couracadoArmamentoJogador2 = new Couracado();
 	
 	public PainelPosicionarArmamento() {
 		setTitle("Batalha Naval");

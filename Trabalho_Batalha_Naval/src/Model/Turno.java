@@ -7,7 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class Turno { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
+class Turno { 
 	private boolean jogoRodando;
 	private String vezJogar;
 

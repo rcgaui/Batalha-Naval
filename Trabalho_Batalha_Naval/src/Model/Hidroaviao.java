@@ -1,6 +1,6 @@
 package Model;
 
-public class Hidroaviao extends Armamentos {
+class Hidroaviao extends Armamentos {
 	public Hidroaviao()
 	{
 		this.armamentoPosicionado = false;

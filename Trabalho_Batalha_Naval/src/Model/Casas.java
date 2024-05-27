@@ -1,11 +1,11 @@
 package Model;
 
-public class Casas { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
+class Casas { // PUBLIC TEMPORARIAMENTE PARA TESTES NA MAIN
 	private int numero;
 	private char letra;
 	private String estadoCasa;
 	
-	public Casas(int numero, char letra){
+	protected Casas(int numero, char letra){
 		this.numero = numero;
 		this.letra = letra;
 		estadoCasa = "?";
