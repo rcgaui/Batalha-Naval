@@ -12,6 +12,15 @@ public class PainelVisaoBloqueada extends JFrame {
 	
 	JPanel painel = new JPanel();
 	
+	// Singleton PainelVisaoBloqueada
+		private static PainelVisaoBloqueada instance = null;
+	    public static PainelVisaoBloqueada getInstance() {
+	        if (instance == null) {
+	            instance = new PainelVisaoBloqueada();
+	        }
+	        return instance;
+	    }
+	
 	public PainelVisaoBloqueada() {
 		setTitle("Batalha Naval");
 		

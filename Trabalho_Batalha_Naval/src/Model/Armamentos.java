@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.Iterator;
-
 abstract class Armamentos {
 	protected String casaTabuleiro;
 	protected String sentido;

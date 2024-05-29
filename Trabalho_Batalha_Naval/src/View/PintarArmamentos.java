@@ -3,6 +3,8 @@ package View;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -10,6 +12,8 @@ import java.awt.Stroke;
 import java.awt.BasicStroke;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -20,7 +24,8 @@ public class PintarArmamentos extends JPanel {
 	public String armamentoSelecionado;
 	private boolean booleanArmamentoSelecionado;
 	
-	private boolean armamentosPosicionados = false;
+	private boolean armamentosJogador1Posicionado = false;
+	private boolean armamentosJogador2Posicionado = false;
 	
 	private boolean hidroAviao1Posicionado = false;
 	private boolean hidroAviao2Posicionado = false;
@@ -50,10 +55,16 @@ public class PintarArmamentos extends JPanel {
 	private boolean mouseEsquerdo = false;
 	private boolean mouseDireito = false;
 	
-	JButton botaoComecarJogo = new JButton("Tabuleiro pronto!");
+	JLabel textNomeJogador1;
+	JLabel textNomeJogador2;
+	JButton botaoProximoJogador = new JButton("Próximo jogador");
+	JButton botaoComecarJogo = new JButton("Começar jogo");
 	
-	public PintarArmamentos() {
-	    this.addMouseListener(new MouseAdapter() {
+	public PintarArmamentos(String nomeJogador1, String nomeJogador2, JFrame framePai) {
+		textNomeJogador1 = new JLabel("Posicionar armamentos " + nomeJogador1);
+		textNomeJogador2 = new JLabel("Posicionar armamentos " + nomeJogador2);
+		
+		this.addMouseListener(new MouseAdapter() {
 	        @Override
 	        public void mouseClicked(MouseEvent e) {
 	            x = e.getX();
@@ -70,12 +81,39 @@ public class PintarArmamentos extends JPanel {
 	            repaint();
 	        }
 	    });
+		
+		botaoProximoJogador.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+            	redefinirPainelProximoJogador();
+            	
+            	repaint();
+            }
+        });
+		
+		botaoComecarJogo.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+            	framePai.dispose();
+            	
+            	PainelVisaoBloqueada.getInstance().setVisible(true);
+            }
+        });
 	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
 		setBackground(Color.lightGray);
+		
+		if(armamentosJogador1Posicionado == false && armamentosJogador2Posicionado == false) {
+			textNomeJogador1.setBounds(400, 20, 220, 30);
+			add(textNomeJogador1);
+		}
+		else if(armamentosJogador1Posicionado == true && armamentosJogador2Posicionado == false) {
+			textNomeJogador2.setBounds(400, 20, 220, 30);
+			add(textNomeJogador2);
+		}
 		
 		double topY = 125.0;
 		double largura = 300.0;
@@ -88,6 +126,40 @@ public class PintarArmamentos extends JPanel {
 		
 		verificarClick(g2d);
 		verificarTudoPosicionado(g);
+	}
+	
+	private void redefinirPainelProximoJogador() {
+		armamentoSelecionado = "";
+    	booleanArmamentoSelecionado = false;
+    	
+    	hidroAviao1Posicionado = false;
+    	hidroAviao2Posicionado = false;
+    	hidroAviao3Posicionado = false;
+    	hidroAviao4Posicionado = false;
+    	hidroAviao5Posicionado = false;
+    	submarino1Posicionado = false;
+    	submarino2Posicionado = false;
+    	submarino3Posicionado = false;
+    	submarino4Posicionado = false;
+    	destroyer1Posicionado = false;
+    	destroyer2Posicionado = false;
+    	destroyer3Posicionado = false;
+    	cruzador1Posicionado = false;
+    	cruzador2Posicionado = false;
+    	couracado1Posicionado = false;
+    	
+    	for(int i = 0; i < arrayArmamentosPosicionados.length; i++) {
+    		arrayArmamentosPosicionados[i] = 0;
+    	}
+    	
+    	for(int i = 0; i < arrayArmamentosNaMatriz.length; i++) {
+    		arrayArmamentosNaMatriz[i] = 0;
+    	}
+    	
+    	remove(textNomeJogador1);
+    	remove(botaoProximoJogador);
+    	
+    	armamentosJogador1Posicionado = true;
 	}
 	
 	private void desenhoArmamentos(Graphics2D g2d, double largura, double altura, int[] arrayArmamentosPosicionados) {
@@ -193,11 +265,13 @@ public class PintarArmamentos extends JPanel {
 		for (int i = 0; i < 15; i++) {
 			char casa = (char)('A' + i);
 			
+			g2d.setPaint(Color.black);
 			g.drawString(Character.toString(casa), 560, 140 + 20 * i);
 			
 			for (int j = 0; j < 15; j++) {
 				int num = 1 + j;
 				
+				g2d.setPaint(Color.black);
 				g.drawString(Integer.toString(num), 580 + 20 * j, 120);
 				
 				index = j + (i * 15);
@@ -591,11 +665,18 @@ public class PintarArmamentos extends JPanel {
 				submarino2Posicionado && submarino3Posicionado && submarino4Posicionado && 
 				destroyer1Posicionado && destroyer2Posicionado && destroyer3Posicionado && 
 				cruzador1Posicionado && cruzador2Posicionado && couracado1Posicionado) {
-			armamentosPosicionados = true;
-			
 			g.drawString("Armamentos selecionados", 435, 470);
-			botaoComecarJogo.setBounds(420, 490, 160, 40);
-			add(botaoComecarJogo);	
+			
+			if(armamentosJogador1Posicionado == false && armamentosJogador2Posicionado == false) {
+				botaoProximoJogador.setBounds(420, 490, 160, 40);
+				add(botaoProximoJogador);
+			}
+			else if(armamentosJogador1Posicionado == true && armamentosJogador2Posicionado == false) {
+				armamentosJogador2Posicionado = true;
+				
+				botaoComecarJogo.setBounds(420, 490, 160, 40);
+				add(botaoComecarJogo);
+			}
 		}
 		else {
 			g.drawString("Selecione os armamentos", 435, 470);

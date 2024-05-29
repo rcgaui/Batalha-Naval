@@ -5,7 +5,7 @@ import javax.swing.JFileChooser;
 public class modelFacade {
 	public void novaPartida(String jogador1, String jogador2)
 	{
-		//PReencher depois
+		//Preencher depois
 	}
 	
 	public void converteCoordenada(float x, float y)

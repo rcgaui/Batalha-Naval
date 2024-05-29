@@ -26,6 +26,25 @@ public class JanelaInicial extends JFrame{
 	JButton CarregaPartida = new JButton("Carregar Partida");
 	JFileChooser fileChooser = new JFileChooser();
 	
+	// Singleton JanelaInicial
+	private static JanelaInicial instance = null;
+    public static JanelaInicial getInstance() {
+        if (instance == null) {
+            instance = new JanelaInicial();
+        }
+        return instance;
+    }
+    
+    // Singleton CriaPartida
+    private CriaPartida criaPartida = null;
+    private void mostrarCriaPartida() {
+        if (criaPartida == null) {
+            criaPartida = new CriaPartida();
+        } else {
+            criaPartida.setVisible(true);
+        }
+    }
+	
 	public JanelaInicial() {
 		setTitle("Batalha Naval");
 		
@@ -37,21 +56,37 @@ public class JanelaInicial extends JFrame{
 		int y = sa / 2 - ALT_DEFAULT / 2; 
 		setBounds(x, y, LARG_DEFAULT, ALT_DEFAULT);
 		
-		PainelInicio.setLayout(new BoxLayout(PainelInicio, BoxLayout.Y_AXIS));
+		PainelInicio.setLayout(null);
 		
-		label.setAlignmentX(Component.CENTER_ALIGNMENT);
-		NovaPartida.setAlignmentX(Component.CENTER_ALIGNMENT);
-		NovaPartida.setAlignmentY(Component.CENTER_ALIGNMENT);
-		CarregaPartida.setAlignmentX(Component.CENTER_ALIGNMENT);
-		CarregaPartida.setAlignmentY(Component.CENTER_ALIGNMENT);
-		
-		PainelInicio.add(label);
-		PainelInicio.add(Box.createRigidArea(new Dimension(0 ,10)));
-		PainelInicio.add(NovaPartida);
-		PainelInicio.add(Box.createRigidArea(new Dimension(0 ,5)));
-		PainelInicio.add(CarregaPartida);
+		int margem = 20;
+        int largComponente = 165;
+        int altComponente = 30;
+        int espacamentoVertical = 10;
+        
+        int posX = ((LARG_DEFAULT - largComponente) / 2) - 5;
+        int posY = margem + altComponente + espacamentoVertical;
+        
+        label.setBounds(posX, posY, largComponente, altComponente);
+        PainelInicio.add(label);
+
+        posY += altComponente + espacamentoVertical;
+        NovaPartida.setBounds(posX, posY, largComponente, altComponente);
+        PainelInicio.add(NovaPartida);
+
+        posY += altComponente + espacamentoVertical;
+        CarregaPartida.setBounds(posX, posY, largComponente, altComponente);
+        PainelInicio.add(CarregaPartida);
 		
 		getContentPane().add(PainelInicio);
+
+		NovaPartida.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e)
+		    {
+		    	dispose();
+		    	
+		        mostrarCriaPartida();
+		    }
+		});
 		
 		CarregaPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
@@ -60,8 +95,6 @@ public class JanelaInicial extends JFrame{
 				fc.showOpenDialog(null);
 			}
 		});
-		
-		PainelInicio.setBorder(new EmptyBorder(new Insets(100, 100, 100, 100)));
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
