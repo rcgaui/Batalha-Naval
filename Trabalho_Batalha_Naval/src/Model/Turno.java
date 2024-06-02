@@ -9,11 +9,15 @@ import java.io.PrintWriter;
 
 class Turno { 
 	private boolean jogoRodando;
-	private String vezJogar;
+	private Jogador vezJogar;
+	private Jogador jogador1;
+	private Jogador jogador2;
 
-	public Turno() {
+	public Turno(Jogador jogador1, Jogador jogador2) {
 		jogoRodando = true;
-		vezJogar = "Jogador 1"; // Por padrão é "Jogador 1" pois o salvamento do jogo sempre acontecerá quando for a vez do jogador 1
+		this.jogador1 = jogador1;
+		this.jogador2 = jogador2;
+		this.vezJogar = jogador1;
 	}
 	
 	public boolean isJogoRodando() {
@@ -24,12 +28,24 @@ class Turno {
 		this.jogoRodando = jogoRodando;
 	}
 	
-	public String getVezJogar() {
+	public Jogador getVezJogar() {
 		return vezJogar;
 	}
 
-	public void setVezJogar(String vezJogar) {
+	public void setVezJogar(Jogador vezJogar) {
 		this.vezJogar = vezJogar;
+	}
+	
+	public void trocaTurno()
+	{
+		if(vezJogar == jogador1)
+		{
+			vezJogar = jogador2;
+		}
+		else
+		{
+			vezJogar = jogador1;
+		}
 	}
 	
 	public boolean salvaJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2)

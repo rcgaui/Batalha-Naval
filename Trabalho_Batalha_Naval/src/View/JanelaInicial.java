@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Controller.Control;
+
 public class JanelaInicial extends JFrame{
 	public final int LARG_DEFAULT = 400;
 	public final int ALT_DEFAULT = 300;
@@ -30,22 +32,14 @@ public class JanelaInicial extends JFrame{
 	private static JanelaInicial instance = null;
     public static JanelaInicial getInstance() {
         if (instance == null) {
-            instance = new JanelaInicial();
+            instance = new JanelaInicial(true);
         }
         return instance;
     }
     
-    // Singleton CriaPartida
-    private CriaPartida criaPartida = null;
-    private void mostrarCriaPartida() {
-        if (criaPartida == null) {
-            criaPartida = new CriaPartida();
-        } else {
-            criaPartida.setVisible(true);
-        }
-    }
+    
 	
-	public JanelaInicial() {
+	public JanelaInicial(boolean visibilidade) {
 		setTitle("Batalha Naval");
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
@@ -82,21 +76,20 @@ public class JanelaInicial extends JFrame{
 		NovaPartida.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e)
 		    {
-		    	dispose();
-		    	
-		        mostrarCriaPartida();
+		    	Control.getController().irParaCriarPartida(instance);
 		    }
 		});
 		
 		CarregaPartida.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)
 			{
-				JFileChooser fc = new JFileChooser();
-				fc.showOpenDialog(null);
+				fileChooser = new JFileChooser();
+				fileChooser.showOpenDialog(null);
+				Control.getController().carregarPartida(instance, fileChooser);
 			}
 		});
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
+		setVisible(visibilidade);
 	}
 }

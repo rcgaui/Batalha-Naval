@@ -13,10 +13,15 @@ public class TurnoTest{
 	private Turno turno;
 	private Tabuleiro tabuleiroJogador1;
     private Tabuleiro tabuleiroJogador2;
-	
+	private Jogador jogador1;
+	private Jogador jogador2;
+    
+    
 	@Before
     public void setUp() {
-        turno = new Turno();
+        jogador1 = new Jogador("Jogador 1");
+        jogador2 = new Jogador("Jogador 2");
+		turno = new Turno(jogador1, jogador2);
         tabuleiroJogador1 = new Tabuleiro();
         tabuleiroJogador2 = new Tabuleiro();
     }
@@ -34,10 +39,6 @@ public class TurnoTest{
 		assertTrue("Por padrão o jogo deve estar rodando ao iniciar um turno", turno.isJogoRodando());
 	}
 	
-	@Test
-	public void testGetVezJogar() {
-		assertEquals("Por padrão a vez deve ser do 'Jogador 1", "Jogador 1", turno.getVezJogar());
-	}
 	
 	@Test
 	public void testSetJogoRodando() {
@@ -50,11 +51,11 @@ public class TurnoTest{
 	
 	@Test
 	public void testSetVezJogar() {
-		turno.setVezJogar("Jogador 2");
-		assertEquals("Após setVeJogar('Jogador 2') a vez deve ser do 'Jogador 2", "Jogador 2", turno.getVezJogar());
+		turno.setVezJogar(jogador2);
+		assertEquals("Após setVeJogar('Jogador 2') a vez deve ser do 'Jogador 2", jogador2, turno.getVezJogar());
 		
-		turno.setVezJogar("Jogador 1");
-		assertEquals("Após setVeJogar('Jogador 1') a vez deve ser do 'Jogador 1", "Jogador 1", turno.getVezJogar());
+		turno.setVezJogar(jogador1);
+		assertEquals("Após setVeJogar('Jogador 1') a vez deve ser do 'Jogador 1", jogador1, turno.getVezJogar());
 	}
 	
 	@Test

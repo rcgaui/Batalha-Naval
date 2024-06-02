@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import Controller.Control;
+
 public class CriaPartida extends JFrame{
 	public final int LARG_DEFAULT = 400;
 	public final int ALT_DEFAULT = 400;
@@ -25,8 +27,16 @@ public class CriaPartida extends JFrame{
 	
 	String nomeJogador1;
     String nomeJogador2;
+    
+    // Singleton CriaPartida
+    private static CriaPartida criaPartida = null;
+    public static CriaPartida singleCriaPartida() {
+        if (criaPartida == null) 
+            criaPartida = new CriaPartida(true);
+        return criaPartida;
+    }
 	
-	public CriaPartida()
+	private CriaPartida(boolean visibilidade)
 	{
 		setTitle("Seleção de Jogadores");
 		
@@ -72,11 +82,9 @@ public class CriaPartida extends JFrame{
         
 		getContentPane().add(Painel);
 		
-        voltar.addActionListener(new ActionListener() {
+        voltar.addActionListener(new ActionListener() { //Classe anônima
             public void actionPerformed(ActionEvent e) {
-                dispose();
-                
-                JanelaInicial.getInstance().setVisible(true);
+                Control.getController().irParaTelaInicial(criaPartida);
             }
         });
         
@@ -84,14 +92,11 @@ public class CriaPartida extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 nomeJogador1 = inputJ1.getText();
                 nomeJogador2 = inputJ2.getText();
-                
-                dispose();
-                
-                PainelPosicionarArmamento painelPosicionarArmamento = new PainelPosicionarArmamento(nomeJogador1, nomeJogador2);
+                Control.getController().irParaPosicionarArmamento(criaPartida, nomeJogador1, nomeJogador2);
             }
         });
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
+		setVisible(visibilidade);
 	}
 }
