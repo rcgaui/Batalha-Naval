@@ -21,6 +21,7 @@ public class Control {
     private JFrame criaPartida;
     private JFrame janelaInicial;
     private JFrame posicionarArmamento;
+    private modelFacade facade;
 	
     Control()
     {
@@ -46,6 +47,11 @@ public class Control {
 	{
 		frame.setVisible(false);
 		posicionarArmamento = new PainelPosicionarArmamento(jogador1, jogador2);
+	}
+	
+	public void registra(ObservadorAtaqueIF observador)
+	{
+		facade.registra(observador);
 	}
 	
 	public void carregarPartida(JFrame frame, JFileChooser file)

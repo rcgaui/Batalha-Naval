@@ -8,8 +8,24 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PainelAtaque extends JPanel{
+import Controller.Control;
+import Model.ObservadoAtaqueIF;
+
+public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	JButton botaoComecarJogo = new JButton("Começar Jogo!");
+	
+	PainelAtaque()
+	{
+		Control.getController().registra(this);
+	}
+	
+	public void notify(ObservadoAtaqueIF observado)
+	{
+		String casa = observado.get(0);
+		String estadoCasa = observado.get(1);
+		
+		//Pintar os quadrados que retornaram na get
+	}
 	
 	public void paintComponent(Graphics g) {	
 		super.paintComponent(g);

@@ -2,6 +2,8 @@ package Model;
 
 import javax.swing.JFileChooser;
 
+import View.ObservadorAtaqueIF;
+
 public class modelFacade {
 	private Jogador J1;
 	private Jogador J2;
@@ -135,6 +137,12 @@ public class modelFacade {
 			tabuleiroJ2.realizarTiro(letra, numero);
 		else if(turno.getVezJogar() == J2) 
 			tabuleiroJ1.realizarTiro(letra,numero);
+	}
+	
+	public void registra(ObservadorAtaqueIF observador)
+	{
+		tabuleiroJ1.registraObservador(observador);
+		tabuleiroJ2.registraObservador(observador);
 	}
 	
 	

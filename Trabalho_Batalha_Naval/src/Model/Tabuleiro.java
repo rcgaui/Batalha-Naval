@@ -1,5 +1,7 @@
 package Model;
 
+import View.ObservadorAtaqueIF;
+
 class Tabuleiro {
 	private Casas casas[][];
 	private int qntNumeros;
@@ -22,6 +24,23 @@ class Tabuleiro {
 	public Casas[][] getCasas() {
 		return casas;
 	}
+	
+	public void registraObservador(ObservadorAtaqueIF observador)
+	{
+		for (int i = 0; i < qntLetras; i++) {
+            for (int j = 0; j < qntNumeros; j++) {
+                casas[i][j].add(observador);;
+            }
+        }
+	}
+	
+	public String realizarTiro(int letra, int numero) {
+		if (letra < 0 || letra >= casas.length || numero < 0 || numero >= casas[letra].length) {
+	        return "Coordenadas inválidas, tente novamente";
+	    }
+        Casas casaAlvo = casas[letra][numero];
+        return casaAlvo.atacarCasa();
+    }
 
 	public void imprimeTabuleiro(boolean mostrarDetalhes) {
 	    System.out.print("   ");
@@ -73,11 +92,5 @@ class Tabuleiro {
 	    }
 	}
 	
-	public String realizarTiro(int letra, int numero) {
-		if (letra < 0 || letra >= casas.length || numero < 0 || numero >= casas[letra].length) {
-	        return "Coordenadas inválidas, tente novamente";
-	    }
-        Casas casaAlvo = casas[letra][numero];
-        return casaAlvo.atacarCasa();
-    }
+	
 }
