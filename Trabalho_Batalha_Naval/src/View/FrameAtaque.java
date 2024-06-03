@@ -6,22 +6,22 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class PainelVisaoBloqueada extends JFrame {
+public class FrameAtaque extends JFrame {
 	private final int LARGURA_PADRAO = 1000;
 	private final int ALTURA_PADRAO = 600;
 	
 	JPanel painel = new JPanel();
 	
 	// Singleton PainelVisaoBloqueada
-		private static PainelVisaoBloqueada instance = null;
-	    public static PainelVisaoBloqueada getInstance() {
+		private static FrameAtaque instance = null;
+	    public static FrameAtaque getInstance() {
 	        if (instance == null) {
-	            instance = new PainelVisaoBloqueada();
+	            instance = new FrameAtaque();
 	        }
 	        return instance;
 	    }
 	
-	public PainelVisaoBloqueada() {
+	public FrameAtaque() {
 		setTitle("Batalha Naval");
 		
 		Toolkit toolkit = Toolkit.getDefaultToolkit();
@@ -32,8 +32,8 @@ public class PainelVisaoBloqueada extends JFrame {
 		int y = (alturaDaResolucao / 2) - (ALTURA_PADRAO / 2);
 		setBounds(x, y, LARGURA_PADRAO, ALTURA_PADRAO);
 		
-		PintarVisaoBloqueada pintarVisaoBloqueada = new PintarVisaoBloqueada();
-		getContentPane().add(pintarVisaoBloqueada);
+		PainelAtaque painelAtaque = new PainelAtaque();
+		getContentPane().add(painelAtaque);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);

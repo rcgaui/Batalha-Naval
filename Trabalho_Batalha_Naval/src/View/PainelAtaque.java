@@ -8,7 +8,7 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-public class PintarVisaoBloqueada extends JPanel{
+public class PainelAtaque extends JPanel{
 	JButton botaoComecarJogo = new JButton("Começar Jogo!");
 	
 	public void paintComponent(Graphics g) {	

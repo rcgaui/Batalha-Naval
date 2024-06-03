@@ -96,7 +96,7 @@ public class PintarArmamentos extends JPanel {
             {
             	framePai.dispose();
             	
-            	PainelVisaoBloqueada.getInstance().setVisible(true);
+            	FrameAtaque.getInstance().setVisible(true);
             }
         });
 	}
