@@ -20,13 +20,22 @@ public class Control {
     //Parte Grafica
     private JFrame criaPartida;
     private JFrame janelaInicial;
+    private JFrame telaAtaque;
     private JFrame posicionarArmamento;
     private modelFacade facade;
 	
     Control()
     {
     	janelaInicial = JanelaInicial.getInstance();
-    	criaPartida = janelaInicial = posicionarArmamento = null;
+    	criaPartida = janelaInicial = posicionarArmamento = null;    	
+    	facade =  new modelFacade();
+
+    }
+    
+    public void comecarAtaque()
+    {
+    	telaAtaque = new FrameAtaque();
+    	telaAtaque.setVisible(true);
     }
 	
 	public void irParaCriarPartida(JFrame frame)
@@ -34,6 +43,12 @@ public class Control {
 		frame.setVisible(false);
 		criaPartida = CriaPartida.singleCriaPartida();
 		criaPartida.setVisible(true);
+	}
+	
+	
+	public boolean isJ1()
+	{
+		return facade.isJ1();
 	}
 	
 	public void irParaTelaInicial(JFrame frame)
@@ -45,6 +60,7 @@ public class Control {
 	
 	public void irParaPosicionarArmamento(JFrame frame, String jogador1, String jogador2)
 	{
+		facade.novaPartida(jogador1, jogador2);
 		frame.setVisible(false);
 		posicionarArmamento = new PainelPosicionarArmamento(jogador1, jogador2);
 	}
@@ -61,5 +77,6 @@ public class Control {
 	
 	public static void main(String[] args) {
 		Control controllerControl = Control.getController();
+
 	}
 }

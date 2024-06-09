@@ -10,16 +10,6 @@ public class FrameAtaque extends JFrame {
 	private final int LARGURA_PADRAO = 1000;
 	private final int ALTURA_PADRAO = 600;
 	
-	JPanel painel = new JPanel();
-	
-	// Singleton PainelVisaoBloqueada
-		private static FrameAtaque instance = null;
-	    public static FrameAtaque getInstance() {
-	        if (instance == null) {
-	            instance = new FrameAtaque();
-	        }
-	        return instance;
-	    }
 	
 	public FrameAtaque() {
 		setTitle("Batalha Naval");

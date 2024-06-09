@@ -48,6 +48,12 @@ public class modelFacade {
 		destroyerJ2 = new Destroyer();
 	}
 	
+	public boolean isJ1()
+	{
+		if(turno.getVezJogar() == J1) return true;
+		else return false;
+	}
+	
 	public void converteCoordenada(float x, float y)
 	{
 		//Preencher Dps

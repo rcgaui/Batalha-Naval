@@ -1,25 +1,28 @@
 package View;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.awt.Stroke;
-import java.awt.BasicStroke;
+import java.util.ResourceBundle.Control;
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.SwingUtilities; 
 
 public class PintarArmamentos extends JPanel {
 	public int x = -1;
 	public int y = -1;
+	
 	
 	public String armamentoSelecionado;
 	private boolean booleanArmamentoSelecionado;
@@ -95,8 +98,7 @@ public class PintarArmamentos extends JPanel {
             public void actionPerformed(ActionEvent e)
             {
             	framePai.dispose();
-            	
-            	FrameAtaque.getInstance().setVisible(true);
+            	Controller.Control.getController().comecarAtaque();;
             }
         });
 	}
