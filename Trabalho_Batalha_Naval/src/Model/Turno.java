@@ -92,6 +92,14 @@ class Turno {
 				writer.flush();
 			}
 			
+			writer.write("\n");
+			writer.flush();
+			writer.write(jogador1.getNome());
+			writer.flush();
+			writer.write("\n");
+			writer.flush();
+			writer.write(jogador2.getNome());
+			
 			System.out.println("Partida Salva!\n");
 			return true;
 			
@@ -111,8 +119,9 @@ class Turno {
 	
 	public boolean carregarJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2) {
 		try {
-			FileReader buffer= new FileReader(nome + ".txt");
+			FileReader buffer= new FileReader(nome);
 			int c = 0;
+			trocaTurno();
 			
 			for(int i = 0; i < 15; i++)
 			{
@@ -121,10 +130,11 @@ class Turno {
 					c = buffer.read();
 					char character = (char) c;
 					tabuleiroJogador1.getCasas()[i][j].setEstadoCasa(Character.toString(character));
-					
 				}
 			}
 			
+			trocaTurno();
+			c = buffer.read();
 			c = buffer.read();
 			
 			for(int i = 0; i < 15; i++)
@@ -134,9 +144,12 @@ class Turno {
 					c = buffer.read();
 					char character = (char) c;
 					tabuleiroJogador2.getCasas()[i][j].setEstadoCasa(Character.toString(character));
-				}
-				
+				}				
 			}
+			
+			c = buffer.read();
+			
+			
 			
 			System.out.println("Partida Carregada!\n");
 			return true;

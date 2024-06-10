@@ -17,6 +17,14 @@ class Jogador {
         this.qntCouracados = 0;
     }
     
+    public Jogador() {
+        this.qntSubmarinos = 0;
+        this.qntCruzadores = 0;
+        this.qntDestroyers = 0;
+        this.qntHidroavioes = 0;
+        this.qntCouracados = 0;
+    }
+    
     public int getQntSubmarinos() {
     	return qntSubmarinos;
     }
@@ -52,5 +60,10 @@ class Jogador {
 
 	public String getNome() {
 		return nome;
+	}
+	
+	public void setNome(String nome)
+	{
+		this.nome = nome;
 	}
 }

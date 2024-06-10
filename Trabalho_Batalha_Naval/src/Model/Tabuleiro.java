@@ -16,7 +16,7 @@ class Tabuleiro {
 		for (int i = 0; i < qntLetras; i++) {
             for (int j = 0; j < qntNumeros; j++) {
                 casa = (char)('A' + i);
-                casas[i][j] = new Casas(i + 1, casa);
+                casas[i][j] = new Casas(j + 1, casa);
             }
         }
 	}
@@ -68,7 +68,7 @@ class Tabuleiro {
 		            else if(casas[i - 1][j - 1].getEstadoCasa().equals("~")) {
 		                System.out.print(" ~ ");
 		            }
-		            else { // Água
+		            else {
 		            	System.out.print(" # ");
 		            }
 		        }
@@ -82,7 +82,7 @@ class Tabuleiro {
 		            else if(casas[i - 1][j - 1].getEstadoCasa().equals("~")) {
 		                System.out.print(" ~ ");
 		            }
-		            else { // Água
+		            else {
 		            	System.out.print(" # ");
 		            }
 		        }

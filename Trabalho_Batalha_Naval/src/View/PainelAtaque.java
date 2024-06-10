@@ -35,7 +35,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	
 	public void notify(ObservadoAtaqueIF observado)
 	{
-		String casa = observado.get(0);
+  		String casa = observado.get(0);
 		String estadoCasa = observado.get(1);
 		converteCasa(casa, estadoCasa);
 		repaint();
@@ -52,23 +52,25 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		{
 			if(estadocasa.equals("*")) //Atingido
 			{
-				this.corCasasJ1[letra][numero] = Color.red;
-			}
-			else if(estadocasa.equals("~")) //Agua
-			{
-				this.corCasasJ2[letra][numero] = Color.blue;
-			}
-		}
-		else
-		{
-			if(estadocasa.equals("*")) //Atingido
-			{
 				this.corCasasJ2[letra][numero] = Color.red;
 			}
 			else if(estadocasa.equals("~")) //Agua
 			{
 				this.corCasasJ2[letra][numero] = Color.blue;
 			}
+			else {}
+		}
+		else
+		{
+			if(estadocasa.equals("*")) //Atingido
+			{
+				this.corCasasJ1[letra][numero] = Color.red;
+			}
+			else if(estadocasa.equals("~")) //Agua
+			{
+				this.corCasasJ1[letra][numero] = Color.blue;
+			}
+			else {}
 		}
 			
 	}
@@ -96,12 +98,15 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			g.drawString(Character.toString(casa), 110, 140 + 20 * i);
 			for (int j = 0; j < qntNumeros; j++) {
 				int num = 1 + j;
+				double posX = 125.0 + (20*j);
+				double posY = topY + (20*i);
 				g.drawString(Integer.toString(num), 130 + 20 * j, 120);
-				Rectangle2D retangulosTabuleiro1 = new Rectangle2D.Double(125.0 + 20 * i, topY + 20 * j, largura / 15, altura / 15);
-				g2d.setPaint(corCasasJ1[i][j]);
+				Rectangle2D retangulosTabuleiro1 = new Rectangle2D.Double(posX, posY, largura / 15, altura / 15);
+				Rectangle2D bordaQuadrados1 = new Rectangle2D.Double(posX, posY, largura / 15, altura / 15);
+				g2d.setPaint(this.corCasasJ1[i][j]);
 				g2d.fill(retangulosTabuleiro1);
 				g2d.setPaint(Color.black);
-				g2d.draw(retangulosTabuleiro1);
+				g2d.draw(bordaQuadrados1);
 			}
 		}
 		
@@ -117,12 +122,15 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			g.drawString(Character.toString(casa), 560, 140 + 20 * i);
 			for (int j = 0; j < qntNumeros; j++) {
 				int num = 1 + j;
+				double posX = 575.0 + (20*j);
+				double posY = topY + 20*i;
 				g.drawString(Integer.toString(num), 580 + 20 * j, 120);
-				Rectangle2D retangulosTabuleiro2 = new Rectangle2D.Double(575.0 + 20 * i, topY + 20 * j, largura / 15, altura / 15);
-				g2d.setPaint(corCasasJ2[i][j]);
+				Rectangle2D retangulosTabuleiro2 = new Rectangle2D.Double(posX, posY, largura / 15, altura / 15);
+				Rectangle2D bordaQuadrados2 = new Rectangle2D.Double(posX, posY, largura / 15, altura / 15);
+				g2d.setPaint(this.corCasasJ2[i][j]);
 				g2d.fill(retangulosTabuleiro2);
 				g2d.setPaint(Color.black);
-				g2d.draw(retangulosTabuleiro2);
+				g2d.draw(bordaQuadrados2);
 			}
 		}
 		

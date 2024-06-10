@@ -1,7 +1,7 @@
 package Controller;
 
 import View.*;
-import Model.modelFacade;
+import Model.ModelFacade;
 import java.awt.*;
 
 import javax.swing.JFileChooser;
@@ -22,14 +22,13 @@ public class Control {
     private JFrame janelaInicial;
     private JFrame telaAtaque;
     private JFrame posicionarArmamento;
-    private modelFacade facade;
+    private ModelFacade facade;
 	
     Control()
     {
     	janelaInicial = JanelaInicial.getInstance();
     	criaPartida = janelaInicial = posicionarArmamento = null;    	
-    	facade =  new modelFacade();
-
+    	facade =  new ModelFacade();
     }
     
     public void comecarAtaque()
@@ -72,7 +71,8 @@ public class Control {
 	
 	public void carregarPartida(JFrame frame, JFileChooser file)
 	{
-		
+		frame.dispose();
+		facade.carregaPartida(file);
 	}
 	
 	public static void main(String[] args) {

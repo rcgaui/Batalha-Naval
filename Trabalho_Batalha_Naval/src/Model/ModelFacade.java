@@ -2,9 +2,10 @@ package Model;
 
 import javax.swing.JFileChooser;
 
+import Controller.Control;
 import View.ObservadorAtaqueIF;
 
-public class modelFacade {
+public class ModelFacade {
 	private Jogador J1;
 	private Jogador J2;
 	private Tabuleiro tabuleiroJ1;
@@ -34,6 +35,30 @@ public class modelFacade {
 		tabuleiroJ1 = new Tabuleiro();
 		tabuleiroJ2 = new Tabuleiro();
 		turno = new Turno(J1, J2);
+		submarinoJ1 = new Submarino();
+		couracadoJ1 = new Couracado();
+		hidroaviaoJ1 = new Hidroaviao();
+		cruzadorJ1 = new Cruzador();
+		destroyerJ1 = new Destroyer();
+		
+		//pecas jogador 2
+		submarinoJ2 = new Submarino();
+		couracadoJ2 = new Couracado();
+		hidroaviaoJ2 = new Hidroaviao();
+		cruzadorJ2 = new Cruzador();
+		destroyerJ2 = new Destroyer();
+	}
+	
+	
+	public void carregaPartida(JFileChooser file)
+	{
+		J1 = new Jogador();
+		J2 = new Jogador();
+		tabuleiroJ1 = new Tabuleiro();
+		tabuleiroJ2 = new Tabuleiro();
+		turno = new Turno(J1, J2);
+		Control.getController().comecarAtaque();
+		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ2, tabuleiroJ1);
 		submarinoJ1 = new Submarino();
 		couracadoJ1 = new Couracado();
 		hidroaviaoJ1 = new Hidroaviao();
@@ -151,11 +176,6 @@ public class modelFacade {
 		tabuleiroJ2.registraObservador(observador);
 	}
 	
-	
-	public void carregaPartida(JFileChooser file)
-	{
-		
-	}
 	
 	public void salvarPartida()
 	{

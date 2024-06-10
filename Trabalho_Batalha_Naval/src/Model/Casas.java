@@ -36,7 +36,7 @@ class Casas implements ObservadoAtaqueIF{
 	{
 		if(n == 0)
 		{
-			String casa = letra + String.valueOf(numero);
+			String casa = this.letra + String.valueOf(this.numero);
 			return casa;
 		}
 		else if(n == 1)
@@ -55,6 +55,7 @@ class Casas implements ObservadoAtaqueIF{
 
 	public void setEstadoCasa(String estadoCasa) {
 		this.estadoCasa = estadoCasa;
+		atualiza();
 	}
 
 	public String atacarCasa() {
