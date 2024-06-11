@@ -36,6 +36,8 @@ public class Control {
     	telaAtaque = new FrameAtaque();
     	telaAtaque.setVisible(true);
     }
+    
+    
 	
 	public void irParaCriarPartida(JFrame frame)
 	{
@@ -44,8 +46,13 @@ public class Control {
 		criaPartida.setVisible(true);
 	}
 	
+	public String getJogadorName(int i)
+	{
+		return facade.getName(i);
+	}
 	
-	public boolean isJ1()
+	
+	public boolean isJ1() //Verifica se está na vez do jogador 1
 	{
 		return facade.isJ1();
 	}

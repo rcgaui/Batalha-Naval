@@ -86,7 +86,10 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		double largura = 300.0;
 		double altura = 300.0;
 		
-		g.drawString("Tabuleiro Jogador 1", 225, 60);
+		String nomeJ1 = "Tabuleiro de " + Control.getController().getJogadorName(1);
+		String nomeJ2 = "Tabuleiro de " + Control.getController().getJogadorName(2);
+		
+		g.drawString(nomeJ1, 225, 60);
 		
 		Rectangle2D tabuleiroJogador1 = new Rectangle2D.Double(125.0, topY, largura, altura);
 		g2d.setPaint(Color.darkGray);
@@ -110,7 +113,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			}
 		}
 		
-		g.drawString("Tabuleiro Jogador 2", 675, 60);
+		g.drawString(nomeJ2, 675, 60);
 		
 		Rectangle2D tabuleiroJogador2 = new Rectangle2D.Double(575.0, topY, largura, altura);
 		g2d.setPaint(Color.darkGray);

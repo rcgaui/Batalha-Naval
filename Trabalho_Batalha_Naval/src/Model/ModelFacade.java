@@ -73,6 +73,13 @@ public class ModelFacade {
 		destroyerJ2 = new Destroyer();
 	}
 	
+	public String getName(int i)
+	{
+		if(i == 1) return this.J1.getNome();
+		else if(i==2) return this.J2.getNome();
+		else return "";
+	}
+	
 	public boolean isJ1()
 	{
 		if(turno.getVezJogar() == J1) return true;

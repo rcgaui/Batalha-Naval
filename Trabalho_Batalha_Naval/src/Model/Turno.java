@@ -94,11 +94,12 @@ class Turno {
 			
 			writer.write("\n");
 			writer.flush();
-			writer.write(jogador1.getNome());
+			writer.write(vezJogar.getNome());
 			writer.flush();
 			writer.write("\n");
 			writer.flush();
-			writer.write(jogador2.getNome());
+			if(vezJogar == jogador1) writer.write(jogador2.getNome());
+			else writer.write(jogador1.getNome());
 			
 			System.out.println("Partida Salva!\n");
 			return true;
@@ -148,7 +149,10 @@ class Turno {
 			}
 			
 			c = buffer.read();
-			
+			c = buffer.read();
+			BufferedReader buffered = new BufferedReader(buffer);
+			this.jogador1.setNome(buffered.readLine());
+			this.jogador2.setNome(buffered.readLine());
 			
 			
 			System.out.println("Partida Carregada!\n");
