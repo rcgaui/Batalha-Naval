@@ -9,8 +9,8 @@ class Tabuleiro {
 	
 	public Tabuleiro() {
 		char casa;
-		qntNumeros = 15; // Por padrão é 15
-		qntLetras = 15; // Por padrão é 15
+		this.qntNumeros = 15; // Por padrão é 15
+		this.qntLetras = 15; // Por padrão é 15
 		casas = new Casas[qntLetras][qntNumeros]; // Letras referem-se à linhas e números à colunas
 		
 		for (int i = 0; i < qntLetras; i++) {
@@ -23,6 +23,20 @@ class Tabuleiro {
 	
 	public Casas[][] getCasas() {
 		return casas;
+	}
+	
+	public boolean gameOver()
+	{
+		int qtdDestruidos = 0;
+		
+		for (int i = 0; i < qntLetras; i++) {
+            for (int j = 0; j < qntNumeros; j++) {
+            	if(casas[i][j].getEstadoCasa().equals("*")) qtdDestruidos++;
+            }
+        }
+		
+		if(qtdDestruidos == 38) return true;
+		else return false;
 	}
 	
 	public void registraObservador(ObservadorAtaqueIF observador)
