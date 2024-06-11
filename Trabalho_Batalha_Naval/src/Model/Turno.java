@@ -12,9 +12,11 @@ class Turno {
 	private Jogador vezJogar;
 	private Jogador jogador1;
 	private Jogador jogador2;
-
+	private int tentativas;
+	
 	public Turno(Jogador jogador1, Jogador jogador2) {
 		jogoRodando = true;
+		this.tentativas = 3;
 		this.jogador1 = jogador1;
 		this.jogador2 = jogador2;
 		this.vezJogar = jogador1;
@@ -33,7 +35,18 @@ class Turno {
 	public Jogador getVezJogar() {
 		return vezJogar;
 	}
-
+	
+	public void tentativaTiro()
+	{
+		if(tentativas>0)
+			this.tentativas--;
+	}
+	
+	public int getTentativas()
+	{
+		return this.tentativas;
+	}
+	
 	public void setVezJogar(Jogador vezJogar) {
 		this.vezJogar = vezJogar;
 	}
@@ -42,11 +55,13 @@ class Turno {
 	{
 		if(vezJogar == jogador1)
 		{
-			vezJogar = jogador2;
+			this.vezJogar = jogador2;
+			this.tentativas = 3;
 		}
 		else
 		{
 			vezJogar = jogador1;
+			this.tentativas = 3;
 		}
 	}
 	
