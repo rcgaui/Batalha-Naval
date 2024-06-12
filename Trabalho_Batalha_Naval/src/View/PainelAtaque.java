@@ -38,9 +38,22 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
   		String casa = observado.get(0);
 		String estadoCasa = observado.get(1);
 		converteCasa(casa, estadoCasa);
+		pintaDestroyed();
 		repaint();
 	}
 	
+	public void pintaDestroyed()
+	{
+		ArrayList<String> destroyed = Control.getController().getDestroyed();
+		if(destroyed == null) {}
+		else
+		{
+			for(String posicao: destroyed)
+			{
+				destroiBarco(posicao);
+			}
+		}
+	}
 	
 	
 	public void converteCasa(String casa, String estadocasa)
@@ -52,7 +65,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		{
 			if(estadocasa.equals("*")) //Atingido
 			{
-				this.corCasasJ2[letra][numero] = Color.red;
+				this.corCasasJ2[letra][numero] = Color.orange;
 			}
 			else if(estadocasa.equals("~")) //Agua
 			{
@@ -64,15 +77,30 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		{
 			if(estadocasa.equals("*")) //Atingido
 			{
-				this.corCasasJ1[letra][numero] = Color.red;
+				this.corCasasJ1[letra][numero] = Color.orange;
 			}
 			else if(estadocasa.equals("~")) //Agua
 			{
 				this.corCasasJ1[letra][numero] = Color.blue;
 			}
 			else {}
+		}		
+	}
+	
+	public void destroiBarco(String casa)
+	{
+		int letra = casa.charAt(0) - 'A';
+		int numero = Integer.parseInt(casa.substring(1)) - 1;
+		
+		if(Control.getController().isJ1())
+		{
+			this.corCasasJ1[letra][numero] = Color.red;
 		}
-			
+		else
+		{
+			this.corCasasJ2[letra][numero] = Color.red;
+		}
+		repaint();
 	}
 	
 	public void paintComponent(Graphics g) {	

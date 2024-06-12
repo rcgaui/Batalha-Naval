@@ -9,12 +9,14 @@ import View.ObservadorAtaqueIF;
 class Casas implements ObservadoAtaqueIF{ 
 	private int numero;
 	private char letra;
+	private String posicao;
 	private String estadoCasa;
 	private List<ObservadorAtaqueIF> lst = new ArrayList<ObservadorAtaqueIF>();
 	
 	protected Casas(int numero, char letra){
 		this.numero = numero;
 		this.letra = letra;
+		this.posicao = letra + Integer.toString(numero);
 		estadoCasa = "?";
 	}
 	
@@ -30,6 +32,11 @@ class Casas implements ObservadoAtaqueIF{
 		while(li.hasNext()) {
 			li.next().notify(this);
 		}
+	}
+	
+	public String getPosicao()
+	{
+		return this.posicao;
 	}
 	
 	public String get(int n)

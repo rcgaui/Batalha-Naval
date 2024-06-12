@@ -1,15 +1,14 @@
 package Model;
 
+import java.util.ArrayList;
+
 abstract class Armamentos {
 	protected String casaTabuleiro;
 	protected String sentido;
+	protected ArrayList<String> posicoes;
 	protected int tamanho;
 	protected boolean armamentoPosicionado;
-	protected static int qntCouracados = 0;
-	protected static int qntSubmarinos = 0;
-	protected static int qntCruzadores = 0;
-	protected static int qntHidroAvioes = 0;
-	protected static int qntDestroyers = 0;
+
 		
 	public boolean isArmamentoPosicionado() {
 		return armamentoPosicionado;
@@ -23,30 +22,53 @@ abstract class Armamentos {
 	
 	protected boolean inserirArmamento(Tabuleiro tabuleiro, int letra, int numero, String sentido)
 	{
+		String coordenada;
 		switch (sentido) {
 			case "Leste-Oeste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero - i].setEstadoCasa("!");
+					coordenada = (char)letra + Integer.toString(numero - i);
+					posicoes.add(coordenada);
 				}
 				return true;
 			case "Oeste-Leste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero + i].setEstadoCasa("!");
+					coordenada = (char)letra + Integer.toString(numero + i);
+					posicoes.add(coordenada);
 				}
 				return true;
 			case "Sul-Norte":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra - i][numero].setEstadoCasa("!");
+					coordenada = (char)(letra - i) + Integer.toString(numero);
+					posicoes.add(coordenada);
 				}
 				return true;
 			case "Norte-Sul":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra + i][numero].setEstadoCasa("!");
+					coordenada = (char)(letra + i) + Integer.toString(numero);
+					posicoes.add(coordenada);
 				}
 				return true;
 			default:
 				return false;
 		}
+	}
+	
+	protected ArrayList<String> isDestroyed(Tabuleiro tabuleiro)
+	{
+		int contaPosicoes = 0;
+		
+		for (String posicao : posicoes) {
+			int letra = posicao.charAt(0) - 'A'; 
+			int numero = Integer.parseInt(posicao.substring(1)) - 1;
+            if(tabuleiro.getCasas()[letra][numero].getPosicao() != "*")
+            	contaPosicoes++;
+        }
+		if(contaPosicoes == this.tamanho) return this.posicoes;
+		else return null;
 	}
 	
 	protected boolean verificarSintaxe(char letra, int numero)

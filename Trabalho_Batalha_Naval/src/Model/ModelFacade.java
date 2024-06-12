@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.ArrayList;
+
 import javax.swing.JFileChooser;
 
 import Controller.Control;
@@ -10,6 +12,10 @@ public class ModelFacade {
 	private Jogador J2;
 	private Tabuleiro tabuleiroJ1;
 	private Tabuleiro tabuleiroJ2;
+	private ArrayList<Armamentos> armamentosJ1;
+	private ArrayList<Armamentos> armamentosJ2;
+	private ArrayList<String> destruidosJ1;
+	private ArrayList<String> destruidosJ2;
 	private Turno turno;
 	
 	//Pecas jogador 1
@@ -71,6 +77,59 @@ public class ModelFacade {
 		hidroaviaoJ2 = new Hidroaviao();
 		cruzadorJ2 = new Cruzador();
 		destroyerJ2 = new Destroyer();
+	}
+	
+	public boolean anyDestroyed()
+	{
+		ArrayList<String> posicoes;
+		if(isJ1())
+		{
+			for(Armamentos barco: armamentosJ1)
+			{
+				posicoes = barco.isDestroyed(tabuleiroJ1);
+				if(posicoes != null)
+				{
+					destruidosJ1.addAll(posicoes);
+					return true;
+				}
+				else {}
+			}
+			return false;
+		}
+		else
+		{
+			for(Armamentos barco: armamentosJ2)
+			{
+				posicoes = barco.isDestroyed(tabuleiroJ2);
+				if(posicoes != null)
+				{
+					destruidosJ2.addAll(posicoes);
+					return true;
+				}
+				else {}
+			}
+			return false;
+		}
+	}
+	
+	public ArrayList<String> getDestroyed()
+	{
+		if(anyDestroyed())
+		{
+			if(isJ1())
+			{
+				return destruidosJ2;
+			}
+			else
+			{
+				return destruidosJ1;
+			}
+		}
+		else
+		{
+			return null;
+		}
+
 	}
 	
 	public String getName(int i)

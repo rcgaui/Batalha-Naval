@@ -3,6 +3,7 @@ package Controller;
 import View.*;
 import Model.ModelFacade;
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -55,6 +56,11 @@ public class Control {
 	public boolean isJ1() //Verifica se está na vez do jogador 1
 	{
 		return facade.isJ1();
+	}
+	
+	public ArrayList<String> getDestroyed()
+	{
+		return facade.getDestroyed();
 	}
 	
 	public void irParaTelaInicial(JFrame frame)
