@@ -84,8 +84,11 @@ public class JanelaInicial extends JFrame{
 			public void actionPerformed(ActionEvent e)
 			{
 				fileChooser = new JFileChooser();
-				fileChooser.showOpenDialog(null);
-				Control.getController().carregarPartida(instance, fileChooser);
+				int r = fileChooser.showOpenDialog(null);
+				if(fileChooser.APPROVE_OPTION == r)
+				{
+					Control.getController().carregarPartida(instance, fileChooser);
+				}
 			}
 		});
 		

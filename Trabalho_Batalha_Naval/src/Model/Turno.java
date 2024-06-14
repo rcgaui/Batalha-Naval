@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 class Turno { 
 	private boolean jogoRodando;
@@ -65,12 +66,12 @@ class Turno {
 		}
 	}
 	
-	public boolean salvaJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2)
+	public boolean salvaJogo(File file, Tabuleiro tabuleiroj1, Tabuleiro tabuleiroj2, ArrayList<Armamentos> armamentosJ1, ArrayList<Armamentos> armamentosJ12 )
 	{
 		PrintWriter writer = null;
 		try
 		{
-			File arq = new File(nome + ".txt");
+			File arq = file;
 			if(arq.createNewFile())
 			{
 				System.out.println("Arquivo Criado: " + arq.getName() + "\n");
@@ -82,33 +83,77 @@ class Turno {
 			
 			writer = new PrintWriter(new FileWriter(arq, false));
 			
-			for(int i = 0; i < 15; i++)
+			for(int i = 0; i < 15; i++) //Escreve posicoes armamentos J1
 			{
-				for(int j = 0; j < 15; j++)
-				{
-					writer.write( tabuleiroJogador1.getCasas()[i][j].getEstadoCasa());
-					writer.flush();
-				}
-			
+				String casa = armamentosJ1.get(i).getCasa();
+				String sentido = armamentosJ1.get(i).getSentido(); 
+				writer.write(casa);
+				writer.flush();
+				writer.write(" ");
+				writer.flush();
+				writer.write(sentido);
+				writer.flush();
+				writer.write("\n");
 				writer.flush();
 			}
 			
 			writer.write("\n");
 			writer.flush();
 			
-			for(int i = 0; i < 15; i++)
+			for(int i = 0; i < 15; i++)//Escreve posicoes armamentos J2
 			{
-				for(int j = 0; j < 15; j++)
-				{
-					writer.write(tabuleiroJogador2.getCasas()[i][j].getEstadoCasa());
-					writer.flush();
-				}
-				
+				String casa = armamentosJ1.get(i).getCasa();
+				String sentido = armamentosJ1.get(i).getSentido(); 
+				writer.write(casa);
+				writer.flush();
+				writer.write(" ");
+				writer.flush();
+				writer.write(sentido);
+				writer.flush();
+				writer.write("\n");
 				writer.flush();
 			}
 			
 			writer.write("\n");
 			writer.flush();
+			
+			for(int i = 0; i < 15; i++) //Escreve atacados tabuleiro 1
+			{
+				for(int j = 0; j < 15; j++)
+				{
+					if(tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "*")
+					{
+						writer.write(tabuleiroj1.getCasas()[i][j].getPosicao());
+						writer.flush();
+						writer.write("\n");
+						writer.flush();
+					}
+				}
+			}
+			
+			writer.write("-"); //Identificador de mudanca de atacados do j1 pra j2
+			writer.flush();
+			writer.write("\n");
+			writer.flush();
+			
+			for(int i = 0; i < 15; i++) //Escreve atacados tabuleiro 2
+			{
+				for(int j = 0; j < 15; j++)
+				{
+					if(tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "*")
+					{
+						writer.write(tabuleiroj2.getCasas()[i][j].getPosicao());
+						writer.flush();
+						writer.write("\n");
+						writer.flush();
+					}
+				}
+			}
+			writer.write("-"); //Identificador de mudanca de atacados do j2 para nomes
+			writer.flush();
+			writer.write("\n");
+			writer.flush();
+
 			writer.write(vezJogar.getNome());
 			writer.flush();
 			writer.write("\n");
@@ -133,39 +178,57 @@ class Turno {
         }
 	}
 	
-	public boolean carregarJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2) {
+	public boolean carregarJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2, ArrayList<Armamentos> armamentosj1, ArrayList<Armamentos> armamentosj2) {
 		try {
 			FileReader buffer= new FileReader(nome);
-			int c = 0;
-			trocaTurno();
 			
-			for(int i = 0; i < 15; i++)
-			{
-				for(int j = 0; j < 15; j++)
-				{
-					c = buffer.read();
-					char character = (char) c;
-					tabuleiroJogador1.getCasas()[i][j].setEstadoCasa(Character.toString(character));
-				}
-			}
-			
-			trocaTurno();
-			c = buffer.read();
-			c = buffer.read();
-			
-			for(int i = 0; i < 15; i++)
-			{
-				for(int j = 0; j < 15; j++)
-				{
-					c = buffer.read();
-					char character = (char) c;
-					tabuleiroJogador2.getCasas()[i][j].setEstadoCasa(Character.toString(character));
-				}				
-			}
-			
-			c = buffer.read();
-			c = buffer.read();
 			BufferedReader buffered = new BufferedReader(buffer);
+			String linha;
+			String casa;
+			String sentido;
+			int letra;
+			int numero;
+			
+			for(int i = 0; i < 15; i++) //insere as embarcacoes j1
+			{
+				linha = buffered.readLine();
+				casa = linha.trim().split("\\s+")[0];
+				sentido =  linha.trim().split("\\s+")[1];
+				letra = casa.charAt(0) - 'A'; 
+				numero = Integer.parseInt(casa.substring(1)) - 1;
+				armamentosj1.get(i).inserirArmamento(tabuleiroJogador1, letra, numero, sentido);
+			}
+			buffered.readLine();
+			for(int i = 0; i < 15; i++) //Insere as embarcacoes j2
+			{
+				linha = buffered.readLine();
+				casa = linha.trim().split("\\s+")[0];
+				sentido =  linha.trim().split("\\s+")[1];
+				letra = casa.charAt(0) - 'A'; 
+				numero = Integer.parseInt(casa.substring(1)) - 1;
+				armamentosj2.get(i).inserirArmamento(tabuleiroJogador2, letra, numero, sentido);
+			}
+			buffered.readLine();
+			
+			linha = buffered.readLine(); 
+			
+			while(linha != "-")
+			{
+				letra = linha.charAt(0) - 'A';
+				numero = Integer.parseInt(linha.substring(1)) - 1;
+				tabuleiroJogador1.realizarTiro(letra, numero);
+				linha = buffered.readLine();
+			}
+			
+			linha = buffered.readLine(); 
+			while(linha != "-")
+			{
+				letra = linha.charAt(0) - 'A';
+				numero = Integer.parseInt(linha.substring(1)) - 1;
+				tabuleiroJogador1.realizarTiro(letra, numero);
+				linha = buffered.readLine();
+			}
+
 			this.jogador1.setNome(buffered.readLine());
 			this.jogador2.setNome(buffered.readLine());
 			

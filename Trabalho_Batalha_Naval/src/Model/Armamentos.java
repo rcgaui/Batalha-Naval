@@ -57,6 +57,16 @@ abstract class Armamentos {
 		}
 	}
 	
+	public String getCasa()
+	{
+		return this.casaTabuleiro;
+	}
+	
+	public String getSentido()
+	{
+		return this.sentido;
+	}
+	
 	protected ArrayList<String> isDestroyed(Tabuleiro tabuleiro)
 	{
 		int contaPosicoes = 0;

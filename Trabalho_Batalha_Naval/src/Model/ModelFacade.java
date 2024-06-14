@@ -1,5 +1,6 @@
 package Model;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -8,32 +9,54 @@ import Controller.Control;
 import View.ObservadorAtaqueIF;
 
 public class ModelFacade {
-	private Jogador J1;
-	private Jogador J2;
-	private Tabuleiro tabuleiroJ1;
-	private Tabuleiro tabuleiroJ2;
-	private ArrayList<Armamentos> armamentosJ1;
-	private ArrayList<Armamentos> armamentosJ2;
-	private ArrayList<String> destruidosJ1;
-	private ArrayList<String> destruidosJ2;
+	//Ambos
 	private Turno turno;
 	
-	//Pecas jogador 1
-	private Submarino submarinoJ1;
-	private Couracado couracadoJ1;
-	private Hidroaviao hidroaviaoJ1;
-	private Cruzador cruzadorJ1;
-	private Destroyer destroyerJ1;
+	//Montagem Jogador 1
+	private Jogador J1;
+	private Tabuleiro tabuleiroJ1;
+	private ArrayList<Armamentos> armamentosJ1;
+	private ArrayList<String> destruidosJ1;
+	private Submarino submarino1J1;
+	private Submarino submarino2J1;
+	private Submarino submarino3J1;
+	private Submarino submarino4J1;
+	private Hidroaviao hidroaviao1J1;
+	private Hidroaviao hidroaviao2J1;
+	private Hidroaviao hidroaviao3J1;
+	private Hidroaviao hidroaviao4J1;
+	private Hidroaviao hidroaviao5J1;
+	private Cruzador cruzador1J1;
+	private Cruzador cruzador2J1;
+	private Destroyer destroyer1J1;
+	private Destroyer destroyer2J1;
+	private Destroyer destroyer3J1;
+	private Couracado couracado1J1;
 	
-	//pecas jogador 2
-	private Submarino submarinoJ2;
-	private Couracado couracadoJ2;
-	private Hidroaviao hidroaviaoJ2;
-	private Cruzador cruzadorJ2;
-	private Destroyer destroyerJ2;
+	//Montagem Jogador 2
+	private Jogador J2;
+	private Tabuleiro tabuleiroJ2;
+	private ArrayList<Armamentos> armamentosJ2;
+	private ArrayList<String> destruidosJ2;
+	private Submarino submarino1J2;
+	private Submarino submarino2J2;
+	private Submarino submarino3J2;
+	private Submarino submarino4J2;
+	private Hidroaviao hidroaviao1J2;
+	private Hidroaviao hidroaviao2J2;
+	private Hidroaviao hidroaviao3J2;
+	private Hidroaviao hidroaviao4J2;
+	private Hidroaviao hidroaviao5J2;
+	private Cruzador cruzador1J2;
+	private Cruzador cruzador2J2;
+	private Destroyer destroyer1J2;
+	private Destroyer destroyer2J2;
+	private Destroyer destroyer3J2;
+	private Couracado couracado1J2;
 	
 	
 	
+		
 	public void novaPartida(String jogador1, String jogador2)
 	{
 		J1 = new Jogador(jogador1);
@@ -41,20 +64,15 @@ public class ModelFacade {
 		tabuleiroJ1 = new Tabuleiro();
 		tabuleiroJ2 = new Tabuleiro();
 		turno = new Turno(J1, J2);
-		submarinoJ1 = new Submarino();
-		couracadoJ1 = new Couracado();
-		hidroaviaoJ1 = new Hidroaviao();
-		cruzadorJ1 = new Cruzador();
-		destroyerJ1 = new Destroyer();
-		
-		//pecas jogador 2
-		submarinoJ2 = new Submarino();
-		couracadoJ2 = new Couracado();
-		hidroaviaoJ2 = new Hidroaviao();
-		cruzadorJ2 = new Cruzador();
-		destroyerJ2 = new Destroyer();
+		armamentosJ1 = new ArrayList<>();
+		armamentosJ2 = new ArrayList<>();
+		inicializarBarcos();
 	}
 	
+	public boolean salvarPartida(File file)
+	{
+		return turno.salvaJogo(file, tabuleiroJ1, tabuleiroJ2, armamentosJ1, armamentosJ1);
+	}
 	
 	public void carregaPartida(JFileChooser file)
 	{
@@ -62,21 +80,12 @@ public class ModelFacade {
 		J2 = new Jogador();
 		tabuleiroJ1 = new Tabuleiro();
 		tabuleiroJ2 = new Tabuleiro();
+		armamentosJ1 = new ArrayList<>();
+		armamentosJ2 = new ArrayList<>();
 		turno = new Turno(J1, J2);
 		Control.getController().comecarAtaque();
-		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ2, tabuleiroJ1);
-		submarinoJ1 = new Submarino();
-		couracadoJ1 = new Couracado();
-		hidroaviaoJ1 = new Hidroaviao();
-		cruzadorJ1 = new Cruzador();
-		destroyerJ1 = new Destroyer();
-		
-		//pecas jogador 2
-		submarinoJ2 = new Submarino();
-		couracadoJ2 = new Couracado();
-		hidroaviaoJ2 = new Hidroaviao();
-		cruzadorJ2 = new Cruzador();
-		destroyerJ2 = new Destroyer();
+		inicializarBarcos();
+		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2,armamentosJ1, armamentosJ2);
 	}
 	
 	public boolean anyDestroyed()
@@ -184,41 +193,48 @@ public class ModelFacade {
         return casaY + casaX;
     }
 	
-	public boolean VerificaPosicao(String nomeBarco, String sentido, String casa) //Adicionar coordenadas da tela como parâmetro
+	public boolean VerificaPosicao(String nomeBarco, int numeroBarco, String sentido, String casa) //Adicionar coordenadas da tela como parâmetro
 	{
 		
 		//Converter aqui a casa para letra e numero
-	
+		int letra = casa.charAt(0) - 'A';
+		int numero = Integer.parseInt(casa.substring(1)) - 1;
+		
+		numeroBarco--;
 		switch (nomeBarco) {
 			case "submarino":
 				if(turno.getVezJogar() == J1)
-					return submarinoJ1.verificarSentido(tabuleiroJ1, sentido, 0, 0); //Usar o conversor pra inserir a casa correta com base na coordenada
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
 				else if (turno.getVezJogar() == J2)
-					return submarinoJ2.verificarSentido(tabuleiroJ1, sentido, 0, 0);
-				else return false;
-			case "couracado":
-				if(turno.getVezJogar() == J1)
-					return couracadoJ1.verificarSentido(tabuleiroJ1, sentido, 0, 0); //Usar o conversor pra inserir a casa correta com base na coordenada
-				else if (turno.getVezJogar() == J2)
-					return couracadoJ2.verificarSentido(tabuleiroJ1, sentido, 0, 0);
-				else return false;
-			case "destroyer":
-				if(turno.getVezJogar() == J1)
-					return destroyerJ1.verificarSentido(tabuleiroJ1, sentido, 0, 0); //Usar o conversor pra inserir a casa correta com base na coordenada
-				else if (turno.getVezJogar() == J2)
-					return destroyerJ2.verificarSentido(tabuleiroJ1, sentido, 0, 0);
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
 				else return false;
 			case "hidroaviao":
+				numeroBarco += 4;
 				if(turno.getVezJogar() == J1)
-					return hidroaviaoJ1.verificarSentido(tabuleiroJ1, sentido, 0, 0); //Usar o conversor pra inserir a casa correta com base na coordenada
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
 				else if (turno.getVezJogar() == J2)
-					return hidroaviaoJ2.verificarSentido(tabuleiroJ1, sentido, 0, 0);
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
 				else return false;
 			case "cruzador":
+				numeroBarco += 9;
 				if(turno.getVezJogar() == J1)
-					return cruzadorJ1.verificarSentido(tabuleiroJ1, sentido, 0, 0); //Usar o conversor pra inserir a casa correta com base na coordenada
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
 				else if (turno.getVezJogar() == J2)
-					return cruzadorJ2.verificarSentido(tabuleiroJ1, sentido, 0, 0);
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				else return false;
+			case "destroyer":
+				numeroBarco += 11;
+				if(turno.getVezJogar() == J1)
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				else if (turno.getVezJogar() == J2)
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				else return false;
+			case "couracado":
+				numeroBarco += 14;
+				if(turno.getVezJogar() == J1)
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				else if (turno.getVezJogar() == J2)
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
 				else return false;
 			default:
 				return false;
@@ -230,35 +246,39 @@ public class ModelFacade {
 		turno.trocaTurno();
 	}
 	
-	public void PosicionaEmbarcacao(String nomeBarco, String sentido, String casa) //Adicionar coordenadas da tela como parâmetro
+	public void PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa) //Adicionar coordenadas da tela como parâmetro
 	{
+		numeroBarco--;
 		switch (nomeBarco) {
 		case "submarino":
 			if(turno.getVezJogar() == J1)
-				 submarinoJ1.posicionarArmamento(tabuleiroJ1, casa, sentido, J1);
+				 armamentosJ1.get(numeroBarco).posicionarArmamento(tabuleiroJ1, casa, sentido, J1);
 			else if (turno.getVezJogar() == J2)
-				 submarinoJ2.posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
-		case "couracado":
-			if(turno.getVezJogar() == J1)
-				 couracadoJ1.posicionarArmamento(tabuleiroJ1, casa, sentido, J1); 
-			else if (turno.getVezJogar() == J2)
-				 couracadoJ2.posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
-		case "destroyer":
-			if(turno.getVezJogar() == J1)
-				 destroyerJ1.posicionarArmamento(tabuleiroJ1, casa, sentido, J1);
-			else if (turno.getVezJogar() == J2)
-				 destroyerJ2.posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
+				 armamentosJ2.get(numeroBarco).posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
 		case "hidroaviao":
+			numeroBarco += 4;
 			if(turno.getVezJogar() == J1)
-				 hidroaviaoJ1.posicionarArmamento(tabuleiroJ1, casa, sentido, J1);
+				armamentosJ1.get(numeroBarco).posicionarArmamento(tabuleiroJ1, casa, sentido, J1);
 			else if (turno.getVezJogar() == J2)
-				 hidroaviaoJ2.posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
-
+				armamentosJ2.get(numeroBarco).posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
 		case "cruzador":
+			numeroBarco += 9;
 			if(turno.getVezJogar() == J1)
-				 cruzadorJ1.posicionarArmamento(tabuleiroJ1, casa, sentido, J1); 
+				armamentosJ1.get(numeroBarco).posicionarArmamento(tabuleiroJ1, casa, sentido, J1); 
 			else if (turno.getVezJogar() == J2)
-				 cruzadorJ2.posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
+				armamentosJ2.get(numeroBarco).posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
+		case "destroyer":
+			numeroBarco += 11;
+			if(turno.getVezJogar() == J1)
+				armamentosJ1.get(numeroBarco).posicionarArmamento(tabuleiroJ1, casa, sentido, J1);
+			else if (turno.getVezJogar() == J2)
+				armamentosJ2.get(numeroBarco).posicionarArmamento(tabuleiroJ2, casa, sentido, J2);
+		case "couracado":
+			numeroBarco += 14;
+			if(turno.getVezJogar() == J1)
+				armamentosJ1.get(numeroBarco).posicionarArmamento(tabuleiroJ1, casa, sentido, J1); 
+			else if (turno.getVezJogar() == J2)
+				armamentosJ2.get(numeroBarco).posicionarArmamento(tabuleiroJ2, casa, sentido, J2);		
 		}	
 	}
 	
@@ -277,9 +297,86 @@ public class ModelFacade {
 	}
 	
 	
-	public void salvarPartida()
-	{
-		
-	}
+	
+	private void inicializarBarcos() {
+        // Inicializando os submarinos do Jogador 1
+        submarino1J1 = new Submarino();
+        submarino2J1 = new Submarino();
+        submarino3J1 = new Submarino();
+        submarino4J1 = new Submarino();
+        armamentosJ1.add(submarino1J1);
+        armamentosJ1.add(submarino2J1);
+        armamentosJ1.add(submarino3J1);
+        armamentosJ1.add(submarino4J1);
 
+        // Inicializando os hidroaviões do Jogador 1
+        hidroaviao1J1 = new Hidroaviao();
+        hidroaviao2J1 = new Hidroaviao();
+        hidroaviao3J1 = new Hidroaviao();
+        hidroaviao4J1 = new Hidroaviao();
+        hidroaviao5J1 = new Hidroaviao();
+        armamentosJ1.add(hidroaviao1J1);
+        armamentosJ1.add(hidroaviao2J1);
+        armamentosJ1.add(hidroaviao3J1);
+        armamentosJ1.add(hidroaviao4J1);
+        armamentosJ1.add(hidroaviao5J1);
+
+        // Inicializando os cruzadores do Jogador 1
+        cruzador1J1 = new Cruzador();
+        cruzador2J1 = new Cruzador();
+        armamentosJ1.add(cruzador1J1);
+        armamentosJ1.add(cruzador2J1);
+
+        // Inicializando os destroyers do Jogador 1
+        destroyer1J1 = new Destroyer();
+        destroyer2J1 = new Destroyer();
+        destroyer3J1 = new Destroyer();
+        armamentosJ1.add(destroyer1J1);
+        armamentosJ1.add(destroyer2J1);
+        armamentosJ1.add(destroyer3J1);
+
+        // Inicializando o couraçado do Jogador 1
+        couracado1J1 = new Couracado();
+        armamentosJ1.add(couracado1J1);
+
+        // Inicializando os submarinos do Jogador 2
+        submarino1J2 = new Submarino();
+        submarino2J2 = new Submarino();
+        submarino3J2 = new Submarino();
+        submarino4J2 = new Submarino();
+        armamentosJ2.add(submarino1J2);
+        armamentosJ2.add(submarino2J2);
+        armamentosJ2.add(submarino3J2);
+        armamentosJ2.add(submarino4J2);
+
+        // Inicializando os hidroaviões do Jogador 2
+        hidroaviao1J2 = new Hidroaviao();
+        hidroaviao2J2 = new Hidroaviao();
+        hidroaviao3J2 = new Hidroaviao();
+        hidroaviao4J2 = new Hidroaviao();
+        hidroaviao5J2 = new Hidroaviao();
+        armamentosJ2.add(hidroaviao1J2);
+        armamentosJ2.add(hidroaviao2J2);
+        armamentosJ2.add(hidroaviao3J2);
+        armamentosJ2.add(hidroaviao4J2);
+        armamentosJ2.add(hidroaviao5J2);
+
+        // Inicializando os cruzadores do Jogador 2
+        cruzador1J2 = new Cruzador();
+        cruzador2J2 = new Cruzador();
+        armamentosJ2.add(cruzador1J2);
+        armamentosJ2.add(cruzador2J2);
+
+        // Inicializando os destroyers do Jogador 2
+        destroyer1J2 = new Destroyer();
+        destroyer2J2 = new Destroyer();
+        destroyer3J2 = new Destroyer();
+        armamentosJ2.add(destroyer1J2);
+        armamentosJ2.add(destroyer2J2);
+        armamentosJ2.add(destroyer3J2);
+
+        // Inicializando o couraçado do Jogador 2
+        couracado1J2 = new Couracado();
+        armamentosJ2.add(couracado1J2);
+    }
 }

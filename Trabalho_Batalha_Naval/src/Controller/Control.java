@@ -3,6 +3,7 @@ package Controller;
 import View.*;
 import Model.ModelFacade;
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -86,6 +87,11 @@ public class Control {
 	{
 		frame.dispose();
 		facade.carregaPartida(file);
+	}
+	
+	public boolean salvarPartida(File file)
+	{
+		return facade.salvarPartida(file);
 	}
 	
 	public static void main(String[] args) {

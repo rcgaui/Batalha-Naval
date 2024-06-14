@@ -3,11 +3,15 @@ package View;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 import Controller.Control;
@@ -15,6 +19,9 @@ import Model.ObservadoAtaqueIF;
 
 public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	JButton botaoComecarJogo = new JButton("Começar Jogo!");
+	JButton botaoSalvarPartida = new JButton("Salvar Partida!");
+	JPanel panel = this;
+	JFileChooser filechooser = new JFileChooser();
 	private Color corCasasJ1 [][];
 	private Color corCasasJ2 [][];
 	int qntNumeros = 15;
@@ -167,7 +174,23 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		
 		g.drawString("Visão bloqueada", 455, 470);
 		
+		botaoSalvarPartida.addActionListener(new ActionListener() {
+		    public void actionPerformed(ActionEvent e)
+		    {
+		    	filechooser = new JFileChooser();
+		    	int selecionado = filechooser.showSaveDialog(panel);
+		    	
+		    	if(selecionado == JFileChooser.APPROVE_OPTION)
+		    	{
+		    		File file = filechooser.getSelectedFile();
+		    		Control.getController().salvarPartida(file);
+		    	} 
+		    }
+		});
+		
 		botaoComecarJogo.setBounds(440, 490, 120, 40);
+		botaoSalvarPartida.setBounds(440, 50, 120, 40);
 		add(botaoComecarJogo);
+		add(botaoSalvarPartida);
 	}
 }

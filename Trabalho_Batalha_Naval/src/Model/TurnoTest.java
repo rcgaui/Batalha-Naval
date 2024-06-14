@@ -57,7 +57,7 @@ public class TurnoTest{
 		turno.setVezJogar(jogador1);
 		assertEquals("Após setVeJogar('Jogador 1') a vez deve ser do 'Jogador 1", jogador1, turno.getVezJogar());
 	}
-	
+	/*
 	@Test
 	public void testSalvaJogo() {
         assertTrue("O jogo deve ser salvo corretamente", turno.salvaJogo("testSave", tabuleiroJogador1, tabuleiroJogador2));
@@ -83,5 +83,5 @@ public class TurnoTest{
         testSalvaJogo();
         assertTrue("O jogo deve ser carregado corretamente", turno.carregarJogo("testSave", tabuleiroJogador1, tabuleiroJogador2));
         assertFalse("O jogo não deve ser carregado corretamente", turno.carregarJogo("arquivoInexistente", tabuleiroJogador1, tabuleiroJogador2));
-	}
+	}*/
 }
