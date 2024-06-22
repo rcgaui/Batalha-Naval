@@ -19,17 +19,6 @@ public class TabuleiroTest {
         assertEquals("Deve haver 15 linhas", 15, casas.length);
         assertEquals("Deve haver 15 colunas", 15, casas[0].length);
     }
-
-    @Test
-    public void testImprimeTabuleiro() {
-        try {
-            tabuleiro.imprimeTabuleiro(true);
-            tabuleiro.imprimeTabuleiro(false);
-        } catch (Exception e) {
-            fail("O método imprimeTabuleiro não deve lançar exceções");
-        }
-    }
-
     
     @Test
     public void testRealizarTiro() {

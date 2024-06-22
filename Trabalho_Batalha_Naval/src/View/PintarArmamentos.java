@@ -24,8 +24,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	public int x = -1;
 	public int y = -1;
 	
-	public String armamentoSelecionado;
-	private boolean booleanArmamentoSelecionado;
+	private String nomeArmamentoSelecionado = "";
+	private int numeroArmamentoSelecionado = 1;
+	private boolean booleanArmamentoSelecionado = false;
+	private boolean existeErroParaConfirmarPosicionamento = false;
 	
 	private boolean armamentosJogador1Posicionado = false;
 	private boolean armamentosJogador2Posicionado = false;
@@ -47,6 +49,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	private boolean couracado1Posicionado = false;
 	private int[] arrayArmamentosPosicionados = new int[15];
 	private int[][] matrizArmamentosNaMatriz = new int[15][15];
+	private int[] retornoClick;
 	// arrayArmamentosNaMatriz[index] recebe:
 	// 0 --> Nada posicionado
 	// 1 --> Hidro Avião posicionado
@@ -60,6 +63,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	
 	JLabel textNomeJogador1;
 	JLabel textNomeJogador2;
+	JLabel textAuxiliar;
+	JButton botaoConfirmarArmamento = new JButton("Confirmar posição de armamento");
 	JButton botaoProximoJogador = new JButton("Próximo jogador");
 	JButton botaoComecarJogo = new JButton("Começar jogo");
 	
@@ -87,6 +92,16 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	        }
 	    });
 		
+		botaoConfirmarArmamento.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e)
+            {
+            	if(existeErroParaConfirmarPosicionamento == false) {
+            		inserirArmamentoSelecionado(retornoClick);
+                	repaint();	
+            	}
+            }
+        });
+		
 		botaoProximoJogador.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
@@ -100,7 +115,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
             public void actionPerformed(ActionEvent e)
             {
             	framePai.dispose();
-            	Controller.Control.getController().comecarAtaque();;
+            	Control.getController().comecarAtaque();;
             }
         });
 	}
@@ -123,6 +138,9 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 			add(textNomeJogador2);
 		}
 		
+		botaoConfirmarArmamento.setBounds(615, 430, 220, 40);
+        add(botaoConfirmarArmamento);
+		
 		double topY = 125.0;
 		double largura = 300.0;
 		double altura = 300.0;
@@ -132,12 +150,24 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		desenhoArmamentos(g2d, largura, altura, arrayArmamentosPosicionados);
 		desenhoTabuleiro(g2d, topY, largura, altura, g, matrizArmamentosNaMatriz);
 		
+		Stroke stroke = new BasicStroke(3f);
+		g2d.setStroke(stroke);
+		
 		verificarClick(g2d);
+		
+		if(booleanArmamentoSelecionado) {
+			g.drawString("Clique na matriz onde deseja posicionar o armamento", 585, 100);
+		}
+		else {
+			g.drawString("Selecione um armamento", 660, 100);
+		}
+		
 		verificarTudoPosicionado(g);
 	}
 	
 	private void redefinirPainelProximoJogador() {
-		armamentoSelecionado = "";
+		nomeArmamentoSelecionado = "";
+		numeroArmamentoSelecionado = -1;
     	booleanArmamentoSelecionado = false;
     	
     	hidroAviao1Posicionado = false;
@@ -315,155 +345,154 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		}
 	}
 
-	private void inserirArmamentoSelecionado(String armamentoSelecionado, int[] retornoClick) {
-		if(armamentoSelecionado.equals("Hidro Avião 1")) {
+	private void inserirArmamentoSelecionado(int[] retornoClick) {
+		if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 1) {
         	arrayArmamentosPosicionados[0] = 1;
 			hidroAviao1Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Hidro Avião 2")) {
+		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 2) {
 			arrayArmamentosPosicionados[1] = 1;
 			hidroAviao2Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Hidro Avião 3")) {
+		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 3) {
 			arrayArmamentosPosicionados[2] = 1;
 			hidroAviao3Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
 		
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Hidro Avião 4")) {
+		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 4) {
 			arrayArmamentosPosicionados[3] = 1;
 			hidroAviao4Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Hidro Avião 5")) {
+		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 5) {
 			arrayArmamentosPosicionados[4] = 1;
 			hidroAviao5Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Submarino 1")) {
+		else if(nomeArmamentoSelecionado.equals("submarino") && numeroArmamentoSelecionado == 1) {
 			arrayArmamentosPosicionados[5] = 1;
 			submarino1Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Submarino 2")) {
+		else if(nomeArmamentoSelecionado.equals("submarino") && numeroArmamentoSelecionado == 2) {
 			arrayArmamentosPosicionados[6] = 1;
 			submarino2Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Submarino 3")) {
+		else if(nomeArmamentoSelecionado.equals("submarino") && numeroArmamentoSelecionado == 3) {
 			arrayArmamentosPosicionados[7] = 1;
 			submarino3Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Submarino 4")) {
+		else if(nomeArmamentoSelecionado.equals("Submarino 4") && numeroArmamentoSelecionado == 4) {
 			arrayArmamentosPosicionados[8] = 1;
 			submarino4Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Destroyer 1")) {
+		else if(nomeArmamentoSelecionado.equals("destroyer") && numeroArmamentoSelecionado == 1) {
 			arrayArmamentosPosicionados[9] = 1;
 			destroyer1Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 3;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 3;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 3;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 3;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Destroyer 2")) {
+		else if(nomeArmamentoSelecionado.equals("destroyer") && numeroArmamentoSelecionado == 2) {
 			arrayArmamentosPosicionados[10] = 1;
 			destroyer2Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 3;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 3;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 3;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 3;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Destroyer 3")) {
+		else if(nomeArmamentoSelecionado.equals("destroyer") && numeroArmamentoSelecionado == 3) {
 			arrayArmamentosPosicionados[11] = 1;
 			destroyer3Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 3;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 3;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 3;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 3;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Cruzador 1")) {
+		else if(nomeArmamentoSelecionado.equals("cruzador") && numeroArmamentoSelecionado == 1) {
 			arrayArmamentosPosicionados[12] = 1;
 			cruzador1Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 4;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 4;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 2] = 4;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 3] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 4;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Cruzador 2")) {
+		else if(nomeArmamentoSelecionado.equals("cruzador") && numeroArmamentoSelecionado == 2) {
 			arrayArmamentosPosicionados[13] = 1;
 			cruzador2Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 4;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 4;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 2] = 4;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 3] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 4;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 4;
 			
 			repaint();
         }
-		else if(armamentoSelecionado.equals("Couraçado 1")) {
+		else if(nomeArmamentoSelecionado.equals("couracado") && numeroArmamentoSelecionado == 1) {
 			arrayArmamentosPosicionados[14] = 1;
 			couracado1Posicionado = true;
 			
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 5;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 5;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 2] = 5;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 3] = 5;
-			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 4] = 5;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 5;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 5;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 5;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 5;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 4] = 5;
 			
 			repaint();
         }
 	}
 	
 	private void verificarClick(Graphics2D g2d) {
-		Stroke stroke = new BasicStroke(3f);
-		g2d.setStroke(stroke);
+		boolean selecionarArmamentoTemp = false;
 		
 		if(mouseEsquerdo) {
 			if(hidroAviao1Posicionado == false) {
@@ -471,8 +500,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 					Rectangle2D hidroAviao1Selecionado = new Rectangle2D.Double(80.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao1Selecionado);
 					
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Hidro Avião 1";
+					nomeArmamentoSelecionado = "hidroaviao";
+					numeroArmamentoSelecionado = 1;
 				}
 			}
 			
@@ -481,8 +512,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D hidroAviao2Selecionado = new Rectangle2D.Double(160.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao2Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Hidro Avião 2";
+					nomeArmamentoSelecionado = "hidroaviao";
+					numeroArmamentoSelecionado = 2;
 		        }
 			}
 			
@@ -491,8 +524,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D hidroAviao3Selecionado = new Rectangle2D.Double(240.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao3Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Hidro Avião 3";
+					nomeArmamentoSelecionado = "hidroaviao";
+					numeroArmamentoSelecionado = 3;
 		        }
 			}
 			
@@ -501,8 +536,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D hidroAviao4Selecionado = new Rectangle2D.Double(320.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao4Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Hidro Avião 4";
+					nomeArmamentoSelecionado = "hidroaviao";
+					numeroArmamentoSelecionado = 4;
 		        }
 			}
 			
@@ -511,8 +548,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D hidroAviao5Selecionado = new Rectangle2D.Double(400.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao5Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Hidro Avião 5";
+					nomeArmamentoSelecionado = "hidroaviao";
+					numeroArmamentoSelecionado = 5;
 		        }
 			}
 			
@@ -521,8 +560,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D submarino1Selecionado = new Rectangle2D.Double(80.0, 180.0, 20, 20);
 					g2d.draw(submarino1Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Submarino 1";
+					nomeArmamentoSelecionado = "submarino";
+					numeroArmamentoSelecionado = 1;
 		        }
 			}
 			
@@ -531,8 +572,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D submarino2Selecionado = new Rectangle2D.Double(120.0, 180.0, 20, 20);
 					g2d.draw(submarino2Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Submarino 2";
+					nomeArmamentoSelecionado = "submarino";
+					numeroArmamentoSelecionado = 2;
 		        }
 			}
 			
@@ -541,8 +584,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D submarino3Selecionado = new Rectangle2D.Double(160.0, 180.0, 20, 20);
 					g2d.draw(submarino3Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Submarino 3";
+					nomeArmamentoSelecionado = "submarino";
+					numeroArmamentoSelecionado = 3;
 		        }
 			}
 			
@@ -551,8 +596,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D submarino4Selecionado = new Rectangle2D.Double(200.0, 180.0, 20, 20);
 					g2d.draw(submarino4Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Submarino 4";
+					nomeArmamentoSelecionado = "submarino";
+					numeroArmamentoSelecionado = 4;
 		        }
 			}
 			
@@ -561,8 +608,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D destroyer1Selecionado = new Rectangle2D.Double(80.0, 240.0, 40, 20);
 					g2d.draw(destroyer1Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Destroyer 1";
+					nomeArmamentoSelecionado = "destroyer";
+					numeroArmamentoSelecionado = 1;
 		        }
 			}
 			
@@ -570,9 +619,11 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 				if (x >= 140 && x <= 180 && y >= 240 && y <= 260) {
 		        	Rectangle2D destroyer2Selecionado = new Rectangle2D.Double(140.0, 240.0, 40, 20);
 					g2d.draw(destroyer2Selecionado);
-					
+
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Destroyer 2";
+					nomeArmamentoSelecionado = "destroyer";
+					numeroArmamentoSelecionado = 2;
 		        }
 			}
 			
@@ -581,8 +632,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D destroyer3Selecionado = new Rectangle2D.Double(200.0, 240.0, 40, 20);
 					g2d.draw(destroyer3Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Destroyer 3";
+					nomeArmamentoSelecionado = "destroyer";
+					numeroArmamentoSelecionado = 3;
 		        }
 			}
 			
@@ -591,8 +644,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D cruzador1Selecionado = new Rectangle2D.Double(80.0, 300.0, 80, 20);
 					g2d.draw(cruzador1Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Cruzador 1";
+					nomeArmamentoSelecionado = "cruzador";
+					numeroArmamentoSelecionado = 1;
 		        }
 			}
 			
@@ -601,8 +656,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D cruzador2Selecionado = new Rectangle2D.Double(180.0, 300.0, 80, 20);
 					g2d.draw(cruzador2Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Cruzador 2";
+					nomeArmamentoSelecionado = "cruzador";
+					numeroArmamentoSelecionado = 2;
 		        }
 			}
 			
@@ -611,18 +668,44 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        	Rectangle2D couracado1Selecionado = new Rectangle2D.Double(80.0, 360.0, 100, 20);
 					g2d.draw(couracado1Selecionado);
 
+					selecionarArmamentoTemp = true;
 					booleanArmamentoSelecionado = true;
-					armamentoSelecionado = "Couraçado 1";
+					nomeArmamentoSelecionado = "couracado";
+					numeroArmamentoSelecionado = 1;
 		        }
 			}
 			
-			int[] retornoClick = ClickTabuleiro.VerificarClickTabuleiro(x, y, armamentoSelecionado);
+			retornoClick = Control.getController().ConverteCoordenadaPosicionarArmamentos(x, y);
+			
+	        char letraLinha = (char) ('A' + retornoClick[1]);
+	        int numeroColuna = retornoClick[0] + 1;
+	        String coordenada =  "" + letraLinha + numeroColuna;
+	        
+			// Armamento estava selecionado mas click foi fora da matriz e des-selecionou o armamento
+			if(selecionarArmamentoTemp == false && booleanArmamentoSelecionado == true && retornoClick[0] == -1 && retornoClick[1] == -1) {
+				booleanArmamentoSelecionado = false;
+				nomeArmamentoSelecionado = "";
+				numeroArmamentoSelecionado = -1;
+			}
 			
 			if (booleanArmamentoSelecionado && retornoClick[0] >= 0 && retornoClick[0] <= 15 && retornoClick[1] >= 0 && retornoClick[1] <= 15) {
-				inserirArmamentoSelecionado(armamentoSelecionado, retornoClick);
+				boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
+				// boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Leste-Oeste", coordenada);
+				// boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Sul-Norte", coordenada);
+				// boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);
 				
-				booleanArmamentoSelecionado = false;
-				armamentoSelecionado = "";
+				if(dentroDoTabuleiro) {
+					boolean posicionou = Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
+					
+					if(posicionou) {
+						System.out.println("SIM");
+					}
+				}
+				else {
+					System.out.println("NAO");
+				}
+				
+				// Control.getController().TrocaTurno();
 	        }
 		}
 	}

@@ -28,15 +28,19 @@ class Jogador {
     public int getQntSubmarinos() {
     	return qntSubmarinos;
     }
+    
     public int getQntCruzadores() {
     	return qntCruzadores;
     }
+    
     public int getQntDestroyers() {
     	return qntDestroyers;
     }
+    
     public int getQntHidroavioes() {
     	return qntHidroavioes;
     }
+    
     public int getQntCouracados() {
     	return qntCouracados;
     }
@@ -44,26 +48,28 @@ class Jogador {
     public void addSubmarino() {
     	qntSubmarinos++; 
     }
+    
     public void addCruzador() {
     	qntCruzadores++; 
     }
+    
     public void addDestroyer() {
     	qntDestroyers++; 
     }
+    
     public void addHidroaviao() {
     	qntHidroavioes++; 
     }
+    
     public void addCouracado() {
     	qntCouracados++; 
     }
     
-
 	public String getNome() {
 		return nome;
 	}
 	
-	public void setNome(String nome)
-	{
+	public void setNome(String nome) {
 		this.nome = nome;
 	}
 }

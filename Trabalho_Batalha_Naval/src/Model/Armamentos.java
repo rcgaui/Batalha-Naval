@@ -5,7 +5,7 @@ import java.util.ArrayList;
 abstract class Armamentos {
 	protected String casaTabuleiro;
 	protected String sentido;
-	protected ArrayList<String> posicoes;
+	protected ArrayList<String> posicoes = new ArrayList<>();
 	protected int tamanho;
 	protected boolean armamentoPosicionado;
 
@@ -26,28 +26,36 @@ abstract class Armamentos {
 			case "Leste-Oeste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero - i].setEstadoCasa("!");
-					coordenada = (char)letra + Integer.toString(numero - i);
+					char letraLinha = (char) ('A' + letra);
+			        int numeroColuna = numero + 1;
+					coordenada = "" + letraLinha + numeroColuna;
 					posicoes.add(coordenada);
 				}
 				return true;
 			case "Oeste-Leste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero + i].setEstadoCasa("!");
-					coordenada = (char)letra + Integer.toString(numero + i);
+					char letraLinha = (char) ('A' + letra);
+			        int numeroColuna = numero + 1;
+					coordenada = "" + letraLinha + numeroColuna;
 					posicoes.add(coordenada);
 				}
 				return true;
 			case "Sul-Norte":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra - i][numero].setEstadoCasa("!");
-					coordenada = (char)(letra - i) + Integer.toString(numero);
+					char letraLinha = (char) ('A' + letra);
+			        int numeroColuna = numero + 1;
+					coordenada = "" + letraLinha + numeroColuna;
 					posicoes.add(coordenada);
 				}
 				return true;
 			case "Norte-Sul":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra + i][numero].setEstadoCasa("!");
-					coordenada = (char)(letra + i) + Integer.toString(numero);
+					char letraLinha = (char) ('A' + letra);
+			        int numeroColuna = numero + 1;
+					coordenada = "" + letraLinha + numeroColuna;
 					posicoes.add(coordenada);
 				}
 				return true;
@@ -89,24 +97,22 @@ abstract class Armamentos {
 			return false;	
 	}
 	
-	public boolean verificarSentido(Tabuleiro tabuleiro, String sentido,int letra, int numero)
+	public boolean verificarSentido(Tabuleiro tabuleiro, String sentido, int letra, int numero)
 	{
 		switch (sentido) {
 			case "Leste-Oeste":
-				// Verificar se posição com esse sentido sai do conjunto (A-O, 1-15)
-				if((numero  - tamanho) < -1) {
+				if((numero - tamanho + 1) < 0) {
 					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
-				// Verificar casa escolhida e casas adjacentes
 				for (int i = 0; i < tamanho; i++) {
 					if(!verificarCasas(tabuleiro, letra, numero - i)) {
-						return false; // Se em algum momento da verificação encontrou uma casa que já está ocupada
+						return false;
 					}
 				}
 				return true;
 			case "Norte-Sul":
-				if((letra + tamanho) > 15) {
+				if((letra + tamanho - 1) > 14) {
 					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
@@ -117,7 +123,7 @@ abstract class Armamentos {
 				}
 			    return true;
 			case "Sul-Norte":
-				if((letra - tamanho) < -1) {
+				if((letra - tamanho + 1) < 0) {
 					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
@@ -128,7 +134,7 @@ abstract class Armamentos {
 				}
 			    return true;
 			case "Oeste-Leste":
-				if((numero + tamanho) > 15) {
+				if((numero + tamanho - 1) > 14) {
 					System.out.println("A embarcação nao pode ser inserida nesse sentido\n");
 					return false;
 				}
@@ -145,30 +151,22 @@ abstract class Armamentos {
 	}
 	
 	protected boolean verificarCasas(Tabuleiro tabuleiro, int letra, int numero) {
-	    // Define os deslocamentos para as 8 direções possíveis
-		// Respectivamente de acordo com os índices dos vetores abaixo:
-		// (Norte, Nordeste, Leste, Sudeste, Sul, Sudoeste, Oeste, Noroeste)
 	    int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
 	    int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
 
-	    
-	    // Verifica se a casa pode ser acessada
-	    if(letra < 0 || letra > 14 || numero < 0 || numero > 14)
-	    {
+	    if(letra < 0 || letra > 14 || numero < 0 || numero > 14) {
 	    	return false;
 	    }
-	    // Verifica a casa escolhida
+	    
 	    if(!tabuleiro.getCasas()[letra][numero].getEstadoCasa().equals("?")) {
 	        return false;
 	    }
 
-	    // Verifica as casas adjacentes
 	    for(int i = 0; i < 8; i++) {
-	        int novaLetra = letra + dx[i];
+	    	int novaLetra = letra + dx[i];
 	        int novoNumero = numero + dy[i];
-
-	        // Verifica se a nova posição está dentro do tabuleiro
-	        if(novaLetra >= 0 && novaLetra < 15 && novoNumero >= 0 && novoNumero < 15) {
+	        
+	        if(novaLetra >= 0 && novaLetra <= 14 && novoNumero >= 0 && novoNumero <= 14) {
 	            if(!tabuleiro.getCasas()[novaLetra][novoNumero].getEstadoCasa().equals("?")) {
 	            	System.out.println("A embarcação conflita com outras embarcacoes\n");
 	                return false;

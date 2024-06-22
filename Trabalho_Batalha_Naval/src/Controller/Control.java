@@ -56,6 +56,10 @@ public class Control {
 		return facade.isJ1();
 	}
 	
+	public void TrocaTurno() {
+		facade.trocaTurno();
+	}
+	
 	public ArrayList<String> getDestroyed()
 	{
 		return facade.getDestroyed();
@@ -65,8 +69,12 @@ public class Control {
 		return facade.VerificaPosicao(nomeBarco, numeroBarco, sentido, casa);
 	}
 	
-	public void PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa) {
-		facade.PosicionaEmbarcacao(nomeBarco, numeroBarco, sentido, casa);
+	public int[] ConverteCoordenadaPosicionarArmamentos(int x, int y) {
+		return facade.converteCoordenadaPosicionarArmamentos(x, y);
+	}
+	
+	public boolean PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa) {
+		return facade.PosicionaEmbarcacao(nomeBarco, numeroBarco, sentido, casa);
 	}
 	
 	public void irParaTelaInicial(JFrame frame)
