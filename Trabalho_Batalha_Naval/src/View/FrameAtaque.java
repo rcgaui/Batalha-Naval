@@ -4,12 +4,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
 public class FrameAtaque extends JFrame {
 	private final int LARGURA_PADRAO = 1000;
 	private final int ALTURA_PADRAO = 600;
-	
 	
 	public FrameAtaque() {
 		setTitle("Batalha Naval");

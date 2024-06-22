@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -61,7 +60,6 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			}
 		}
 	}
-	
 	
 	public void converteCasa(String casa, String estadocasa)
 	{
@@ -116,7 +114,6 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		
 		Graphics2D g2d = (Graphics2D) g;
 		
-
 		double topY = 125.0;
 		double largura = 300.0;
 		double altura = 300.0;

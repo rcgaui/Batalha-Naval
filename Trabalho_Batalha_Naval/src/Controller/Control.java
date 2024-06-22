@@ -2,7 +2,6 @@ package Controller;
 
 import View.*;
 import Model.ModelFacade;
-import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -14,8 +13,9 @@ public class Control {
     private static Control controller = null;
     public static Control getController()
     {
-    	if(controller == null)
+    	if(controller == null) {
     		controller = new Control();
+    	}
     	return controller;
     }
     
@@ -39,12 +39,10 @@ public class Control {
     	telaAtaque.setVisible(true);
     }
     
-    
-	
 	public void irParaCriarPartida(JFrame frame)
 	{
 		frame.setVisible(false);
-		criaPartida = CriaPartida.singleCriaPartida();
+		criaPartida = CriaPartida.getInstance();
 		criaPartida.setVisible(true);
 	}
 	
@@ -52,7 +50,6 @@ public class Control {
 	{
 		return facade.getName(i);
 	}
-	
 	
 	public boolean isJ1() //Verifica se está na vez do jogador 1
 	{
@@ -64,6 +61,14 @@ public class Control {
 		return facade.getDestroyed();
 	}
 	
+	public boolean VerificaPosicao(String nomeBarco, int numeroBarco, String sentido, String casa) {
+		return facade.VerificaPosicao(nomeBarco, numeroBarco, sentido, casa);
+	}
+	
+	public void PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa) {
+		facade.PosicionaEmbarcacao(nomeBarco, numeroBarco, sentido, casa);
+	}
+	
 	public void irParaTelaInicial(JFrame frame)
 	{
 		frame.setVisible(false);
@@ -73,8 +78,8 @@ public class Control {
 	
 	public void irParaPosicionarArmamento(JFrame frame, String jogador1, String jogador2)
 	{
-		facade.novaPartida(jogador1, jogador2);
 		frame.setVisible(false);
+		facade.novaPartida(jogador1, jogador2);
 		posicionarArmamento = new PainelPosicionarArmamento(jogador1, jogador2);
 	}
 	
@@ -96,6 +101,5 @@ public class Control {
 	
 	public static void main(String[] args) {
 		Control controllerControl = Control.getController();
-
 	}
 }

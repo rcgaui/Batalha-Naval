@@ -29,11 +29,11 @@ public class CriaPartida extends JFrame{
     String nomeJogador2;
     
     // Singleton CriaPartida
-    private static CriaPartida criaPartida = null;
-    public static CriaPartida singleCriaPartida() {
-        if (criaPartida == null) 
-            criaPartida = new CriaPartida(true);
-        return criaPartida;
+    private static CriaPartida instance = null;
+    public static CriaPartida getInstance() {
+        if (instance == null) 
+        	instance = new CriaPartida(true);
+        return instance;
     }
 	
 	private CriaPartida(boolean visibilidade)
@@ -84,7 +84,7 @@ public class CriaPartida extends JFrame{
 		
         voltar.addActionListener(new ActionListener() { //Classe anônima
             public void actionPerformed(ActionEvent e) {
-                Control.getController().irParaTelaInicial(criaPartida);
+                Control.getController().irParaTelaInicial(instance);
             }
         });
         
@@ -92,7 +92,7 @@ public class CriaPartida extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 nomeJogador1 = inputJ1.getText();
                 nomeJogador2 = inputJ2.getText();
-                Control.getController().irParaPosicionarArmamento(criaPartida, nomeJogador1, nomeJogador2);
+                Control.getController().irParaPosicionarArmamento(instance, nomeJogador1, nomeJogador2);
             }
         });
 		

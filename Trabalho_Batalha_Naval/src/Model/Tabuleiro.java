@@ -48,6 +48,15 @@ class Tabuleiro {
         }
 	}
 	
+	public void registraObservadorPosicionar(ObservadorAtaqueIF observador)
+	{
+		for (int i = 0; i < qntLetras; i++) {
+            for (int j = 0; j < qntNumeros; j++) {
+                casas[i][j].add(observador);;
+            }
+        }
+	}
+	
 	public String realizarTiro(int letra, int numero) {
 		if (letra < 0 || letra >= casas.length || numero < 0 || numero >= casas[letra].length) {
 	        return "Coordenadas inválidas, tente novamente";
@@ -105,6 +114,4 @@ class Tabuleiro {
 	        System.out.println();
 	    }
 	}
-	
-	
 }

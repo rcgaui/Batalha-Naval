@@ -7,7 +7,6 @@ class Destroyer extends Armamentos {
 		this.tamanho = 2;	
 	}
 	
-	
 	public boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador) {
 		int letra = casaTabuleiro.charAt(0) - 'A'; // Pegar o primeiro caracter da string
 		char letraCh = casaTabuleiro.charAt(0);

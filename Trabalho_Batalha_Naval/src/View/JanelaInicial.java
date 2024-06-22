@@ -1,20 +1,15 @@
 package View;
 
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 import Controller.Control;
 
@@ -37,8 +32,6 @@ public class JanelaInicial extends JFrame{
         return instance;
     }
     
-    
-	
 	public JanelaInicial(boolean visibilidade) {
 		setTitle("Batalha Naval");
 		
@@ -74,19 +67,16 @@ public class JanelaInicial extends JFrame{
 		getContentPane().add(PainelInicio);
 
 		NovaPartida.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e)
-		    {
+		    public void actionPerformed(ActionEvent e) {
 		    	Control.getController().irParaCriarPartida(instance);
 		    }
 		});
 		
 		CarregaPartida.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e)
-			{
+			public void actionPerformed(ActionEvent e) {
 				fileChooser = new JFileChooser();
 				int r = fileChooser.showOpenDialog(null);
-				if(fileChooser.APPROVE_OPTION == r)
-				{
+				if(fileChooser.APPROVE_OPTION == r) {
 					Control.getController().carregarPartida(instance, fileChooser);
 				}
 			}

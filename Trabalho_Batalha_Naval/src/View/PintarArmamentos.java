@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
-import java.util.ResourceBundle.Control;
-
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -19,10 +17,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities; 
 
-public class PintarArmamentos extends JPanel {
+import Controller.Control;
+import Model.ObservadoAtaqueIF;
+
+public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	public int x = -1;
 	public int y = -1;
-	
 	
 	public String armamentoSelecionado;
 	private boolean booleanArmamentoSelecionado;
@@ -46,7 +46,7 @@ public class PintarArmamentos extends JPanel {
 	private boolean cruzador2Posicionado = false;
 	private boolean couracado1Posicionado = false;
 	private int[] arrayArmamentosPosicionados = new int[15];
-	private int[] arrayArmamentosNaMatriz = new int[225];
+	private int[][] matrizArmamentosNaMatriz = new int[15][15];
 	// arrayArmamentosNaMatriz[index] recebe:
 	// 0 --> Nada posicionado
 	// 1 --> Hidro Avião posicionado
@@ -63,7 +63,9 @@ public class PintarArmamentos extends JPanel {
 	JButton botaoProximoJogador = new JButton("Próximo jogador");
 	JButton botaoComecarJogo = new JButton("Começar jogo");
 	
-	public PintarArmamentos(String nomeJogador1, String nomeJogador2, JFrame framePai) {
+	PintarArmamentos(String nomeJogador1, String nomeJogador2, JFrame framePai) {
+		Control.getController().registra(this);
+		
 		textNomeJogador1 = new JLabel("Posicionar armamentos " + nomeJogador1);
 		textNomeJogador2 = new JLabel("Posicionar armamentos " + nomeJogador2);
 		
@@ -103,6 +105,10 @@ public class PintarArmamentos extends JPanel {
         });
 	}
 	
+	public void notify(ObservadoAtaqueIF observado) {
+		
+	}
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 
@@ -124,7 +130,7 @@ public class PintarArmamentos extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		
 		desenhoArmamentos(g2d, largura, altura, arrayArmamentosPosicionados);
-		desenhoTabuleiro(g2d, topY, largura, altura, g, arrayArmamentosNaMatriz);
+		desenhoTabuleiro(g2d, topY, largura, altura, g, matrizArmamentosNaMatriz);
 		
 		verificarClick(g2d);
 		verificarTudoPosicionado(g);
@@ -153,10 +159,12 @@ public class PintarArmamentos extends JPanel {
     	for(int i = 0; i < arrayArmamentosPosicionados.length; i++) {
     		arrayArmamentosPosicionados[i] = 0;
     	}
-    	
-    	for(int i = 0; i < arrayArmamentosNaMatriz.length; i++) {
-    		arrayArmamentosNaMatriz[i] = 0;
-    	}
+
+    	for (int i = 0; i < 15; i++) {
+            for (int j = 0; j < 15; j++) {
+            	matrizArmamentosNaMatriz[i][j] = 0;
+            }
+        }
     	
     	remove(textNomeJogador1);
     	remove(botaoProximoJogador);
@@ -261,9 +269,7 @@ public class PintarArmamentos extends JPanel {
 		g2d.setPaint(Color.black);
 	}
 	
-	private void desenhoTabuleiro(Graphics2D g2d, double topY, double largura, double altura, Graphics g, int[] arrayArmamentosNaMatriz) {
-		int index = 0;
-		
+	private void desenhoTabuleiro(Graphics2D g2d, double topY, double largura, double altura, Graphics g, int[][] arrayArmamentosNaMatriz) {
 		for (int i = 0; i < 15; i++) {
 			char casa = (char)('A' + i);
 			
@@ -276,36 +282,34 @@ public class PintarArmamentos extends JPanel {
 				g2d.setPaint(Color.black);
 				g.drawString(Integer.toString(num), 580 + 20 * j, 120);
 				
-				index = j + (i * 15);
-				
 				Rectangle2D retangulosTabuleiro = new Rectangle2D.Double(575.0 + 20.0 * j, topY + 20.0 * i, largura / 15.0, altura / 15.0);
-				inserirCorMatriz(g2d, retangulosTabuleiro, index);
+				inserirCorMatriz(g2d, retangulosTabuleiro, i, j);
 			}
 		}
 	}
 	
-	private void inserirCorMatriz(Graphics2D g2d, Rectangle2D retangulosTabuleiro, int index) {
-		if(arrayArmamentosNaMatriz[index] == 0) {
+	private void inserirCorMatriz(Graphics2D g2d, Rectangle2D retangulosTabuleiro, int i, int j) {
+		if(matrizArmamentosNaMatriz[i][j] == 0) {
 			g2d.setPaint(Color.black);
 			g2d.draw(retangulosTabuleiro);
 		}
-		else if(arrayArmamentosNaMatriz[index] == 1) {
+		else if(matrizArmamentosNaMatriz[i][j] == 1) {
 			g2d.setPaint(new Color(0, 80, 0));
 			g2d.fill(retangulosTabuleiro);
 		}
-		else if(arrayArmamentosNaMatriz[index] == 2) {
+		else if(matrizArmamentosNaMatriz[i][j] == 2) {
 			g2d.setPaint(new Color(75, 0, 130));
 			g2d.fill(retangulosTabuleiro);
 		}
-		else if(arrayArmamentosNaMatriz[index] == 3) {
+		else if(matrizArmamentosNaMatriz[i][j] == 3) {
 			g2d.setPaint(new Color(255, 255, 0));
 			g2d.fill(retangulosTabuleiro);
 		}
-		else if(arrayArmamentosNaMatriz[index] == 4) {
+		else if(matrizArmamentosNaMatriz[i][j] == 4) {
 			g2d.setPaint(new Color(255, 165, 0));
 			g2d.fill(retangulosTabuleiro);
 		}
-		else if(arrayArmamentosNaMatriz[index] == 5) {
+		else if(matrizArmamentosNaMatriz[i][j] == 5) {
 			g2d.setPaint(new Color(160, 82, 45));
 			g2d.fill(retangulosTabuleiro);
 		}
@@ -316,12 +320,9 @@ public class PintarArmamentos extends JPanel {
         	arrayArmamentosPosicionados[0] = 1;
 			hidroAviao1Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] - 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] + 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
 			
 			repaint();
         }
@@ -329,12 +330,9 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[1] = 1;
 			hidroAviao2Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] - 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] + 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
 			
 			repaint();
         }
@@ -342,12 +340,9 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[2] = 1;
 			hidroAviao3Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] - 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] + 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
 		
 			repaint();
         }
@@ -355,12 +350,9 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[3] = 1;
 			hidroAviao4Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] - 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] + 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
 			
 			repaint();
         }
@@ -368,12 +360,9 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[4] = 1;
 			hidroAviao5Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] - 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
-			index = (retornoClick[0] + 1) + (retornoClick[1] * 15) + 15;
-			arrayArmamentosNaMatriz[index] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] - 1] = 1;
+			matrizArmamentosNaMatriz[retornoClick[0] - 1][retornoClick[1] + 1] = 1;
 			
 			repaint();
         }
@@ -381,8 +370,7 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[5] = 1;
 			submarino1Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 2;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
 			
 			repaint();
         }
@@ -390,8 +378,7 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[6] = 1;
 			submarino2Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 2;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
 			
 			repaint();
         }
@@ -399,8 +386,7 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[7] = 1;
 			submarino3Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 2;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
 			
 			repaint();
         }
@@ -408,8 +394,7 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[8] = 1;
 			submarino4Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 2;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 2;
 			
 			repaint();
         }
@@ -417,10 +402,8 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[9] = 1;
 			destroyer1Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 3;
-			index = retornoClick[0] + 1 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 3;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 3;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 3;
 			
 			repaint();
         }
@@ -428,10 +411,8 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[10] = 1;
 			destroyer2Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 3;
-			index = retornoClick[0] + 1 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 3;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 3;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 3;
 			
 			repaint();
         }
@@ -439,10 +420,8 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[11] = 1;
 			destroyer3Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 3;
-			index = retornoClick[0] + 1 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 3;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 3;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 3;
 			
 			repaint();
         }
@@ -450,14 +429,10 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[12] = 1;
 			cruzador1Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
-			index = retornoClick[0] + 1 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
-			index = retornoClick[0] + 2 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
-			index = retornoClick[0] + 3 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 2] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 3] = 4;
 			
 			repaint();
         }
@@ -465,14 +440,10 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[13] = 1;
 			cruzador2Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
-			index = retornoClick[0] + 1 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
-			index = retornoClick[0] + 2 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
-			index = retornoClick[0] + 3 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 2] = 4;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 3] = 4;
 			
 			repaint();
         }
@@ -480,16 +451,11 @@ public class PintarArmamentos extends JPanel {
 			arrayArmamentosPosicionados[14] = 1;
 			couracado1Posicionado = true;
 			
-			int index = retornoClick[0] + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 5;
-			index = retornoClick[0] + 1 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 5;
-			index = retornoClick[0] + 2 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 5;
-			index = retornoClick[0] + 3 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 5;
-			index = retornoClick[0] + 4 + (retornoClick[1] * 15);
-			arrayArmamentosNaMatriz[index] = 5;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1]] = 5;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 1] = 5;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 2] = 5;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 3] = 5;
+			matrizArmamentosNaMatriz[retornoClick[0]][retornoClick[1] + 4] = 5;
 			
 			repaint();
         }

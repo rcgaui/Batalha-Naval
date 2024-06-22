@@ -9,7 +9,6 @@ abstract class Armamentos {
 	protected int tamanho;
 	protected boolean armamentoPosicionado;
 
-		
 	public boolean isArmamentoPosicionado() {
 		return armamentoPosicionado;
 	}
@@ -74,8 +73,9 @@ abstract class Armamentos {
 		for (String posicao : posicoes) {
 			int letra = posicao.charAt(0) - 'A'; 
 			int numero = Integer.parseInt(posicao.substring(1)) - 1;
-            if(tabuleiro.getCasas()[letra][numero].getPosicao() != "*")
+            if(tabuleiro.getCasas()[letra][numero].getPosicao() != "*") {
             	contaPosicoes++;
+            }
         }
 		if(contaPosicoes == this.tamanho) return this.posicoes;
 		else return null;

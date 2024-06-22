@@ -31,8 +31,6 @@ class Turno {
 		this.jogoRodando = jogoRodando;
 	}
 	
-	
-	
 	public Jogador getVezJogar() {
 		return vezJogar;
 	}
