@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.util.ArrayList;
@@ -37,6 +39,16 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
                 corCasasJ2[i][j] = Color.darkGray;
             }
         }
+		this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                System.out.println("Clique detectado nas coordenadas: (" + x + ", " + y + ")");
+                String coordenadaConvertida = Control.getController().converteCoordenadaAtaque(x, y);
+                System.out.println("Coordenada convertida: " + coordenadaConvertida);
+            }
+        });
 	}
 	
 	public void notify(ObservadoAtaqueIF observado)

@@ -239,10 +239,9 @@ public class ModelFacade {
 		turno.trocaTurno();
 	}
 	
-	public String converteCoordenada(double x, double y)
-	{
-        if (y < 125.0 || y > 425.0) {
-            return "Fora do tabuleiro";
+	public String converteCoordenada(int x, int y) {
+        if (y < 125 || y > 425) {
+            return null;
         }
 
         int indexY = (int) ((y - 125) / 20);
@@ -250,32 +249,31 @@ public class ModelFacade {
         if (indexY >= 0 && indexY <= 14) {
             casaY = (char) ('A' + indexY);
         } else {
-            return "Fora do tabuleiro";
+            return null;
         }
 
         String casaX;
         if (isJ1()) {
-            if (x < 125.0 || x > 425.0) {
-                return "Fora do tabuleiro";
+            if (x < 125 || x > 425) {
+                return null;
             }
             int indexX = (int) ((x - 125) / 20);
             if (indexX >= 0 && indexX <= 14) {
             	casaX = String.valueOf(1 + indexX);
             } else {
-                return "Fora do tabuleiro";
+                return null;
             }
         } else {
-            if (x < 575.0 || x > 875.0) {
-                return "Fora do tabuleiro";
+            if (x < 575 || x > 875) {
+                return null;
             }
             int indexX = (int) ((x - 575) / 20);
             if (indexX >= 0 && indexX <= 14) {
             	casaX = String.valueOf(1 + indexX);
             } else {
-                return "Fora do tabuleiro";
+                return null;
             }
         }
-
         return casaY + casaX;
     }
 	

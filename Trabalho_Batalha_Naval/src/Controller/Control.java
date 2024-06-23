@@ -69,6 +69,10 @@ public class Control {
 		return facade.verificaPosicao(nomeBarco, numeroBarco, sentido, casa);
 	}
 	
+	public String converteCoordenadaAtaque(int x, int y) {
+	    return facade.converteCoordenada(x, y);
+	}
+	
 	public int[] ConverteCoordenadaPosicionarArmamentos(int x, int y) {
 		return facade.converteCoordenadaPosicionarArmamentos(x, y);
 	}
