@@ -50,88 +50,140 @@ abstract class Armamentos {
 		else return false;	
 	}
 	
-	public boolean verificarSentido(Tabuleiro tabuleiro, String sentido, int letra, int numero)
+	public int verificarSentido(Tabuleiro tabuleiro, String sentido, int letra, int numero)
 	{
 		switch (sentido) {
 			case "Leste-Oeste":
 				if((numero - tamanho + 1) < 0) {
-					return false;
+					return 2;
 				}
 				for (int i = 0; i < tamanho; i++) {
-					if(!verificarCasas(tabuleiro, letra, numero - i)) {
-						return false;
+					if(verificarCasas(tabuleiro, letra, numero - i) == 1) {
+						return 1;
+					}
+					else if (verificarCasas(tabuleiro, letra, numero - i) == 2) {
+						return 2;
 					}
 				}
-				return true;
+				return 0;
 			case "Norte-Sul":
 				if((letra + tamanho - 1) > 14) {
-					return false;
+					return 2;
 				}
 				for (int i = 0; i < tamanho; i++) {
-					if(!verificarCasas(tabuleiro, letra + i, numero)) {
-						return false;
+					if(verificarCasas(tabuleiro, letra + i, numero) == 1) {
+						return 1;
+					}
+					else if (verificarCasas(tabuleiro, letra + i, numero) == 2) {
+						return 2;
 					}
 				}
-			    return true;
+			    return 0;
 			case "Sul-Norte":
 				if((letra - tamanho + 1) < 0) {
-					return false;
+					return 2;
 				}
 				for (int i = 0; i < tamanho; i++) {
-					if(!verificarCasas(tabuleiro, letra - i, numero)) {
-						return false;
+					if(verificarCasas(tabuleiro, letra - i, numero) == 1) {
+						return 1;
+					}
+					else if(verificarCasas(tabuleiro, letra - i, numero) == 1) {
+						return 2;
 					}
 				}
-			    return true;
+			    return 0;
 			case "Oeste-Leste":
 				if((numero + tamanho - 1) > 14) {
-					return false;
+					return 2;
 				}
 				for (int i = 0; i < tamanho; i++) {
-					if(!verificarCasas(tabuleiro, letra, numero + i)) {
-						return false;
+					if(verificarCasas(tabuleiro, letra, numero + i) == 1) {
+						return 1;
+					}
+					else if(verificarCasas(tabuleiro, letra, numero + i) == 1) {
+						return 2;
 					}
 				}
-			    return true;
+			    return 0;
 			default:
-				return false;
+				return 2;
 		}
 	}
 	
-	public boolean verificarSentidoHidroAviao(Tabuleiro tabuleiro, String sentido, int letra, int numero)
+	public int verificarSentidoHidroAviao(Tabuleiro tabuleiro, String sentido, int letra, int numero)
 	{
 		switch (sentido) {
 			case "Oeste-Leste":
-				return (verificarCasas(tabuleiro, letra, numero) && 
-						verificarCasas(tabuleiro, letra + 1, numero + 1) && 
-						verificarCasas(tabuleiro, letra - 1, numero + 1)) ? true : false;
+				if (verificarCasas(tabuleiro, letra, numero) == 0 && 
+					verificarCasas(tabuleiro, letra + 1, numero + 1) == 0 && 
+					verificarCasas(tabuleiro, letra - 1, numero + 1) == 0) {
+					return 0;
+				}
+				else if (verificarCasas(tabuleiro, letra, numero) == 2 || 
+						 verificarCasas(tabuleiro, letra + 1, numero + 1) == 2 || 
+						 verificarCasas(tabuleiro, letra - 1, numero + 1) == 2) {
+					return 2;
+				}
+				else {
+					return 1;
+				}
 			case "Leste-Oeste":
-				return (verificarCasas(tabuleiro, letra, numero) && 
-						verificarCasas(tabuleiro, letra + 1, numero - 1) && 
-						verificarCasas(tabuleiro, letra - 1, numero - 1)) ? true : false;
+				if (verificarCasas(tabuleiro, letra, numero) == 0 && 
+					verificarCasas(tabuleiro, letra + 1, numero - 1) == 0 && 
+					verificarCasas(tabuleiro, letra - 1, numero - 1) == 0) {
+					return 0;
+				}
+				else if (verificarCasas(tabuleiro, letra, numero) == 2 || 
+						 verificarCasas(tabuleiro, letra + 1, numero - 1) == 2 || 
+						 verificarCasas(tabuleiro, letra - 1, numero - 1) == 2) {
+					return 2;
+				}
+				else {
+					return 1;
+				}
 			case "Norte-Sul":
-				return (verificarCasas(tabuleiro, letra, numero) && 
-						verificarCasas(tabuleiro, letra + 1, numero + 1) && 
-						verificarCasas(tabuleiro, letra + 1, numero - 1)) ? true : false;
+				if (verificarCasas(tabuleiro, letra, numero) == 0 && 
+					verificarCasas(tabuleiro, letra + 1, numero + 1) == 0 && 
+					verificarCasas(tabuleiro, letra + 1, numero - 1) == 0) {
+					return 0;
+				}
+				else if (verificarCasas(tabuleiro, letra, numero) == 2 || 
+						 verificarCasas(tabuleiro, letra + 1, numero + 1) == 2 || 
+						 verificarCasas(tabuleiro, letra + 1, numero - 1) == 2) {
+					return 2;
+				}
+				else {
+					return 1;
+				}
 			case "Sul-Norte":
-				return (verificarCasas(tabuleiro, letra, numero) && 
-						verificarCasas(tabuleiro, letra - 1, numero + 1) && 
-						verificarCasas(tabuleiro, letra - 1, numero - 1)) ? true : false;
+				if (verificarCasas(tabuleiro, letra, numero) == 0 && 
+					verificarCasas(tabuleiro, letra - 1, numero + 1) == 0 && 
+					verificarCasas(tabuleiro, letra - 1, numero - 1) == 0) {
+					return 0;
+				}
+				else if (verificarCasas(tabuleiro, letra, numero) == 2 || 
+						 verificarCasas(tabuleiro, letra - 1, numero + 1) == 2 || 
+						 verificarCasas(tabuleiro, letra - 1, numero - 1) == 2) {
+					return 2;
+				}
+				else {
+					return 1;
+				}
 			default:
-				return false;
+				return 2;
 		}
 	}
-	
-	protected boolean verificarCasas(Tabuleiro tabuleiro, int letra, int numero) {
+
+	protected int verificarCasas(Tabuleiro tabuleiro, int letra, int numero) {
 	    int[] dx = {-1, -1, 0, 1, 1, 1, 0, -1};
 	    int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
 
 	    if(letra < 0 || letra > 14 || numero < 0 || numero > 14) {
-	    	return false;
+	    	return 2;
 	    }
 	    
 	    if(!tabuleiro.getCasas()[letra][numero].getEstadoCasa().equals("?")) {
-	        return false;
+	        return 1;
 	    }
 
 	    for(int i = 0; i < 8; i++) {
@@ -140,13 +192,12 @@ abstract class Armamentos {
 	        
 	        if(novaLetra >= 0 && novaLetra <= 14 && novoNumero >= 0 && novoNumero <= 14) {
 	            if(!tabuleiro.getCasas()[novaLetra][novoNumero].getEstadoCasa().equals("?")) {
-	            	// System.out.println("A embarcação conflita com outras embarcacoes\n");
-	                return false;
+	                return 1;
 	            }
 	        }
 	    }
 
-	    return true;
+	    return 0;
 	}
 	
 	protected boolean inserirArmamento(Tabuleiro tabuleiro, int letra, int numero, String sentido)

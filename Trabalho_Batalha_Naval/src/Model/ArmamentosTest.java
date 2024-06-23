@@ -48,20 +48,20 @@ public class ArmamentosTest{
 	
 	@Test
 	public void testVerificarSentido() {
-		assertFalse("O sentido deve ser inválido para posicionar o hidroaviao dessa forma", hidroaviao.verificarSentido(tabuleiro, "Norte-Sul", 0, 0));
-		assertTrue("O sentido deve ser válido para posicionar o hidroaviao dessa forma", hidroaviao.verificarSentido(tabuleiro, "Norte-Sul", 0, 1));
+	    assertEquals("Deve retornar 2 para índice fora da matriz", 2, hidroaviao.verificarSentido(tabuleiro, "Norte-Sul", -1, -1));
+	    assertEquals("Deve retornar 0 para uma posição válida", 0, hidroaviao.verificarSentido(tabuleiro, "Norte-Sul", 0, 1));
+	    tabuleiro.getCasas()[1][1].setEstadoCasa("!");
+	    assertEquals("Deve retornar 1 para um conflito de embarcações", 1, hidroaviao.verificarSentido(tabuleiro, "Norte-Sul", 0, 1));
+	    tabuleiro.getCasas()[1][1].setEstadoCasa("?");
 	}
-	
+
 	@Test
 	public void testVerificarCasa() {
-		tabuleiro.getCasas()[0][0].setEstadoCasa("?");
-        tabuleiro.getCasas()[0][1].setEstadoCasa("?");
-        assertTrue("A casa deve estar válida para inserção do destroyer", destroyer.verificarCasas(tabuleiro, 0, 0));
-        tabuleiro.getCasas()[0][1].setEstadoCasa("!");
-        assertFalse("A casa deve estar inválida para inserção do destroyer", destroyer.verificarCasas(tabuleiro, 0, 0));
-        
+	    tabuleiro.getCasas()[0][0].setEstadoCasa("?");
+	    tabuleiro.getCasas()[0][1].setEstadoCasa("?");
+	    assertEquals("Deve retornar 0 para uma casa válida para inserção do destroyer", 0, destroyer.verificarCasas(tabuleiro, 0, 0));
+	    tabuleiro.getCasas()[0][1].setEstadoCasa("!");
+	    assertEquals("Deve retornar 1 para conflito de embarcações", 1, destroyer.verificarCasas(tabuleiro, 0, 0));
+	    assertEquals("Deve retornar 2 para índice fora da matriz", 2, destroyer.verificarCasas(tabuleiro, 15, 15));
 	}
-	
-	
 }
-

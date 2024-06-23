@@ -305,7 +305,7 @@ public class ModelFacade {
 		return new int[]{posX, posY};
 	}
 	
-	public boolean VerificaPosicao(String nomeBarco, int numeroBarco, String sentido, String casa)
+	public int verificaPosicao(String nomeBarco, int numeroBarco, String sentido, String casa)
 	{
 		int letra = casa.charAt(0) - 'A';
 		int numero = Integer.parseInt(casa.substring(1)) - 1;
@@ -319,7 +319,6 @@ public class ModelFacade {
 				else if (turno.getVezJogar() == J2) {
 					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);
 				}
-				else return false;
 			case "hidroaviao":
 				numeroBarco += 4;
 				if(turno.getVezJogar() == J1) {
@@ -328,7 +327,6 @@ public class ModelFacade {
 				else if (turno.getVezJogar() == J2) {
 					return armamentosJ1.get(numeroBarco).verificarSentidoHidroAviao(tabuleiroJ2, sentido, letra, numero);	
 				}
-				else return false;
 			case "cruzador":
 				numeroBarco += 9;
 				if(turno.getVezJogar() == J1) {
@@ -337,7 +335,6 @@ public class ModelFacade {
 				else if (turno.getVezJogar() == J2) {
 					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);
 				}
-				else return false;
 			case "destroyer":
 				numeroBarco += 11;
 				if(turno.getVezJogar() == J1) {
@@ -346,7 +343,6 @@ public class ModelFacade {
 				else if (turno.getVezJogar() == J2) {
 					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);	
 				}
-				else return false;
 			case "couracado":
 				numeroBarco += 14;
 				if(turno.getVezJogar() == J1) {
@@ -355,13 +351,12 @@ public class ModelFacade {
 				else if (turno.getVezJogar() == J2) {
 					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);
 				}
-				else return false;
 			default:
-				return false;
+				return 2;
 		}
 	}
 	
-	public boolean PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa)
+	public boolean posicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa)
 	{
 		numeroBarco--;
 		switch (nomeBarco) {

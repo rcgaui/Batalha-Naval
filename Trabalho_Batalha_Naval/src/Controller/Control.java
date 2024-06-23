@@ -65,8 +65,8 @@ public class Control {
 		return facade.getDestroyed();
 	}
 	
-	public boolean VerificaPosicao(String nomeBarco, int numeroBarco, String sentido, String casa) {
-		return facade.VerificaPosicao(nomeBarco, numeroBarco, sentido, casa);
+	public int VerificaPosicao(String nomeBarco, int numeroBarco, String sentido, String casa) {
+		return facade.verificaPosicao(nomeBarco, numeroBarco, sentido, casa);
 	}
 	
 	public int[] ConverteCoordenadaPosicionarArmamentos(int x, int y) {
@@ -74,7 +74,7 @@ public class Control {
 	}
 	
 	public boolean PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa) {
-		return facade.PosicionaEmbarcacao(nomeBarco, numeroBarco, sentido, casa);
+		return facade.posicionaEmbarcacao(nomeBarco, numeroBarco, sentido, casa);
 	}
 	
 	public void irParaTelaInicial(JFrame frame)
