@@ -28,6 +28,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	private int numeroArmamentoSelecionado = 1;
 	private boolean booleanArmamentoSelecionado = false;
 	private boolean existeErroParaConfirmarPosicionamento = false;
+	private boolean confirmarPosicionamento = false;
 	
 	private boolean armamentosJogador1Posicionado = false;
 	private boolean armamentosJogador2Posicionado = false;
@@ -50,6 +51,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	private int[] arrayArmamentosPosicionados = new int[15];
 	private int[][] matrizArmamentosNaMatriz = new int[15][15];
 	private int[] retornoClick;
+	private String coordenada;
+	private int[] clickSalvoAteInserir;
 	// arrayArmamentosNaMatriz[index] recebe:
 	// 0 --> Nada posicionado
 	// 1 --> Hidro Avião posicionado
@@ -95,9 +98,24 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		botaoConfirmarArmamento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-            	if(existeErroParaConfirmarPosicionamento == false) {
-            		inserirArmamentoSelecionado(retornoClick);
-                	repaint();	
+            	if(existeErroParaConfirmarPosicionamento == false && confirmarPosicionamento) {
+            		confirmarPosicionamento = false;
+            		
+            		inserirArmamentoSelecionado(clickSalvoAteInserir);
+            		
+            		if(nomeArmamentoSelecionado == "hidroaviao") {
+						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);
+					}
+					else {
+						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
+					}
+            		
+            		booleanArmamentoSelecionado = false;
+					nomeArmamentoSelecionado = "";
+					numeroArmamentoSelecionado = -1;
+					coordenada = "";
+					
+                	repaint();
             	}
             }
         });
@@ -320,6 +338,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	
 	private void inserirCorMatriz(Graphics2D g2d, Rectangle2D retangulosTabuleiro, int i, int j) {
 		if(matrizArmamentosNaMatriz[i][j] == 0) {
+			g2d.setPaint(Color.lightGray);
+			g2d.fill(retangulosTabuleiro);
 			g2d.setPaint(Color.black);
 			g2d.draw(retangulosTabuleiro);
 		}
@@ -343,159 +363,170 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 			g2d.setPaint(new Color(160, 82, 45));
 			g2d.fill(retangulosTabuleiro);
 		}
+		else if(matrizArmamentosNaMatriz[i][j] == 6) {
+			g2d.setPaint(new Color(100, 100, 120));
+			g2d.fill(retangulosTabuleiro);
+		}
 	}
 
-	private void inserirArmamentoSelecionado(int[] retornoClick) {
-		if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 1) {
-        	arrayArmamentosPosicionados[0] = 1;
-			hidroAviao1Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
-			
-			repaint();
+	private void inserirTempArmamento(int[] retornoClick) {
+		if(nomeArmamentoSelecionado.equals("submarino")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 6;
         }
-		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 2) {
-			arrayArmamentosPosicionados[1] = 1;
-			hidroAviao2Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
-			
-			repaint();
+		else if(nomeArmamentoSelecionado.equals("hidroaviao")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 6;
+		}
+		else if(nomeArmamentoSelecionado.equals("destroyer")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 6;
         }
-		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 3) {
-			arrayArmamentosPosicionados[2] = 1;
-			hidroAviao3Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
+		else if(nomeArmamentoSelecionado.equals("cruzador")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 6;
+        }
+		else if(nomeArmamentoSelecionado.equals("couracado")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 6;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 4] = 6;
+        }
 		
-			repaint();
+		repaint();
+	}
+	
+	private void removerTempArmamento(int[] retornoClick) {
+		if(nomeArmamentoSelecionado.equals("submarino")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 0;
         }
-		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 4) {
-			arrayArmamentosPosicionados[3] = 1;
-			hidroAviao4Posicionado = true;
+		else if(nomeArmamentoSelecionado.equals("hidroaviao")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 0;
+		}
+		else if(nomeArmamentoSelecionado.equals("destroyer")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 0;
+        }
+		else if(nomeArmamentoSelecionado.equals("cruzador")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 0;
+        }
+		else if(nomeArmamentoSelecionado.equals("couracado")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 0;
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 4] = 0;
+        }
+		
+		repaint();
+	}
+	
+	private void inserirArmamentoSelecionado(int[] retornoClick) {
+		if(nomeArmamentoSelecionado.equals("submarino")) {
+			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
 			
+			if(numeroArmamentoSelecionado == 1) {
+				arrayArmamentosPosicionados[5] = 1;
+				submarino1Posicionado = true;	
+			}
+			else if(numeroArmamentoSelecionado == 2) {
+				arrayArmamentosPosicionados[6] = 1;
+				submarino2Posicionado = true;
+	        }
+			else if(numeroArmamentoSelecionado == 3) {
+				arrayArmamentosPosicionados[7] = 1;
+				submarino3Posicionado = true;
+	        }
+			else if(numeroArmamentoSelecionado == 4) {
+				arrayArmamentosPosicionados[8] = 1;
+				submarino4Posicionado = true;
+	        }
+        }
+		else if(nomeArmamentoSelecionado.equals("hidroaviao")) {
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
 			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
 			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
 			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("hidroaviao") && numeroArmamentoSelecionado == 5) {
-			arrayArmamentosPosicionados[4] = 1;
-			hidroAviao5Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] - 1] = 1;
-			matrizArmamentosNaMatriz[retornoClick[1] + 1][retornoClick[0] + 1] = 1;
-			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("submarino") && numeroArmamentoSelecionado == 1) {
-			arrayArmamentosPosicionados[5] = 1;
-			submarino1Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
-			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("submarino") && numeroArmamentoSelecionado == 2) {
-			arrayArmamentosPosicionados[6] = 1;
-			submarino2Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
-			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("submarino") && numeroArmamentoSelecionado == 3) {
-			arrayArmamentosPosicionados[7] = 1;
-			submarino3Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
-			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("Submarino 4") && numeroArmamentoSelecionado == 4) {
-			arrayArmamentosPosicionados[8] = 1;
-			submarino4Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 2;
-			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("destroyer") && numeroArmamentoSelecionado == 1) {
-			arrayArmamentosPosicionados[9] = 1;
-			destroyer1Posicionado = true;
-			
+			if(numeroArmamentoSelecionado == 1) {
+	        	arrayArmamentosPosicionados[0] = 1;
+				hidroAviao1Posicionado = true;
+	        }
+			else if(numeroArmamentoSelecionado == 2) {
+				arrayArmamentosPosicionados[1] = 1;
+				hidroAviao2Posicionado = true;
+	        }
+			else if(numeroArmamentoSelecionado == 3) {
+				arrayArmamentosPosicionados[2] = 1;
+				hidroAviao3Posicionado = true;
+	        }
+			else if(numeroArmamentoSelecionado == 4) {
+				arrayArmamentosPosicionados[3] = 1;
+				hidroAviao4Posicionado = true;
+	        }
+			else if(numeroArmamentoSelecionado == 5) {
+				arrayArmamentosPosicionados[4] = 1;
+				hidroAviao5Posicionado = true;
+	        }
+		}
+		else if(nomeArmamentoSelecionado.equals("destroyer")) {
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 3;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 3;
 			
-			repaint();
+			if(numeroArmamentoSelecionado == 1) {
+				arrayArmamentosPosicionados[9] = 1;
+				destroyer1Posicionado = true;	
+			}
+			else if(numeroArmamentoSelecionado == 2) {
+				arrayArmamentosPosicionados[10] = 1;
+				destroyer2Posicionado = true;
+	        }
+			else if(numeroArmamentoSelecionado == 3) {
+				arrayArmamentosPosicionados[11] = 1;
+				destroyer3Posicionado = true;
+	        }
         }
-		else if(nomeArmamentoSelecionado.equals("destroyer") && numeroArmamentoSelecionado == 2) {
-			arrayArmamentosPosicionados[10] = 1;
-			destroyer2Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 3;
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 3;
-			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("destroyer") && numeroArmamentoSelecionado == 3) {
-			arrayArmamentosPosicionados[11] = 1;
-			destroyer3Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 3;
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 3;
-			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("cruzador") && numeroArmamentoSelecionado == 1) {
-			arrayArmamentosPosicionados[12] = 1;
-			cruzador1Posicionado = true;
-			
+		else if(nomeArmamentoSelecionado.equals("cruzador")) {
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 4;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 4;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 4;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 4;
 			
-			repaint();
-        }
-		else if(nomeArmamentoSelecionado.equals("cruzador") && numeroArmamentoSelecionado == 2) {
-			arrayArmamentosPosicionados[13] = 1;
-			cruzador2Posicionado = true;
-			
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 4;
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 4;
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 4;
-			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 4;
-			
-			repaint();
+			if(numeroArmamentoSelecionado == 1) {
+				arrayArmamentosPosicionados[12] = 1;
+				cruzador1Posicionado = true;
+			}
+			else if(numeroArmamentoSelecionado == 2) {
+				arrayArmamentosPosicionados[13] = 1;
+				cruzador2Posicionado = true;
+	        }
         }
 		else if(nomeArmamentoSelecionado.equals("couracado") && numeroArmamentoSelecionado == 1) {
-			arrayArmamentosPosicionados[14] = 1;
-			couracado1Posicionado = true;
-			
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0]] = 5;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 1] = 5;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 2] = 5;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 3] = 5;
 			matrizArmamentosNaMatriz[retornoClick[1]][retornoClick[0] + 4] = 5;
 			
-			repaint();
+			arrayArmamentosPosicionados[14] = 1;
+			couracado1Posicionado = true;
         }
+		
+		repaint();
 	}
 	
 	private void verificarClick(Graphics2D g2d) {
 		boolean selecionarArmamentoTemp = false;
 		
 		if(mouseEsquerdo) {
-			if(hidroAviao1Posicionado == false) {
+			if(hidroAviao1Posicionado == false && confirmarPosicionamento == false) {
 				if(x >= 100 && x <= 120 && y >= 100 && y <= 120 || x >= 80 && x <= 100 && y >= 120 && y <= 140 || x >= 120 && x <= 140 && y >= 120 && y <= 140) {
 					Rectangle2D hidroAviao1Selecionado = new Rectangle2D.Double(80.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao1Selecionado);
@@ -507,7 +538,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 				}
 			}
 			
-			if (hidroAviao2Posicionado == false) {
+			if (hidroAviao2Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 180 && x <= 200 && y >= 100 && y <= 120 || x >= 160 && x <= 180 && y >= 120 && y <= 140 || x >= 200 && x <= 220 && y >= 120 && y <= 140) {
 		        	Rectangle2D hidroAviao2Selecionado = new Rectangle2D.Double(160.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao2Selecionado);
@@ -519,7 +550,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (hidroAviao3Posicionado == false) {
+			if (hidroAviao3Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 260 && x <= 280 && y >= 100 && y <= 120 || x >= 240 && x <= 260 && y >= 120 && y <= 140 || x >= 280 && x <= 300 && y >= 120 && y <= 140) {
 		        	Rectangle2D hidroAviao3Selecionado = new Rectangle2D.Double(240.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao3Selecionado);
@@ -531,7 +562,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (hidroAviao4Posicionado == false) {
+			if (hidroAviao4Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 340 && x <= 360 && y >= 100 && y <= 120 || x >= 320 && x <= 340 && y >= 120 && y <= 140 || x >= 360 && x <= 380 && y >= 120 && y <= 140) {
 		        	Rectangle2D hidroAviao4Selecionado = new Rectangle2D.Double(320.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao4Selecionado);
@@ -543,7 +574,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (hidroAviao5Posicionado == false) {
+			if (hidroAviao5Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 420 && x <= 440 && y >= 100 && y <= 120 || x >= 400 && x <= 420 && y >= 120 && y <= 140 || x >= 440 && x <= 460 && y >= 120 && y <= 140) {
 		        	Rectangle2D hidroAviao5Selecionado = new Rectangle2D.Double(400.0, 100.0, 60, 40);
 					g2d.draw(hidroAviao5Selecionado);
@@ -555,7 +586,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (submarino1Posicionado == false) {
+			if (submarino1Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 80 && x <= 100 && y >= 180 && y <= 200) {
 		        	Rectangle2D submarino1Selecionado = new Rectangle2D.Double(80.0, 180.0, 20, 20);
 					g2d.draw(submarino1Selecionado);
@@ -567,7 +598,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (submarino2Posicionado == false) {
+			if (submarino2Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 120 && x <= 140 && y >= 180 && y <= 200) {
 		        	Rectangle2D submarino2Selecionado = new Rectangle2D.Double(120.0, 180.0, 20, 20);
 					g2d.draw(submarino2Selecionado);
@@ -579,7 +610,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (submarino3Posicionado == false) {
+			if (submarino3Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 160 && x <= 180 && y >= 180 && y <= 200) {
 		        	Rectangle2D submarino3Selecionado = new Rectangle2D.Double(160.0, 180.0, 20, 20);
 					g2d.draw(submarino3Selecionado);
@@ -591,7 +622,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (submarino4Posicionado == false) {
+			if (submarino4Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 200 && x <= 220 && y >= 180 && y <= 200) {
 		        	Rectangle2D submarino4Selecionado = new Rectangle2D.Double(200.0, 180.0, 20, 20);
 					g2d.draw(submarino4Selecionado);
@@ -603,7 +634,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (destroyer1Posicionado == false) {
+			if (destroyer1Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 80 && x <= 120 && y >= 240 && y <= 260) {
 		        	Rectangle2D destroyer1Selecionado = new Rectangle2D.Double(80.0, 240.0, 40, 20);
 					g2d.draw(destroyer1Selecionado);
@@ -615,7 +646,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (destroyer2Posicionado == false) {
+			if (destroyer2Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 140 && x <= 180 && y >= 240 && y <= 260) {
 		        	Rectangle2D destroyer2Selecionado = new Rectangle2D.Double(140.0, 240.0, 40, 20);
 					g2d.draw(destroyer2Selecionado);
@@ -627,7 +658,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (destroyer3Posicionado == false) {
+			if (destroyer3Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 200 && x <= 240 && y >= 240 && y <= 260) {
 		        	Rectangle2D destroyer3Selecionado = new Rectangle2D.Double(200.0, 240.0, 40, 20);
 					g2d.draw(destroyer3Selecionado);
@@ -639,7 +670,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (cruzador1Posicionado == false) {
+			if (cruzador1Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 80 && x <= 160 && y >= 300 && y <= 320) {
 		        	Rectangle2D cruzador1Selecionado = new Rectangle2D.Double(80.0, 300.0, 80, 20);
 					g2d.draw(cruzador1Selecionado);
@@ -651,7 +682,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (cruzador2Posicionado == false) {
+			if (cruzador2Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 180 && x <= 260 && y >= 300 && y <= 320) {
 		        	Rectangle2D cruzador2Selecionado = new Rectangle2D.Double(180.0, 300.0, 80, 20);
 					g2d.draw(cruzador2Selecionado);
@@ -663,7 +694,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		        }
 			}
 			
-			if (couracado1Posicionado == false) {
+			if (couracado1Posicionado == false && confirmarPosicionamento == false) {
 				if (x >= 80 && x <= 180 && y >= 360 && y <= 380) {
 		        	Rectangle2D couracado1Selecionado = new Rectangle2D.Double(80.0, 360.0, 100, 20);
 					g2d.draw(couracado1Selecionado);
@@ -679,34 +710,40 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 			
 	        char letraLinha = (char) ('A' + retornoClick[1]);
 	        int numeroColuna = retornoClick[0] + 1;
-	        String coordenada =  "" + letraLinha + numeroColuna;
+	        coordenada =  "" + letraLinha + numeroColuna;
 	        
 			// Armamento estava selecionado mas click foi fora da matriz e des-selecionou o armamento
-			if(selecionarArmamentoTemp == false && booleanArmamentoSelecionado == true && retornoClick[0] == -1 && retornoClick[1] == -1) {
+			if(selecionarArmamentoTemp == false && booleanArmamentoSelecionado == true && retornoClick[0] == -1 && retornoClick[1] == -1 && confirmarPosicionamento == false) {
 				booleanArmamentoSelecionado = false;
 				nomeArmamentoSelecionado = "";
 				numeroArmamentoSelecionado = -1;
 			}
 			
 			if (booleanArmamentoSelecionado && retornoClick[0] >= 0 && retornoClick[0] <= 15 && retornoClick[1] >= 0 && retornoClick[1] <= 15) {
-				boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
-				// boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Leste-Oeste", coordenada);
-				// boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Sul-Norte", coordenada);
-				// boolean dentroDoTabuleiro = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);
+				boolean verificaPosicaoNovaPosicao = false;
 				
-				if(dentroDoTabuleiro) {
-					boolean posicionou = Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
-					
-					if(posicionou) {
-						System.out.println("SIM");
-					}
+				if (nomeArmamentoSelecionado == "hidroaviao") {
+					verificaPosicaoNovaPosicao = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);
 				}
 				else {
-					System.out.println("NAO");
+					verificaPosicaoNovaPosicao = Control.getController().VerificaPosicao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
+				}
+				
+				if(confirmarPosicionamento && verificaPosicaoNovaPosicao) {
+					removerTempArmamento(clickSalvoAteInserir);
+				}
+				
+				if (verificaPosicaoNovaPosicao) {
+					clickSalvoAteInserir = retornoClick;
+					inserirTempArmamento(retornoClick);
+					confirmarPosicionamento = true;
 				}
 				
 				// Control.getController().TrocaTurno();
 	        }
+			
+			mouseEsquerdo = false;
+			mouseDireito = false;
 		}
 	}
 	

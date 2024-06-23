@@ -85,7 +85,8 @@ public class ModelFacade {
 		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2,armamentosJ1, armamentosJ2);
 	}
 	
-	private void inicializarBarcos() {
+	private void inicializarBarcos()
+	{
         // Inicializando os submarinos do Jogador 1
         submarino1J1 = new Submarino();
         submarino2J1 = new Submarino();
@@ -238,7 +239,8 @@ public class ModelFacade {
 		turno.trocaTurno();
 	}
 	
-	public String converteCoordenada(double x, double y) {
+	public String converteCoordenada(double x, double y)
+	{
         if (y < 125.0 || y > 425.0) {
             return "Fora do tabuleiro";
         }
@@ -277,7 +279,8 @@ public class ModelFacade {
         return casaY + casaX;
     }
 	
-	public int[] converteCoordenadaPosicionarArmamentos(int x, int y) {
+	public int[] converteCoordenadaPosicionarArmamentos(int x, int y)
+	{
 		int posX = -1;
 		int posY = -1;
 
@@ -310,44 +313,53 @@ public class ModelFacade {
 		numeroBarco--;
 		switch (nomeBarco) {
 			case "submarino":
-				if(turno.getVezJogar() == J1)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
-				else if (turno.getVezJogar() == J2)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				if(turno.getVezJogar() == J1) {
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);	
+				}
+				else if (turno.getVezJogar() == J2) {
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);
+				}
 				else return false;
 			case "hidroaviao":
 				numeroBarco += 4;
-				if(turno.getVezJogar() == J1)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
-				else if (turno.getVezJogar() == J2)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				if(turno.getVezJogar() == J1) {
+					return armamentosJ1.get(numeroBarco).verificarSentidoHidroAviao(tabuleiroJ1, sentido, letra, numero);
+				}
+				else if (turno.getVezJogar() == J2) {
+					return armamentosJ1.get(numeroBarco).verificarSentidoHidroAviao(tabuleiroJ2, sentido, letra, numero);	
+				}
 				else return false;
 			case "cruzador":
 				numeroBarco += 9;
-				if(turno.getVezJogar() == J1)
+				if(turno.getVezJogar() == J1) {
 					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
-				else if (turno.getVezJogar() == J2)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				}
+				else if (turno.getVezJogar() == J2) {
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);
+				}
 				else return false;
 			case "destroyer":
 				numeroBarco += 11;
-				if(turno.getVezJogar() == J1)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
-				else if (turno.getVezJogar() == J2)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				if(turno.getVezJogar() == J1) {
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);	
+				}
+				else if (turno.getVezJogar() == J2) {
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);	
+				}
 				else return false;
 			case "couracado":
 				numeroBarco += 14;
-				if(turno.getVezJogar() == J1)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
-				else if (turno.getVezJogar() == J2)
-					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);
+				if(turno.getVezJogar() == J1) {
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ1, sentido, letra, numero);	
+				}
+				else if (turno.getVezJogar() == J2) {
+					return armamentosJ1.get(numeroBarco).verificarSentido(tabuleiroJ2, sentido, letra, numero);
+				}
 				else return false;
 			default:
 				return false;
 		}
 	}
-	
 	
 	public boolean PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa)
 	{
@@ -404,12 +416,13 @@ public class ModelFacade {
 	
 	public void atacar(int letra, int numero)
 	{
-		if(turno.getVezJogar() == J1) 
-			tabuleiroJ2.realizarTiro(letra, numero);
-		else if(turno.getVezJogar() == J2) 
+		if(turno.getVezJogar() == J1) {
+			tabuleiroJ2.realizarTiro(letra, numero);	
+		}
+		else if(turno.getVezJogar() == J2) {
 			tabuleiroJ1.realizarTiro(letra,numero);
+		}
 	}
-	
 	
 	public void registra(ObservadorAtaqueIF observador)
 	{
