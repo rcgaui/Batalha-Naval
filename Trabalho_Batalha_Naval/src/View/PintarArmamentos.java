@@ -54,6 +54,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	// 1 --> Posicionado
 	
 	private int[][] matrizArmamentos = new int[15][15];
+	// private int[][] matrizArmamentosJ2 = new int[15][15];
+	
 	private int[][] matrizArmamentosTemp = new int[25][25];
 	// arrayArmamentosNaMatriz[index] recebe:
 	// 0 --> Nada posicionado
@@ -1082,11 +1084,12 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 					removerTempArmamento(clickSalvoAteInserir);	
 				}
 				
+				confirmarPosicionamento = true;
+				
 				if (verificaPosicaoNovaPosicao == 0) {
-					confirmarPosicionamento = true;
+					clickSalvoAteInserir = retornoClick;
 					
 					limparMatrizArmamentosTemp();
-					clickSalvoAteInserir = retornoClick;
 					
 					if (nomeArmamentoSelecionado == "hidroaviao") {
 						inserirTempArmamento(retornoClick, true, numRotaçãoHidroAviao);
@@ -1114,6 +1117,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		else if(mouseDireito) {
 			if(confirmarPosicionamento) {
 				int verificaPosicaoNovaPosicao = -1;
+				
 				if (nomeArmamentoSelecionado == "hidroaviao") {
 					numRotaçãoHidroAviao += 1;
 					if(numRotaçãoHidroAviao == 5) {
