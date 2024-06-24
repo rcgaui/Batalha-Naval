@@ -101,8 +101,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	            	mouseDireito = true;
 	            	mouseEsquerdo = false;
 	            }
-
-	            repaint();
 	        }
 	    });
 		
@@ -113,10 +111,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
             		confirmarPosicionamento = false;
             		
             		if(nomeArmamentoSelecionado == "hidroaviao") {
-            			inserirArmamentoSelecionado(clickSalvoAteInserir, numRotaçãoHidroAviao);
-                		limparMatrizArmamentosTemp();
-                		
-                		if(numRotaçãoHidroAviao == 1) {
+            			if(numRotaçãoHidroAviao == 1) {
                 			Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);	
                 		}
     					else if(numRotaçãoHidroAviao == 2) {
@@ -130,10 +125,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
     					}
 					}
 					else {
-						inserirArmamentoSelecionado(clickSalvoAteInserir, numRotaçãoGeral);
-	            		limparMatrizArmamentosTemp();
-	            		
-	            		if(numRotaçãoGeral == 1) {
+						if(numRotaçãoGeral == 1) {
 	            			Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
     					}
     					else if(numRotaçãoGeral == 2) {
@@ -146,16 +138,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
     						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Sul-Norte", coordenada);
     					}
 					}
-            		
-            		booleanArmamentoSelecionado = false;
-					nomeArmamentoSelecionado = "";
-					numeroArmamentoSelecionado = -1;
-					coordenada = "";
-					clickSalvoAteInserir = null;
-					numRotaçãoGeral = 0;
-					numRotaçãoHidroAviao = 0;
-					
-                	repaint();
             	}
             }
         });
@@ -165,7 +147,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
             {
             	redefinirPainelProximoJogador();
             	
-            	repaint();
+            	Control.getController().TrocaTurno();
             }
         });
 		
@@ -173,13 +155,29 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
             public void actionPerformed(ActionEvent e)
             {
             	framePai.dispose();
-            	Control.getController().comecarAtaque();;
+            	
+            	Control.getController().ComecarAtaque();
             }
         });
 	}
 	
-	public void notify(ObservadoAtaqueIF observado) {
+	public void notify(ObservadoAtaqueIF observado)
+	{
+		if(nomeArmamentoSelecionado == "hidroaviao") {
+			inserirArmamentoSelecionado(clickSalvoAteInserir, numRotaçãoHidroAviao);
+		}
+		else {
+			inserirArmamentoSelecionado(clickSalvoAteInserir, numRotaçãoGeral);
+		}
 		
+		limparMatrizArmamentosTemp();
+		booleanArmamentoSelecionado = false;
+		nomeArmamentoSelecionado = "";
+		numeroArmamentoSelecionado = -1;
+		coordenada = "";
+		clickSalvoAteInserir = null;
+		numRotaçãoGeral = 0;
+		numRotaçãoHidroAviao = 0;
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -226,6 +224,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		}
 		
 		verificarTudoPosicionado(g);
+		
+		repaint();
 	}
 	
 	private void redefinirPainelProximoJogador() {
@@ -249,6 +249,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
     	cruzador2Posicionado = false;
     	couracado1Posicionado = false;
     	
+    	limparMatrizArmamentosTemp();
+    	
     	for(int i = 0; i < arrayArmamentosPosicionados.length; i++) {
     		arrayArmamentosPosicionados[i] = 0;
     	}
@@ -263,6 +265,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
     	remove(botaoProximoJogador);
     	
     	armamentosJogador1Posicionado = true;
+    	
+    	repaint();
 	}
 	
 	private void desenhoArmamentos(Graphics2D g2d, double largura, double altura, int[] arrayArmamentosPosicionados) {
@@ -509,8 +513,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 			Rectangle2D couracado1Selecionado = new Rectangle2D.Double(80.0, 360.0, 100, 20);
 			g2d.draw(couracado1Selecionado);
         }
-		
-		repaint();
 	}
 	
 	private void inserirTempArmamento(int[] retornoClick, boolean posicionamentoPermitido, int numRotação) {
@@ -716,38 +718,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 				}
 	        }
 		}
-		
-		repaint();
-	}
-	
-	private void removerTempArmamento(int[] retornoClick) {
-		if(nomeArmamentoSelecionado.equals("submarino")) {
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 5] = 0;
-        }
-		else if(nomeArmamentoSelecionado.equals("hidroaviao")) {
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 1 + 5][retornoClick[0] - 1 + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 1 + 5][retornoClick[0] + 1 + 5] = 0;
-		}
-		else if(nomeArmamentoSelecionado.equals("destroyer")) {
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 1 + 5] = 0;
-        }
-		else if(nomeArmamentoSelecionado.equals("cruzador")) {
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 1 + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 2 + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 3 + 5] = 0;
-        }
-		else if(nomeArmamentoSelecionado.equals("couracado")) {
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 1 + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 2 + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 3 + 5] = 0;
-			matrizArmamentosTemp[retornoClick[1] + 5][retornoClick[0] + 4 + 5] = 0;
-        }
-		
-		repaint();
 	}
 	
 	private void inserirArmamentoSelecionado(int[] retornoClick, int numRotação) {
@@ -913,8 +883,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 			arrayArmamentosPosicionados[14] = 1;
 			couracado1Posicionado = true;
         }
-		
-		repaint();
 	}
 	
 	private void verificarClick(Graphics2D g2d) {
@@ -1080,10 +1048,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 					numRotaçãoGeral = 1;
 				}
 				
-				if(clickSalvoAteInserir != null) {
-					removerTempArmamento(clickSalvoAteInserir);	
-				}
-				
 				confirmarPosicionamento = true;
 				
 				if (verificaPosicaoNovaPosicao == 0) {
@@ -1157,10 +1121,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 					}
 				}
 				
-				if(clickSalvoAteInserir != null) {
-					removerTempArmamento(clickSalvoAteInserir);	
-				}
-				
 				if (verificaPosicaoNovaPosicao == 0) {
 					confirmarPosicionamento = true;
 					
@@ -1190,8 +1150,6 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 				}
 			}
 		}
-		
-		// Control.getController().TrocaTurno();
 		
 		mouseEsquerdo = false;
 		mouseDireito = false;

@@ -33,7 +33,7 @@ public class Control {
     	facade =  new ModelFacade();
     }
     
-    public void comecarAtaque()
+    public void ComecarAtaque()
     {
     	telaAtaque = new FrameAtaque();
     	telaAtaque.setVisible(true);

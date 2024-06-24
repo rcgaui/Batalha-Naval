@@ -80,7 +80,7 @@ public class ModelFacade {
 		armamentosJ1 = new ArrayList<>();
 		armamentosJ2 = new ArrayList<>();
 		turno = new Turno(J1, J2);
-		Control.getController().comecarAtaque();
+		Control.getController().ComecarAtaque();
 		inicializarBarcos();
 		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2,armamentosJ1, armamentosJ2);
 	}
