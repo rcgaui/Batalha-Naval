@@ -85,88 +85,7 @@ public class ModelFacade {
 		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2,armamentosJ1, armamentosJ2);
 	}
 	
-	private void inicializarBarcos()
-	{
-        // Inicializando os submarinos do Jogador 1
-        submarino1J1 = new Submarino();
-        submarino2J1 = new Submarino();
-        submarino3J1 = new Submarino();
-        submarino4J1 = new Submarino();
-        armamentosJ1.add(submarino1J1);
-        armamentosJ1.add(submarino2J1);
-        armamentosJ1.add(submarino3J1);
-        armamentosJ1.add(submarino4J1);
-
-        // Inicializando os hidroaviões do Jogador 1
-        hidroaviao1J1 = new Hidroaviao();
-        hidroaviao2J1 = new Hidroaviao();
-        hidroaviao3J1 = new Hidroaviao();
-        hidroaviao4J1 = new Hidroaviao();
-        hidroaviao5J1 = new Hidroaviao();
-        armamentosJ1.add(hidroaviao1J1);
-        armamentosJ1.add(hidroaviao2J1);
-        armamentosJ1.add(hidroaviao3J1);
-        armamentosJ1.add(hidroaviao4J1);
-        armamentosJ1.add(hidroaviao5J1);
-
-        // Inicializando os cruzadores do Jogador 1
-        cruzador1J1 = new Cruzador();
-        cruzador2J1 = new Cruzador();
-        armamentosJ1.add(cruzador1J1);
-        armamentosJ1.add(cruzador2J1);
-
-        // Inicializando os destroyers do Jogador 1
-        destroyer1J1 = new Destroyer();
-        destroyer2J1 = new Destroyer();
-        destroyer3J1 = new Destroyer();
-        armamentosJ1.add(destroyer1J1);
-        armamentosJ1.add(destroyer2J1);
-        armamentosJ1.add(destroyer3J1);
-
-        // Inicializando o couraçado do Jogador 1
-        couracado1J1 = new Couracado();
-        armamentosJ1.add(couracado1J1);
-
-        // Inicializando os submarinos do Jogador 2
-        submarino1J2 = new Submarino();
-        submarino2J2 = new Submarino();
-        submarino3J2 = new Submarino();
-        submarino4J2 = new Submarino();
-        armamentosJ2.add(submarino1J2);
-        armamentosJ2.add(submarino2J2);
-        armamentosJ2.add(submarino3J2);
-        armamentosJ2.add(submarino4J2);
-
-        // Inicializando os hidroaviões do Jogador 2
-        hidroaviao1J2 = new Hidroaviao();
-        hidroaviao2J2 = new Hidroaviao();
-        hidroaviao3J2 = new Hidroaviao();
-        hidroaviao4J2 = new Hidroaviao();
-        hidroaviao5J2 = new Hidroaviao();
-        armamentosJ2.add(hidroaviao1J2);
-        armamentosJ2.add(hidroaviao2J2);
-        armamentosJ2.add(hidroaviao3J2);
-        armamentosJ2.add(hidroaviao4J2);
-        armamentosJ2.add(hidroaviao5J2);
-
-        // Inicializando os cruzadores do Jogador 2
-        cruzador1J2 = new Cruzador();
-        cruzador2J2 = new Cruzador();
-        armamentosJ2.add(cruzador1J2);
-        armamentosJ2.add(cruzador2J2);
-
-        // Inicializando os destroyers do Jogador 2
-        destroyer1J2 = new Destroyer();
-        destroyer2J2 = new Destroyer();
-        destroyer3J2 = new Destroyer();
-        armamentosJ2.add(destroyer1J2);
-        armamentosJ2.add(destroyer2J2);
-        armamentosJ2.add(destroyer3J2);
-
-        // Inicializando o couraçado do Jogador 2
-        couracado1J2 = new Couracado();
-        armamentosJ2.add(couracado1J2);
-    }
+	
 	
 	public boolean anyDestroyed()
 	{
@@ -422,4 +341,87 @@ public class ModelFacade {
 		tabuleiroJ1.registraObservador(observador);
 		tabuleiroJ2.registraObservador(observador);
 	}
+	
+	private void inicializarBarcos()
+	{
+        // Inicializando os submarinos do Jogador 1
+        submarino1J1 = new Submarino();
+        submarino2J1 = new Submarino();
+        submarino3J1 = new Submarino();
+        submarino4J1 = new Submarino();
+        armamentosJ1.add(submarino1J1);
+        armamentosJ1.add(submarino2J1);
+        armamentosJ1.add(submarino3J1);
+        armamentosJ1.add(submarino4J1);
+
+        // Inicializando os hidroaviões do Jogador 1
+        hidroaviao1J1 = new Hidroaviao();
+        hidroaviao2J1 = new Hidroaviao();
+        hidroaviao3J1 = new Hidroaviao();
+        hidroaviao4J1 = new Hidroaviao();
+        hidroaviao5J1 = new Hidroaviao();
+        armamentosJ1.add(hidroaviao1J1);
+        armamentosJ1.add(hidroaviao2J1);
+        armamentosJ1.add(hidroaviao3J1);
+        armamentosJ1.add(hidroaviao4J1);
+        armamentosJ1.add(hidroaviao5J1);
+
+        // Inicializando os cruzadores do Jogador 1
+        cruzador1J1 = new Cruzador();
+        cruzador2J1 = new Cruzador();
+        armamentosJ1.add(cruzador1J1);
+        armamentosJ1.add(cruzador2J1);
+
+        // Inicializando os destroyers do Jogador 1
+        destroyer1J1 = new Destroyer();
+        destroyer2J1 = new Destroyer();
+        destroyer3J1 = new Destroyer();
+        armamentosJ1.add(destroyer1J1);
+        armamentosJ1.add(destroyer2J1);
+        armamentosJ1.add(destroyer3J1);
+
+        // Inicializando o couraçado do Jogador 1
+        couracado1J1 = new Couracado();
+        armamentosJ1.add(couracado1J1);
+
+        // Inicializando os submarinos do Jogador 2
+        submarino1J2 = new Submarino();
+        submarino2J2 = new Submarino();
+        submarino3J2 = new Submarino();
+        submarino4J2 = new Submarino();
+        armamentosJ2.add(submarino1J2);
+        armamentosJ2.add(submarino2J2);
+        armamentosJ2.add(submarino3J2);
+        armamentosJ2.add(submarino4J2);
+
+        // Inicializando os hidroaviões do Jogador 2
+        hidroaviao1J2 = new Hidroaviao();
+        hidroaviao2J2 = new Hidroaviao();
+        hidroaviao3J2 = new Hidroaviao();
+        hidroaviao4J2 = new Hidroaviao();
+        hidroaviao5J2 = new Hidroaviao();
+        armamentosJ2.add(hidroaviao1J2);
+        armamentosJ2.add(hidroaviao2J2);
+        armamentosJ2.add(hidroaviao3J2);
+        armamentosJ2.add(hidroaviao4J2);
+        armamentosJ2.add(hidroaviao5J2);
+
+        // Inicializando os cruzadores do Jogador 2
+        cruzador1J2 = new Cruzador();
+        cruzador2J2 = new Cruzador();
+        armamentosJ2.add(cruzador1J2);
+        armamentosJ2.add(cruzador2J2);
+
+        // Inicializando os destroyers do Jogador 2
+        destroyer1J2 = new Destroyer();
+        destroyer2J2 = new Destroyer();
+        destroyer3J2 = new Destroyer();
+        armamentosJ2.add(destroyer1J2);
+        armamentosJ2.add(destroyer2J2);
+        armamentosJ2.add(destroyer3J2);
+
+        // Inicializando o couraçado do Jogador 2
+        couracado1J2 = new Couracado();
+        armamentosJ2.add(couracado1J2);
+    }
 }
