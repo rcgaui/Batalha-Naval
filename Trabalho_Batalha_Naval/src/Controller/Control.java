@@ -106,6 +106,11 @@ public class Control {
 		facade.carregaPartida(file);
 	}
 	
+	public void atacar(int letra, int numero)
+	{
+		facade.atacar(letra, numero);
+	}
+	
 	public boolean salvarPartida(File file)
 	{
 		return facade.salvarPartida(file);

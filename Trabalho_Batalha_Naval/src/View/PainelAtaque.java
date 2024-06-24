@@ -46,7 +46,12 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
                 int y = e.getY();
                 System.out.println("Clique detectado nas coordenadas: (" + x + ", " + y + ")");
                 String coordenadaConvertida = Control.getController().converteCoordenadaAtaque(x, y);
-                System.out.println("Coordenada convertida: " + coordenadaConvertida);
+                if(coordenadaConvertida != null)
+                {
+                	int letra = coordenadaConvertida.charAt(0) - 'A';
+            		int numero = Integer.parseInt(coordenadaConvertida.substring(1)) - 1;
+            		Control.getController().atacar(letra, numero);
+                }
             }
         });
 	}
