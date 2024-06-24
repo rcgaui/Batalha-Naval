@@ -155,7 +155,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
             public void actionPerformed(ActionEvent e)
             {
             	framePai.dispose();
-            	
+            	Control.getController().TrocaTurno();
             	Control.getController().ComecarAtaque();
             }
         });

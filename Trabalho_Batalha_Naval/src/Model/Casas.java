@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import Controller.Control;
 import View.ObservadorAtaqueIF;
 
 class Casas implements ObservadoAtaqueIF{ 
@@ -66,6 +67,7 @@ class Casas implements ObservadoAtaqueIF{
 	}
 
 	public String atacarCasa() {
+
 		if (estadoCasa.equals("!")) {
             estadoCasa = "*";
             atualiza();

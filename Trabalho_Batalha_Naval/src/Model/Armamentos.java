@@ -5,6 +5,7 @@ import java.util.ArrayList;
 abstract class Armamentos {
 	protected String casaTabuleiro;
 	protected String sentido;
+	protected boolean destroyed = false;
 	protected ArrayList<String> posicoes = new ArrayList<>();
 	protected int tamanho;
 	protected boolean armamentoPosicionado;
@@ -15,6 +16,11 @@ abstract class Armamentos {
 
 	public void setArmamentoPosicionado(boolean armamentoPosicionado) {
 		this.armamentoPosicionado = armamentoPosicionado;
+	}
+	
+	public boolean getIfDestroyed()
+	{
+		return destroyed;
 	}
 	
 	protected abstract boolean posicionarArmamento(Tabuleiro tabuleiro, String casaTabuleiro, String sentido, Jogador jogador);
@@ -32,15 +38,21 @@ abstract class Armamentos {
 	protected ArrayList<String> isDestroyed(Tabuleiro tabuleiro)
 	{
 		int contaPosicoes = 0;
-		
 		for (String posicao : posicoes) {
 			int letra = posicao.charAt(0) - 'A'; 
 			int numero = Integer.parseInt(posicao.substring(1)) - 1;
-            if(tabuleiro.getCasas()[letra][numero].getPosicao() != "*") {
+			System.out.printf("Posicoes: %s", posicao);
+            if(tabuleiro.getCasas()[letra][numero].getEstadoCasa() == "*") {
             	contaPosicoes++;
             }
         }
-		if(contaPosicoes == this.tamanho) return this.posicoes;
+		System.out.printf("Conta posicoes: %d\n", contaPosicoes);
+		if(contaPosicoes == this.tamanho) 
+			{
+				System.out.println("Is destoyed retorna vetor com destruidos\n");
+				this.destroyed = true;
+				return this.posicoes;
+			}
 		else return null;
 	}
 	
@@ -202,42 +214,29 @@ abstract class Armamentos {
 	
 	protected boolean inserirArmamento(Tabuleiro tabuleiro, int letra, int numero, String sentido)
 	{
-		String coordenada;
 		switch (sentido) {
 			case "Leste-Oeste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero - i].setEstadoCasa("!");
-					char letraLinha = (char) ('A' + letra);
-			        int numeroColuna = numero + 1;
-					coordenada = "" + letraLinha + numeroColuna;
-					posicoes.add(coordenada);
+					posicoes.add(tabuleiro.getCasas()[letra][numero - 1].getPosicao());
 				}
 				return true;
 			case "Oeste-Leste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero + i].setEstadoCasa("!");
-					char letraLinha = (char) ('A' + letra);
-			        int numeroColuna = numero + 1;
-					coordenada = "" + letraLinha + numeroColuna;
-					posicoes.add(coordenada);
+					posicoes.add(tabuleiro.getCasas()[letra][numero + i].getPosicao());
 				}
 				return true;
 			case "Sul-Norte":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra - i][numero].setEstadoCasa("!");
-					char letraLinha = (char) ('A' + letra);
-			        int numeroColuna = numero + 1;
-					coordenada = "" + letraLinha + numeroColuna;
-					posicoes.add(coordenada);
+					posicoes.add(tabuleiro.getCasas()[letra - i][numero].getPosicao());
 				}
 				return true;
 			case "Norte-Sul":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra + i][numero].setEstadoCasa("!");
-					char letraLinha = (char) ('A' + letra);
-			        int numeroColuna = numero + 1;
-					coordenada = "" + letraLinha + numeroColuna;
-					posicoes.add(coordenada);
+					posicoes.add(tabuleiro.getCasas()[letra + i][numero].getPosicao());
 				}
 				return true;
 			default:
@@ -250,23 +249,36 @@ abstract class Armamentos {
 		switch (sentido) {
 			case "Oeste-Leste":
 				tabuleiro.getCasas()[letra][numero].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra][numero].getPosicao());
 				tabuleiro.getCasas()[letra + 1][numero + 1].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra + 1][numero + 1].getPosicao());
 				tabuleiro.getCasas()[letra - 1][numero + 1].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra - 1][numero + 1].getPosicao());
+				
 				return true;
 			case "Leste-Oeste":
 				tabuleiro.getCasas()[letra][numero].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra][numero].getPosicao());
 				tabuleiro.getCasas()[letra + 1][numero - 1].setEstadoCasa("!");
-				tabuleiro.getCasas()[letra - 1][numero - 1].setEstadoCasa("!");			
+				posicoes.add(tabuleiro.getCasas()[letra + 1][numero - 1].getPosicao());
+				tabuleiro.getCasas()[letra - 1][numero - 1].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra - 1][numero - 1].getPosicao());
 				return true;
 			case "Norte-Sul":
 				tabuleiro.getCasas()[letra][numero].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra][numero].getPosicao());
 				tabuleiro.getCasas()[letra + 1][numero + 1].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra + 1][numero + 1].getPosicao());
 				tabuleiro.getCasas()[letra + 1][numero - 1].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra + 1][numero - 1].getPosicao());
 				return true;
 			case "Sul-Norte":
 				tabuleiro.getCasas()[letra][numero].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra][numero].getPosicao());
 				tabuleiro.getCasas()[letra - 1][numero + 1].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra - 1][numero + 1].getPosicao());
 				tabuleiro.getCasas()[letra - 1][numero - 1].setEstadoCasa("!");
+				posicoes.add(tabuleiro.getCasas()[letra - 1][numero - 1].getPosicao());
 				return true;
 			default:
 				return false;

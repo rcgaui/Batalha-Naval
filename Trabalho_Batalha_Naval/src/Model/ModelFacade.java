@@ -62,7 +62,10 @@ public class ModelFacade {
 		tabuleiroJ2 = new Tabuleiro();
 		armamentosJ1 = new ArrayList<>();
 		armamentosJ2 = new ArrayList<>();
+		destruidosJ1 = new ArrayList<>();
+		destruidosJ2 = new ArrayList<>();
 		turno = new Turno(J1, J2);
+		turno.setVezJogar(J1);
 		inicializarBarcos();
 	}
 	
@@ -79,6 +82,8 @@ public class ModelFacade {
 		tabuleiroJ2 = new Tabuleiro();
 		armamentosJ1 = new ArrayList<>();
 		armamentosJ2 = new ArrayList<>();
+		destruidosJ1 = new ArrayList<>();
+		destruidosJ2 = new ArrayList<>();
 		turno = new Turno(J1, J2);
 		Control.getController().ComecarAtaque();
 		inicializarBarcos();
@@ -92,29 +97,34 @@ public class ModelFacade {
 		ArrayList<String> posicoes;
 		if(isJ1())
 		{
-			for(Armamentos barco: armamentosJ1)
+			for(Armamentos barco: armamentosJ2)
 			{
-				posicoes = barco.isDestroyed(tabuleiroJ1);
-				if(posicoes != null)
+				if(barco.getIfDestroyed() == false)
 				{
-					destruidosJ1.addAll(posicoes);
-					return true;
+					posicoes = barco.isDestroyed(tabuleiroJ2);
+					if(posicoes != null )
+					{
+						System.out.println("posicoes not null");
+						destruidosJ2.addAll(posicoes);
+						return true;
+					}					
 				}
-				else {}
 			}
 			return false;
 		}
 		else
 		{
-			for(Armamentos barco: armamentosJ2)
+			for(Armamentos barco: armamentosJ1)
 			{
-				posicoes = barco.isDestroyed(tabuleiroJ2);
-				if(posicoes != null)
-				{
-					destruidosJ2.addAll(posicoes);
-					return true;
+				if(barco.getIfDestroyed() == false)
+				{					
+					posicoes = barco.isDestroyed(tabuleiroJ1);
+					if(posicoes != null)
+					{
+						destruidosJ1.addAll(posicoes);
+						return true;
+					}
 				}
-				else {}
 			}
 			return false;
 		}
@@ -126,6 +136,7 @@ public class ModelFacade {
 		{
 			if(isJ1())
 			{
+				System.out.println("Algum barco foi destruido(to na get destroyed)");
 				return destruidosJ2;
 			}
 			else
@@ -149,8 +160,14 @@ public class ModelFacade {
 	
 	public boolean isJ1()
 	{
-		if(turno.getVezJogar() == J1) return true;
-		else return false;
+		if(turno.getVezJogar().equals(J1)) 
+			{
+				return true;
+			}
+		else 
+			{
+				return false;
+			}
 	}
 	
 	public void trocaTurno()
@@ -172,7 +189,7 @@ public class ModelFacade {
         }
 
         String casaX;
-        if (isJ1()) {
+        if (!isJ1()) {
             if (x < 125 || x > 425) {
                 return null;
             }
@@ -328,10 +345,10 @@ public class ModelFacade {
 	
 	public void atacar(int letra, int numero)
 	{
-		if(turno.getVezJogar() == J1) {
+		if(isJ1()) {
 			tabuleiroJ2.realizarTiro(letra, numero);	
 		}
-		else if(turno.getVezJogar() == J2) {
+		else {
 			tabuleiroJ1.realizarTiro(letra,numero);
 		}
 	}

@@ -44,8 +44,8 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
             public void mouseClicked(MouseEvent e) {
                 int x = e.getX();
                 int y = e.getY();
-                System.out.println("Clique detectado nas coordenadas: (" + x + ", " + y + ")");
                 String coordenadaConvertida = Control.getController().converteCoordenadaAtaque(x, y);
+
                 if(coordenadaConvertida != null)
                 {
                 	int letra = coordenadaConvertida.charAt(0) - 'A';
@@ -82,12 +82,11 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	{
 		int letra = casa.charAt(0) - 'A';
 		int numero = Integer.parseInt(casa.substring(1)) - 1;
-		
 		if(Control.getController().isJ1())
 		{
 			if(estadocasa.equals("*")) //Atingido
 			{
-				this.corCasasJ2[letra][numero] = Color.orange;
+				this.corCasasJ2[letra][numero] = Color.green;
 			}
 			else if(estadocasa.equals("~")) //Agua
 			{
@@ -99,7 +98,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		{
 			if(estadocasa.equals("*")) //Atingido
 			{
-				this.corCasasJ1[letra][numero] = Color.orange;
+				this.corCasasJ1[letra][numero] = Color.green;
 			}
 			else if(estadocasa.equals("~")) //Agua
 			{
@@ -116,11 +115,11 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		
 		if(Control.getController().isJ1())
 		{
-			this.corCasasJ1[letra][numero] = Color.red;
+			this.corCasasJ2[letra][numero] = Color.red;
 		}
 		else
 		{
-			this.corCasasJ2[letra][numero] = Color.red;
+			this.corCasasJ1[letra][numero] = Color.red;
 		}
 		repaint();
 	}
