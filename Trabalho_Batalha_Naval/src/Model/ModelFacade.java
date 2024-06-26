@@ -90,7 +90,27 @@ public class ModelFacade {
 		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2,armamentosJ1, armamentosJ2);
 	}
 	
-	
+	public boolean isGameOver()
+	{
+		if(isJ1())
+		{
+			for(Armamentos barco: armamentosJ2)
+			{
+				if(barco.getIfDestroyed() == false)
+					return false;
+			}
+		}
+		else
+		{
+			for(Armamentos barco: armamentosJ1)
+			{
+				if(barco.getIfDestroyed() == false)
+					return false;
+			}
+		}
+		
+		return true;
+	}
 	
 	public boolean anyDestroyed()
 	{
@@ -104,7 +124,6 @@ public class ModelFacade {
 					posicoes = barco.isDestroyed(tabuleiroJ2);
 					if(posicoes != null )
 					{
-						System.out.println("posicoes not null");
 						destruidosJ2.addAll(posicoes);
 						return true;
 					}					
@@ -136,7 +155,6 @@ public class ModelFacade {
 		{
 			if(isJ1())
 			{
-				System.out.println("Algum barco foi destruido(to na get destroyed)");
 				return destruidosJ2;
 			}
 			else
@@ -149,6 +167,11 @@ public class ModelFacade {
 			return null;
 		}
 
+	}
+	
+	public int getTentativas()
+	{
+		return turno.getTentativas();
 	}
 	
 	public String getName(int i)
@@ -212,6 +235,33 @@ public class ModelFacade {
         }
         return casaY + casaX;
     }
+
+	public void atacar(int letra, int numero)
+	{
+		if(turno.getTentativas() > 0)
+		{	
+			if(isJ1()) {
+				if(tabuleiroJ2.getCasas()[letra][numero].getEstadoCasa() != "*" && tabuleiroJ2.getCasas()[letra][numero].getEstadoCasa() != "~")
+				{					
+					tabuleiroJ2.realizarTiro(letra, numero);						
+					turno.tentativaTiro();
+				}
+			}
+			else {
+				if(tabuleiroJ1.getCasas()[letra][numero].getEstadoCasa() != "*" && tabuleiroJ1.getCasas()[letra][numero].getEstadoCasa() != "~") 
+				{					
+					tabuleiroJ1.realizarTiro(letra,numero);
+					turno.tentativaTiro();
+				}
+			}
+		}
+	}
+	
+	public void registra(ObservadorAtaqueIF observador)
+	{
+		tabuleiroJ1.registraObservador(observador);
+		tabuleiroJ2.registraObservador(observador);
+	}
 	
 	public int[] converteCoordenadaPosicionarArmamentos(int x, int y)
 	{
@@ -343,21 +393,6 @@ public class ModelFacade {
 		}
 	}
 	
-	public void atacar(int letra, int numero)
-	{
-		if(isJ1()) {
-			tabuleiroJ2.realizarTiro(letra, numero);	
-		}
-		else {
-			tabuleiroJ1.realizarTiro(letra,numero);
-		}
-	}
-	
-	public void registra(ObservadorAtaqueIF observador)
-	{
-		tabuleiroJ1.registraObservador(observador);
-		tabuleiroJ2.registraObservador(observador);
-	}
 	
 	private void inicializarBarcos()
 	{

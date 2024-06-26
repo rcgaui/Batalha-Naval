@@ -60,6 +60,11 @@ public class Control {
 		facade.trocaTurno();
 	}
 	
+	public boolean isGameOver()
+	{
+		return facade.isGameOver();
+	}
+	
 	public ArrayList<String> getDestroyed()
 	{
 		return facade.getDestroyed();
@@ -75,6 +80,11 @@ public class Control {
 	
 	public int[] ConverteCoordenadaPosicionarArmamentos(int x, int y) {
 		return facade.converteCoordenadaPosicionarArmamentos(x, y);
+	}
+	
+	public int getTentativas()
+	{
+		return facade.getTentativas();
 	}
 	
 	public boolean PosicionaEmbarcacao(String nomeBarco, int numeroBarco, String sentido, String casa) {

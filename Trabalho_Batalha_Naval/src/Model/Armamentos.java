@@ -41,15 +41,12 @@ abstract class Armamentos {
 		for (String posicao : posicoes) {
 			int letra = posicao.charAt(0) - 'A'; 
 			int numero = Integer.parseInt(posicao.substring(1)) - 1;
-			System.out.printf("Posicoes: %s", posicao);
             if(tabuleiro.getCasas()[letra][numero].getEstadoCasa() == "*") {
             	contaPosicoes++;
             }
         }
-		System.out.printf("Conta posicoes: %d\n", contaPosicoes);
 		if(contaPosicoes == this.tamanho) 
 			{
-				System.out.println("Is destoyed retorna vetor com destruidos\n");
 				this.destroyed = true;
 				return this.posicoes;
 			}

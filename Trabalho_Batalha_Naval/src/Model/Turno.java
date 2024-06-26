@@ -70,14 +70,6 @@ class Turno {
 		try
 		{
 			File arq = file;
-			if(arq.createNewFile())
-			{
-				System.out.println("Arquivo Criado: " + arq.getName() + "\n");
-			}
-			else
-			{
-				System.out.println("Arquivo existente, sobreescrevendo: " + arq.getName() + "\n");
-			}
 			
 			writer = new PrintWriter(new FileWriter(arq, false));
 			
@@ -159,13 +151,11 @@ class Turno {
 			if(vezJogar == jogador1) writer.write(jogador2.getNome());
 			else writer.write(jogador1.getNome());
 			
-			System.out.println("Partida Salva!\n");
 			return true;
 			
 		}
 		catch(IOException e)
 		{
-			System.out.println("Erro ao abrir arquivo \n");
 			e.printStackTrace();
 			return false;
 		}
@@ -230,13 +220,10 @@ class Turno {
 			this.jogador1.setNome(buffered.readLine());
 			this.jogador2.setNome(buffered.readLine());
 			
-			
-			System.out.println("Partida Carregada!\n");
 			return true;
 		}
 		catch(IOException e)
 		{
-			System.out.println("Erro ao Carregar arquivo \n");
 			e.printStackTrace();
 			return false;
 		}
