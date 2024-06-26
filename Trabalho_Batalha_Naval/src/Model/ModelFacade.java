@@ -393,7 +393,6 @@ public class ModelFacade {
 		}
 	}
 	
-	
 	private void inicializarBarcos()
 	{
         // Inicializando os submarinos do Jogador 1

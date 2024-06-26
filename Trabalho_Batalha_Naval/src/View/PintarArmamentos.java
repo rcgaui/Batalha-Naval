@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -104,41 +106,20 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	        }
 	    });
 		
+		this.setFocusable(true);
+		this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                    confirmarPosicionamentoArmamento();
+                }
+            }
+        });
+		
 		botaoConfirmarArmamento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {
-            	if(existeErroParaConfirmarPosicionamento == false && confirmarPosicionamento) {
-            		confirmarPosicionamento = false;
-            		
-            		if(nomeArmamentoSelecionado == "hidroaviao") {
-            			if(numRotaçãoHidroAviao == 1) {
-                			Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);	
-                		}
-    					else if(numRotaçãoHidroAviao == 2) {
-    						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Leste-Oeste", coordenada);
-    					}
-    					else if(numRotaçãoHidroAviao == 3) {
-    						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Sul-Norte", coordenada);
-    					}
-    					else if(numRotaçãoHidroAviao == 4) {
-    						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);	
-    					}
-					}
-					else {
-						if(numRotaçãoGeral == 1) {
-	            			Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
-    					}
-    					else if(numRotaçãoGeral == 2) {
-    						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);
-    					}
-    					else if(numRotaçãoGeral == 3) {
-    						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Leste-Oeste", coordenada);
-    					}
-    					else if(numRotaçãoGeral == 4) {
-    						Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Sul-Norte", coordenada);
-    					}
-					}
-            	}
+            	confirmarPosicionamentoArmamento();
             }
         });
 		
@@ -214,7 +195,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		selecionarArmamento(g2d);
 		
 		if(booleanArmamentoSelecionado && confirmarPosicionamento) {
-			g.drawString("Altere, rotacione ou confirme o posicionamento", 600, 100);
+			g.drawString("Altere, rotacione ou confirme o posicionamento (ESC ou botão)", 560, 100);
 		}
 		else if(booleanArmamentoSelecionado) {
 			g.drawString("Clique na matriz onde deseja posicionar o armamento", 585, 100);
@@ -226,6 +207,41 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		verificarTudoPosicionado(g);
 		
 		repaint();
+	}
+	
+	private void confirmarPosicionamentoArmamento() {
+		if(existeErroParaConfirmarPosicionamento == false && confirmarPosicionamento) {
+    		confirmarPosicionamento = false;
+    		
+    		if(nomeArmamentoSelecionado == "hidroaviao") {
+    			if(numRotaçãoHidroAviao == 1) {
+        			Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);	
+        		}
+				else if(numRotaçãoHidroAviao == 2) {
+					Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Leste-Oeste", coordenada);
+				}
+				else if(numRotaçãoHidroAviao == 3) {
+					Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Sul-Norte", coordenada);
+				}
+				else if(numRotaçãoHidroAviao == 4) {
+					Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);	
+				}
+			}
+			else {
+				if(numRotaçãoGeral == 1) {
+        			Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Oeste-Leste", coordenada);
+				}
+				else if(numRotaçãoGeral == 2) {
+					Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Norte-Sul", coordenada);
+				}
+				else if(numRotaçãoGeral == 3) {
+					Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Leste-Oeste", coordenada);
+				}
+				else if(numRotaçãoGeral == 4) {
+					Control.getController().PosicionaEmbarcacao(nomeArmamentoSelecionado, numeroArmamentoSelecionado, "Sul-Norte", coordenada);
+				}
+			}
+    	}
 	}
 	
 	private void redefinirPainelProximoJogador() {
@@ -1049,17 +1065,16 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 				}
 				
 				confirmarPosicionamento = true;
+				clickSalvoAteInserir = retornoClick;
 				
 				if (verificaPosicaoNovaPosicao == 0) {
-					clickSalvoAteInserir = retornoClick;
-					
 					limparMatrizArmamentosTemp();
 					
 					if (nomeArmamentoSelecionado == "hidroaviao") {
-						inserirTempArmamento(retornoClick, true, numRotaçãoHidroAviao);
+						inserirTempArmamento(clickSalvoAteInserir, true, numRotaçãoHidroAviao);
 					}
 					else {
-						inserirTempArmamento(retornoClick, true, numRotaçãoGeral);
+						inserirTempArmamento(clickSalvoAteInserir, true, numRotaçãoGeral);
 					}
 					
 					existeErroParaConfirmarPosicionamento = false;
@@ -1068,10 +1083,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 					limparMatrizArmamentosTemp();
 					
 					if (nomeArmamentoSelecionado == "hidroaviao") {
-						inserirTempArmamento(retornoClick, false, numRotaçãoHidroAviao);
+						inserirTempArmamento(clickSalvoAteInserir, false, numRotaçãoHidroAviao);
 					}
 					else {
-						inserirTempArmamento(retornoClick, false, numRotaçãoGeral);
+						inserirTempArmamento(clickSalvoAteInserir, false, numRotaçãoGeral);
 					}
 					
 					existeErroParaConfirmarPosicionamento = true;
@@ -1122,16 +1137,13 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 				}
 				
 				if (verificaPosicaoNovaPosicao == 0) {
-					confirmarPosicionamento = true;
-					
 					limparMatrizArmamentosTemp();
-					clickSalvoAteInserir = retornoClick;
 					
 					if (nomeArmamentoSelecionado == "hidroaviao") {
-						inserirTempArmamento(retornoClick, true, numRotaçãoHidroAviao);
+						inserirTempArmamento(clickSalvoAteInserir, true, numRotaçãoHidroAviao);
 					}
 					else {
-						inserirTempArmamento(retornoClick, true, numRotaçãoGeral);
+						inserirTempArmamento(clickSalvoAteInserir, true, numRotaçãoGeral);
 					}
 					
 					existeErroParaConfirmarPosicionamento = false;
@@ -1140,10 +1152,10 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 					limparMatrizArmamentosTemp();
 					
 					if (nomeArmamentoSelecionado == "hidroaviao") {
-						inserirTempArmamento(retornoClick, false, numRotaçãoHidroAviao);
+						inserirTempArmamento(clickSalvoAteInserir, false, numRotaçãoHidroAviao);
 					}
 					else {
-						inserirTempArmamento(retornoClick, false, numRotaçãoGeral);
+						inserirTempArmamento(clickSalvoAteInserir, false, numRotaçãoGeral);
 					}
 					
 					existeErroParaConfirmarPosicionamento = true;
