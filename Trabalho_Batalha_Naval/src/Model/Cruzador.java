@@ -16,7 +16,7 @@ class Cruzador extends Armamentos {
 			return false;
 		}
 		else {
-			if(inserirArmamento(tabuleiro, letra, numero, sentido))
+			if(inserirArmamento(tabuleiro, casaTabuleiro, letra, numero, sentido))
 			{
 				jogador.addCruzador();
 				if (jogador.getQntCruzadores() == 2) {

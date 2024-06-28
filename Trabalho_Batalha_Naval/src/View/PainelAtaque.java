@@ -26,7 +26,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	JButton botaoTrocaTurno = new JButton("Trocar Turno");
 	JLabel textoAcao = new JLabel();
 	JPanel panel = this;
-	JFileChooser filechooser = new JFileChooser();
+	JFileChooser filechooser;
 	private Color corCasasJ1 [][];
 	private Color corCasasJ2 [][];
 	int qntNumeros = 15;
@@ -78,8 +78,6 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		    	repaint();
 		    }
 		});
-		
-		
 		
 		this.addMouseListener(new MouseAdapter() {
             @Override
@@ -205,7 +203,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		String nomeJ1 = "Tabuleiro de " + Control.getController().getJogadorName(1);
 		String nomeJ2 = "Tabuleiro de " + Control.getController().getJogadorName(2);
 		
-		//Tabuleiro J1
+		// Tabuleiro J1
 		g.drawString(nomeJ1, 225, 60);
 		
 		Rectangle2D tabuleiroJogador1 = new Rectangle2D.Double(125.0, topY, largura, altura);
@@ -231,7 +229,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		}
 		
 		
-		//Tabuleiro J2
+		// Tabuleiro J2
 		g.drawString(nomeJ2, 675, 60);
 		
 		Rectangle2D tabuleiroJogador2 = new Rectangle2D.Double(575.0, topY, largura, altura);
@@ -256,14 +254,10 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			}
 		}
 		
-		
-			
-		
-		
-		//Escrever Jlabel aqui		
+		// Escrever Jlabel aqui		
 		g.drawString("Visão bloqueada", 455, 470);
 
-		//Bloqueios de visao
+		// Bloqueios de visao
 		if(telaBloqueio == true)
 		{
 			g2d.setPaint(Color.darkGray);

@@ -69,11 +69,29 @@ class Turno {
 		PrintWriter writer = null;
 		try
 		{
-			File arq = file;
+			writer = new PrintWriter(new FileWriter(file, false));
 			
-			writer = new PrintWriter(new FileWriter(arq, false));
+			for(int i = 0; i < 15; i++) // Escreve posicoes armamentos J1
+			{
+				System.out.println(armamentosJ1.get(0));
+				System.out.println(armamentosJ1.get(0).getCasa());
+				System.out.println(armamentosJ1.get(0).getSentido());
+				String casa = armamentosJ1.get(i).getCasa();
+				String sentido = armamentosJ1.get(i).getSentido();
+				writer.write(casa);
+				writer.flush();
+				writer.write(" ");
+				writer.flush();
+				writer.write(sentido);
+				writer.flush();
+				writer.write("\n");
+				writer.flush();
+			}
 			
-			for(int i = 0; i < 15; i++) //Escreve posicoes armamentos J1
+			writer.write("\n");
+			writer.flush();
+			
+			for(int i = 0; i < 15; i++) // Escreve posicoes armamentos J2
 			{
 				String casa = armamentosJ1.get(i).getCasa();
 				String sentido = armamentosJ1.get(i).getSentido(); 
@@ -90,24 +108,7 @@ class Turno {
 			writer.write("\n");
 			writer.flush();
 			
-			for(int i = 0; i < 15; i++)//Escreve posicoes armamentos J2
-			{
-				String casa = armamentosJ1.get(i).getCasa();
-				String sentido = armamentosJ1.get(i).getSentido(); 
-				writer.write(casa);
-				writer.flush();
-				writer.write(" ");
-				writer.flush();
-				writer.write(sentido);
-				writer.flush();
-				writer.write("\n");
-				writer.flush();
-			}
-			
-			writer.write("\n");
-			writer.flush();
-			
-			for(int i = 0; i < 15; i++) //Escreve atacados tabuleiro 1
+			for(int i = 0; i < 15; i++) // Escreve atacados tabuleiro 1
 			{
 				for(int j = 0; j < 15; j++)
 				{
@@ -121,12 +122,12 @@ class Turno {
 				}
 			}
 			
-			writer.write("-"); //Identificador de mudanca de atacados do j1 pra j2
+			writer.write("-"); // Identificador de mudanca de atacados do j1 pra j2
 			writer.flush();
 			writer.write("\n");
 			writer.flush();
 			
-			for(int i = 0; i < 15; i++) //Escreve atacados tabuleiro 2
+			for(int i = 0; i < 15; i++) // Escreve atacados tabuleiro 2
 			{
 				for(int j = 0; j < 15; j++)
 				{
@@ -139,7 +140,7 @@ class Turno {
 					}
 				}
 			}
-			writer.write("-"); //Identificador de mudanca de atacados do j2 para nomes
+			writer.write("-"); // Identificador de mudanca de atacados do j2 para nomes
 			writer.flush();
 			writer.write("\n");
 			writer.flush();
@@ -176,6 +177,8 @@ class Turno {
 			String sentido;
 			int letra;
 			int numero;
+			char letraLinha;
+			String coordenada;
 			
 			for(int i = 0; i < 15; i++) //insere as embarcacoes j1
 			{
@@ -184,7 +187,9 @@ class Turno {
 				sentido =  linha.trim().split("\\s+")[1];
 				letra = casa.charAt(0) - 'A'; 
 				numero = Integer.parseInt(casa.substring(1)) - 1;
-				armamentosj1.get(i).inserirArmamento(tabuleiroJogador1, letra, numero, sentido);
+				letraLinha = (char) ('A' + letra);
+		        coordenada =  "" + letraLinha + numero;
+				armamentosj1.get(i).inserirArmamento(tabuleiroJogador1, coordenada, letra, numero, sentido);
 			}
 			buffered.readLine();
 			for(int i = 0; i < 15; i++) //Insere as embarcacoes j2
@@ -194,7 +199,9 @@ class Turno {
 				sentido =  linha.trim().split("\\s+")[1];
 				letra = casa.charAt(0) - 'A'; 
 				numero = Integer.parseInt(casa.substring(1)) - 1;
-				armamentosj2.get(i).inserirArmamento(tabuleiroJogador2, letra, numero, sentido);
+				letraLinha = (char) ('A' + letra);
+		        coordenada =  "" + letraLinha + numero;
+				armamentosj2.get(i).inserirArmamento(tabuleiroJogador2, coordenada, letra, numero, sentido);
 			}
 			buffered.readLine();
 			

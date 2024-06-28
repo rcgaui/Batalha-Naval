@@ -742,7 +742,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 			
 			if(numeroArmamentoSelecionado == 1) {
 				arrayArmamentosPosicionados[5] = 1;
-				submarino1Posicionado = true;	
+				submarino1Posicionado = true;
 			}
 			else if(numeroArmamentoSelecionado == 2) {
 				arrayArmamentosPosicionados[6] = 1;

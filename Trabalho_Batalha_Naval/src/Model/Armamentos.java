@@ -209,7 +209,7 @@ abstract class Armamentos {
 	    return 0;
 	}
 	
-	protected boolean inserirArmamento(Tabuleiro tabuleiro, int letra, int numero, String sentido)
+	protected boolean inserirArmamento(Tabuleiro tabuleiro, String casaTabuleiro, int letra, int numero, String sentido)
 	{
 		switch (sentido) {
 			case "Leste-Oeste":
@@ -217,31 +217,39 @@ abstract class Armamentos {
 					tabuleiro.getCasas()[letra][numero - i].setEstadoCasa("!");
 					posicoes.add(tabuleiro.getCasas()[letra][numero - 1].getPosicao());
 				}
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			case "Oeste-Leste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero + i].setEstadoCasa("!");
 					posicoes.add(tabuleiro.getCasas()[letra][numero + i].getPosicao());
 				}
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			case "Sul-Norte":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra - i][numero].setEstadoCasa("!");
 					posicoes.add(tabuleiro.getCasas()[letra - i][numero].getPosicao());
 				}
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			case "Norte-Sul":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra + i][numero].setEstadoCasa("!");
 					posicoes.add(tabuleiro.getCasas()[letra + i][numero].getPosicao());
 				}
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			default:
 				return false;
 		}
 	}
 	
-	protected boolean inserirArmamentoHidroAviao(Tabuleiro tabuleiro, int letra, int numero, String sentido)
+	protected boolean inserirArmamentoHidroAviao(Tabuleiro tabuleiro, String casaTabuleiro, int letra, int numero, String sentido)
 	{
 		switch (sentido) {
 			case "Oeste-Leste":
@@ -251,7 +259,8 @@ abstract class Armamentos {
 				posicoes.add(tabuleiro.getCasas()[letra + 1][numero + 1].getPosicao());
 				tabuleiro.getCasas()[letra - 1][numero + 1].setEstadoCasa("!");
 				posicoes.add(tabuleiro.getCasas()[letra - 1][numero + 1].getPosicao());
-				
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			case "Leste-Oeste":
 				tabuleiro.getCasas()[letra][numero].setEstadoCasa("!");
@@ -260,6 +269,8 @@ abstract class Armamentos {
 				posicoes.add(tabuleiro.getCasas()[letra + 1][numero - 1].getPosicao());
 				tabuleiro.getCasas()[letra - 1][numero - 1].setEstadoCasa("!");
 				posicoes.add(tabuleiro.getCasas()[letra - 1][numero - 1].getPosicao());
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			case "Norte-Sul":
 				tabuleiro.getCasas()[letra][numero].setEstadoCasa("!");
@@ -268,6 +279,8 @@ abstract class Armamentos {
 				posicoes.add(tabuleiro.getCasas()[letra + 1][numero + 1].getPosicao());
 				tabuleiro.getCasas()[letra + 1][numero - 1].setEstadoCasa("!");
 				posicoes.add(tabuleiro.getCasas()[letra + 1][numero - 1].getPosicao());
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			case "Sul-Norte":
 				tabuleiro.getCasas()[letra][numero].setEstadoCasa("!");
@@ -276,6 +289,8 @@ abstract class Armamentos {
 				posicoes.add(tabuleiro.getCasas()[letra - 1][numero + 1].getPosicao());
 				tabuleiro.getCasas()[letra - 1][numero - 1].setEstadoCasa("!");
 				posicoes.add(tabuleiro.getCasas()[letra - 1][numero - 1].getPosicao());
+				this.casaTabuleiro = casaTabuleiro;
+				this.sentido = sentido;
 				return true;
 			default:
 				return false;

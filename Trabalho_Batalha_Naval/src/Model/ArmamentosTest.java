@@ -36,7 +36,7 @@ public class ArmamentosTest{
 	
 	@Test
 	public void testInserirArmamento() {
-		assertTrue("O armamento deve ser inserido após inserirArmamento() com parâmetros corretos", cruzador.inserirArmamento(tabuleiro, 6, 8, "Norte-Sul"));
+		assertTrue("O armamento deve ser inserido após inserirArmamento() com parâmetros corretos", cruzador.inserirArmamento(tabuleiro, "G8", 6, 8, "Norte-Sul"));
 	}
 	
 	@Test

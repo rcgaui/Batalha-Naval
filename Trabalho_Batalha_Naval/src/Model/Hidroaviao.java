@@ -16,7 +16,7 @@ class Hidroaviao extends Armamentos {
 			return false;
 		}
 		else {
-			if(inserirArmamentoHidroAviao(tabuleiro, letra, numero, sentido))
+			if(inserirArmamentoHidroAviao(tabuleiro, casaTabuleiro, letra, numero, sentido))
 			{
 				jogador.addHidroaviao();
 				if (jogador.getQntHidroavioes() == 5) {
