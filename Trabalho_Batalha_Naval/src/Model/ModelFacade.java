@@ -87,7 +87,7 @@ public class ModelFacade {
 		turno = new Turno(J1, J2);
 		Control.getController().ComecarAtaque();
 		inicializarBarcos();
-		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2,armamentosJ1, armamentosJ2);
+		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2, armamentosJ1, armamentosJ2);
 	}
 	
 	public boolean isGameOver()
@@ -184,13 +184,13 @@ public class ModelFacade {
 	public boolean isJ1()
 	{
 		if(turno.getVezJogar().equals(J1)) 
-			{
-				return true;
-			}
+		{
+			return true;
+		}
 		else 
-			{
-				return false;
-			}
+		{
+			return false;
+		}
 	}
 	
 	public void trocaTurno()

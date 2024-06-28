@@ -72,14 +72,17 @@ class Casas implements ObservadoAtaqueIF{
             estadoCasa = "*";
             atualiza();
             return "Embarcação atingida!";
-        } else if (estadoCasa.equals("?") || estadoCasa.equals("~")) {
-            estadoCasa = "~";
+        } else if(estadoCasa.equals("?")) {
+        	estadoCasa = "~";
+        	atualiza();
+        	return "Água atingida!";
+        } else if (estadoCasa.equals("~")) {
             atualiza();
-            return "Água!";
+            return "Já atingido! (Água)";
         } else if (estadoCasa.equals("*")){
         	atualiza();
-            return "Já atingido!";
-        }else {
+            return "Já atingido! (Embarcação)";
+        } else {
         	return "Ataque inválido!";
         }
     }

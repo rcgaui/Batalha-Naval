@@ -41,7 +41,6 @@ class Tabuleiro {
 		return casas;
 	}
 	
-	
 	public void registraObservador(ObservadorAtaqueIF observador)
 	{
 		for (int i = 0; i < qntLetras; i++) {

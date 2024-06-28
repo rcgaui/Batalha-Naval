@@ -73,9 +73,6 @@ class Turno {
 			
 			for(int i = 0; i < 15; i++) // Escreve posicoes armamentos J1
 			{
-				System.out.println(armamentosJ1.get(0));
-				System.out.println(armamentosJ1.get(0).getCasa());
-				System.out.println(armamentosJ1.get(0).getSentido());
 				String casa = armamentosJ1.get(i).getCasa();
 				String sentido = armamentosJ1.get(i).getSentido();
 				writer.write(casa);
@@ -108,11 +105,11 @@ class Turno {
 			writer.write("\n");
 			writer.flush();
 			
-			for(int i = 0; i < 15; i++) // Escreve atacados tabuleiro 1
+			for(int i = 0; i < 15; i++) // Escreve tabuleiro 1
 			{
 				for(int j = 0; j < 15; j++)
 				{
-					if(tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "*")
+					if(tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "*" || tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "~")
 					{
 						writer.write(tabuleiroj1.getCasas()[i][j].getPosicao());
 						writer.flush();
@@ -127,11 +124,11 @@ class Turno {
 			writer.write("\n");
 			writer.flush();
 			
-			for(int i = 0; i < 15; i++) // Escreve atacados tabuleiro 2
+			for(int i = 0; i < 15; i++) // Escreve tabuleiro 2
 			{
 				for(int j = 0; j < 15; j++)
 				{
-					if(tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "*")
+					if(tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "*" || tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "~")
 					{
 						writer.write(tabuleiroj2.getCasas()[i][j].getPosicao());
 						writer.flush();
@@ -149,8 +146,25 @@ class Turno {
 			writer.flush();
 			writer.write("\n");
 			writer.flush();
-			if(vezJogar == jogador1) writer.write(jogador2.getNome());
-			else writer.write(jogador1.getNome());
+			
+			if(vezJogar == jogador1) {
+				writer.write("J1");
+				writer.flush();
+				writer.write("\n");
+				writer.flush();
+				writer.write(jogador2.getNome());
+			}
+			else {
+				writer.write("J2");
+				writer.flush();
+				writer.write("\n");
+				writer.flush();
+				writer.write(jogador1.getNome());
+			}
+			
+			writer.flush();
+			writer.write("\n");
+			writer.flush();
 			
 			return true;
 			
@@ -169,9 +183,7 @@ class Turno {
 	
 	public boolean carregarJogo(String nome, Tabuleiro tabuleiroJogador1, Tabuleiro tabuleiroJogador2, ArrayList<Armamentos> armamentosj1, ArrayList<Armamentos> armamentosj2) {
 		try {
-			FileReader buffer= new FileReader(nome);
-			
-			BufferedReader buffered = new BufferedReader(buffer);
+			BufferedReader buffered = new BufferedReader(new FileReader(nome));
 			String linha;
 			String casa;
 			String sentido;
@@ -180,7 +192,7 @@ class Turno {
 			char letraLinha;
 			String coordenada;
 			
-			for(int i = 0; i < 15; i++) //insere as embarcacoes j1
+			for(int i = 0; i < 15; i++) // 15 embarcações J1
 			{
 				linha = buffered.readLine();
 				casa = linha.trim().split("\\s+")[0];
@@ -189,10 +201,18 @@ class Turno {
 				numero = Integer.parseInt(casa.substring(1)) - 1;
 				letraLinha = (char) ('A' + letra);
 		        coordenada =  "" + letraLinha + numero;
-				armamentosj1.get(i).inserirArmamento(tabuleiroJogador1, coordenada, letra, numero, sentido);
+		        
+		        if(i >= 4 && i <= 8) {
+		        	armamentosj1.get(i).inserirArmamentoHidroAviao(tabuleiroJogador1, coordenada, letra, numero, sentido);	
+		        }
+		        else {
+		        	armamentosj1.get(i).inserirArmamento(tabuleiroJogador1, coordenada, letra, numero, sentido);
+		        }
 			}
+			
 			buffered.readLine();
-			for(int i = 0; i < 15; i++) //Insere as embarcacoes j2
+			
+			for(int i = 0; i < 15; i++) // 15 embarcações J2
 			{
 				linha = buffered.readLine();
 				casa = linha.trim().split("\\s+")[0];
@@ -201,31 +221,52 @@ class Turno {
 				numero = Integer.parseInt(casa.substring(1)) - 1;
 				letraLinha = (char) ('A' + letra);
 		        coordenada =  "" + letraLinha + numero;
-				armamentosj2.get(i).inserirArmamento(tabuleiroJogador2, coordenada, letra, numero, sentido);
+		        
+		        if(i >= 4 && i <= 8) {
+		        	armamentosj2.get(i).inserirArmamentoHidroAviao(tabuleiroJogador2, coordenada, letra, numero, sentido);	
+		        }
+		        else {
+		        	armamentosj2.get(i).inserirArmamento(tabuleiroJogador2, coordenada, letra, numero, sentido);
+		        }
 			}
+			
 			buffered.readLine();
 			
-			linha = buffered.readLine(); 
-			
-			while(linha != "-")
+			while(true) // J1 atirando no J2
 			{
+				linha = buffered.readLine();
+				if(linha.equals("-")) {
+					break;
+				}
+				letra = linha.charAt(0) - 'A';
+				numero = Integer.parseInt(linha.substring(1)) - 1;
+				tabuleiroJogador2.realizarTiro(letra, numero);
+			}
+			
+			while(true) // J2 atirando no J1
+			{
+				linha = buffered.readLine();
+				if(linha.equals("-")) {
+					break;
+				}
 				letra = linha.charAt(0) - 'A';
 				numero = Integer.parseInt(linha.substring(1)) - 1;
 				tabuleiroJogador1.realizarTiro(letra, numero);
-				linha = buffered.readLine();
 			}
 			
-			linha = buffered.readLine(); 
-			while(linha != "-")
-			{
-				letra = linha.charAt(0) - 'A';
-				numero = Integer.parseInt(linha.substring(1)) - 1;
-				tabuleiroJogador1.realizarTiro(letra, numero);
-				linha = buffered.readLine();
+			String primeiroNome = buffered.readLine();
+			String vezDoJogador = buffered.readLine();
+			
+			if(vezDoJogador.equals("J1")) {
+				jogador1.setNome(primeiroNome);
+				jogador2.setNome(buffered.readLine());
+				vezJogar = jogador1;
 			}
-
-			this.jogador1.setNome(buffered.readLine());
-			this.jogador2.setNome(buffered.readLine());
+			else {
+				jogador2.setNome(primeiroNome);
+				jogador1.setNome(buffered.readLine());
+				vezJogar = jogador2;
+			}
 			
 			return true;
 		}

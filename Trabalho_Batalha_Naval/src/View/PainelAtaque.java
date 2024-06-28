@@ -228,7 +228,6 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			}
 		}
 		
-		
 		// Tabuleiro J2
 		g.drawString(nomeJ2, 675, 60);
 		
@@ -276,7 +275,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			g.setColor(Color.black);
 			g.drawString("Visão bloqueada", 225, 275);
 		}
-		else //Vez do J2, bloqueia tabuleiro dele
+		else // Vez do J2, bloqueia tabuleiro dele
 		{
 			g2d.setPaint(Color.darkGray);
 			g2d.fill(tabuleiroJogador2);
