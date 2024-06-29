@@ -71,7 +71,7 @@ public class ModelFacade {
 	
 	public boolean salvarPartida(File file)
 	{
-		return turno.salvaJogo(file, tabuleiroJ1, tabuleiroJ2, armamentosJ1, armamentosJ1);
+		return turno.salvaJogo(file, tabuleiroJ1, tabuleiroJ2, armamentosJ1, armamentosJ2);
 	}
 	
 	public void carregaPartida(JFileChooser file)

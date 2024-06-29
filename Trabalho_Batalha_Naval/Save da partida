@@ -1,79 +1,103 @@
-D5 Oeste-Leste
-D7 Oeste-Leste
-D9 Oeste-Leste
-D11 Oeste-Leste
-D2 Norte-Sul
-A14 Norte-Sul
+A5 Oeste-Leste
+C5 Oeste-Leste
+E5 Oeste-Leste
+G5 Oeste-Leste
 A2 Norte-Sul
-A10 Norte-Sul
-A6 Norte-Sul
-H7 Oeste-Leste
-F5 Oeste-Leste
-F10 Oeste-Leste
-D13 Norte-Sul
-D15 Norte-Sul
-H1 Oeste-Leste
-
-D5 Oeste-Leste
-D7 Oeste-Leste
-D9 Oeste-Leste
-D11 Oeste-Leste
 D2 Norte-Sul
-A14 Norte-Sul
-A2 Norte-Sul
+G2 Norte-Sul
+J2 Norte-Sul
+M2 Norte-Sul
+A8 Norte-Sul
+F8 Norte-Sul
+I5 Norte-Sul
+L5 Norte-Sul
+O5 Oeste-Leste
 A10 Norte-Sul
-A6 Norte-Sul
-H7 Oeste-Leste
-F5 Oeste-Leste
-F10 Oeste-Leste
-D13 Norte-Sul
-D15 Norte-Sul
-H1 Oeste-Leste
 
-A3
-A7
-C3
-C7
-E3
-E7
+A1 Oeste-Leste
+O1 Oeste-Leste
+O15 Oeste-Leste
+A15 Oeste-Leste
+G3 Oeste-Leste
+G7 Leste-Oeste
+G9 Oeste-Leste
+G13 Leste-Oeste
+O8 Sul-Norte
+D3 Oeste-Leste
+D10 Oeste-Leste
+I8 Norte-Sul
+B4 Oeste-Leste
+B11 Oeste-Leste
+L6 Oeste-Leste
+
+A1
+A15
+B4
+B5
+B10
+D3
+D4
+D5
+D6
+D10
+D11
+D12
+F4
+F6
+F10
+F12
 G3
 G7
-G11
-I3
-I7
-I11
-K3
-K7
-K11
-M3
-M7
-M11
-O3
-O7
-O11
+G9
+G13
+H4
+H6
+H10
+H12
+I8
+J8
+L6
+L7
+L8
+L9
+L10
+O1
+O15
 -
-D1
-D3
-D5
-D7
-D9
-D11
-D13
-D15
+A2
+A5
+A7
+B1
+B3
+B7
+C5
+D2
+E1
+E3
+E5
+E8
+F7
+F8
+G2
+G5
+G8
 H1
 H3
-H5
-H7
-H9
-H11
-H13
-H15
-L1
-L3
+H8
+I5
+I8
+J2
+J5
+K1
+K3
 L5
-L7
-L9
+M2
+M5
+N1
+N3
+O5
+O6
 -
-Felipe
+Jogador 1
 J1
-Vagner
+Jogador 2

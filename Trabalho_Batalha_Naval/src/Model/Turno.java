@@ -64,7 +64,7 @@ class Turno {
 		}
 	}
 	
-	public boolean salvaJogo(File file, Tabuleiro tabuleiroj1, Tabuleiro tabuleiroj2, ArrayList<Armamentos> armamentosJ1, ArrayList<Armamentos> armamentosJ12 )
+	public boolean salvaJogo(File file, Tabuleiro tabuleiroj1, Tabuleiro tabuleiroj2, ArrayList<Armamentos> armamentosJ1, ArrayList<Armamentos> armamentosJ2 )
 	{
 		PrintWriter writer = null;
 		try
@@ -90,8 +90,8 @@ class Turno {
 			
 			for(int i = 0; i < 15; i++) // Escreve posicoes armamentos J2
 			{
-				String casa = armamentosJ1.get(i).getCasa();
-				String sentido = armamentosJ1.get(i).getSentido(); 
+				String casa = armamentosJ2.get(i).getCasa();
+				String sentido = armamentosJ2.get(i).getSentido(); 
 				writer.write(casa);
 				writer.flush();
 				writer.write(" ");
@@ -105,13 +105,13 @@ class Turno {
 			writer.write("\n");
 			writer.flush();
 			
-			for(int i = 0; i < 15; i++) // Escreve tabuleiro 1
+			for(int i = 0; i < 15; i++) // Escreve ataques jogador 1 no tabuleiro 2
 			{
 				for(int j = 0; j < 15; j++)
 				{
-					if(tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "*" || tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "~")
+					if(tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "*" || tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "~")
 					{
-						writer.write(tabuleiroj1.getCasas()[i][j].getPosicao());
+						writer.write(tabuleiroj2.getCasas()[i][j].getPosicao());
 						writer.flush();
 						writer.write("\n");
 						writer.flush();
@@ -124,13 +124,13 @@ class Turno {
 			writer.write("\n");
 			writer.flush();
 			
-			for(int i = 0; i < 15; i++) // Escreve tabuleiro 2
+			for(int i = 0; i < 15; i++) // Escreve ataques jogador 2 no tabuleiro 1
 			{
 				for(int j = 0; j < 15; j++)
 				{
-					if(tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "*" || tabuleiroj2.getCasas()[i][j].getEstadoCasa() == "~")
+					if(tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "*" || tabuleiroj1.getCasas()[i][j].getEstadoCasa() == "~")
 					{
-						writer.write(tabuleiroj2.getCasas()[i][j].getPosicao());
+						writer.write(tabuleiroj1.getCasas()[i][j].getPosicao());
 						writer.flush();
 						writer.write("\n");
 						writer.flush();
