@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities; 
 
@@ -81,11 +84,14 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	JLabel textNomeJogador1;
 	JLabel textNomeJogador2;
 	JLabel textAuxiliar;
-	JButton carregaPartida = new JButton("Carregar Partida");
+	//JButton carregaPartida = new JButton("Carregar Partida");
 	JFileChooser fileChooser = new JFileChooser();
 	JButton botaoConfirmarArmamento = new JButton("Confirmar posição de armamento");
 	JButton botaoProximoJogador = new JButton("Próximo jogador");
 	JButton botaoComecarJogo = new JButton("Começar jogo");
+	JMenuBar barra = new JMenuBar();
+	JMenu menu = new JMenu("Menu");
+    JMenuItem carregarItem = new JMenuItem("Carregar Partida");
 	
 	PintarArmamentos(String nomeJogador1, String nomeJogador2, JFrame framePai) {
 		Control.getController().registra(this);
@@ -119,7 +125,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
             }
         });
 		
-		carregaPartida.addActionListener(new ActionListener() {
+		carregarItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				fileChooser = new JFileChooser();
 				int r = fileChooser.showOpenDialog(null);
@@ -188,14 +194,16 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 				destroyer2Posicionado == false && destroyer3Posicionado == false && 
 				cruzador1Posicionado == false && cruzador2Posicionado == false && 
 				couracado1Posicionado == false) {
-			g.drawString("Enquanto a primeira embarcação não for posicionada", 30, 15);
-			g.drawString("ainda é possível carregar uma partida já existente", 40, 30);
-			carregaPartida.setBounds(95, 35, 140, 30);
-	        add(carregaPartida);	
+			g.drawString("Enquanto a primeira embarcação não for posicionada", 10, 45);
+			g.drawString("ainda é possível carregar uma partida já existente", 10, 60);
+			menu.add(carregarItem);
+			barra.add(menu);
+			barra.setBounds(0, 0, 60, 30);
+			add(barra);
 		}
 		else {
-			if(carregaPartida.isEnabled()) {
-				remove(carregaPartida);
+			if(carregarItem.isEnabled()) {
+				remove(barra);
 			}
 		}
 		

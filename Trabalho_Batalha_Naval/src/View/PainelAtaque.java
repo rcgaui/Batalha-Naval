@@ -16,16 +16,21 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JMenuBar;
 
 import Controller.Control;
 import Model.ObservadoAtaqueIF;
 
 public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	JButton botaoComecarJogo = new JButton("Liberar Visão!");
-	JButton botaoSalvarPartida = new JButton("Salvar Partida!");
 	JButton botaoTrocaTurno = new JButton("Trocar Turno");
 	JLabel textoAcao = new JLabel();
 	JPanel panel = this;
+	JMenuBar barra = new JMenuBar();
+	JMenu menu = new JMenu("Menu");
+    JMenuItem salvarItem = new JMenuItem("Salvar Partida");
 	JFileChooser filechooser;
 	private Color corCasasJ1 [][];
 	private Color corCasasJ2 [][];
@@ -45,19 +50,22 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
             }
         }
 		
-		botaoSalvarPartida.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e)
-		    {
-		    	filechooser = new JFileChooser();
-		    	int selecionado = filechooser.showSaveDialog(panel);
-		    	
-		    	if(selecionado == JFileChooser.APPROVE_OPTION)
-		    	{
-		    		File file = filechooser.getSelectedFile();
-		    		Control.getController().salvarPartida(file);
-		    	} 
-		    }
-		});
+		salvarItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                filechooser = new JFileChooser();
+                int selecionado = filechooser.showSaveDialog(panel);
+                
+                if(selecionado == JFileChooser.APPROVE_OPTION) {
+                    File file = filechooser.getSelectedFile();
+                    Control.getController().salvarPartida(file);
+                } 
+            }
+        });
+		
+		menu.add(salvarItem);
+		barra.add(menu);
+		barra.setBounds(440, 50, 120, 40);
+		add(barra);
 		
 		botaoTrocaTurno.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e)
@@ -305,12 +313,14 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		}
 		else if(Control.getController().getTentativas() == 3 && telaBloqueio == false)
 		{
-			botaoSalvarPartida.setBounds(440, 50, 120, 40);
-			add(botaoSalvarPartida);
+			menu.add(salvarItem);
+			barra.add(menu);
+			barra.setBounds(0, 0, 50, 20);
+			add(barra);
 		}
 		else
 		{
-			remove(botaoSalvarPartida);
+			remove(barra);
 		}
 	}
 }
