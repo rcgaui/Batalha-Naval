@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JOptionPane;
 
-public abstract class ESC implements KeyListener {
+abstract class ESC implements KeyListener {
 	Component c;
 	
 	public ESC (Component x) {
