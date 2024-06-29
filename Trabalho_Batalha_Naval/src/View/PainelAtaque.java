@@ -125,10 +125,10 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
             					JOptionPane.showMessageDialog(null, vencedorPartida, "Partida Terminada", JOptionPane.INFORMATION_MESSAGE);    
             				}
             				
-            				escolha = JOptionPane.showConfirmDialog(null, "Deseja Reiniciar essa partida?", "Confirmação", JOptionPane.YES_NO_OPTION);
+            				escolha = JOptionPane.showConfirmDialog(null, "Deseja começar uma nova partida?", "Confirmação", JOptionPane.YES_NO_OPTION);
         				  if (escolha == JOptionPane.YES_OPTION) {
         			            JOptionPane.showMessageDialog(null, "Você escolheu continuar.");
-        			            Control.getController().irParaTelaInicial(null);
+        			            Control.getController().irParaPosicionarArmamento(framePai, coordenadaConvertida, coordenadaConvertida);
         			            pai.dispose();
         			        } else {
         			        	JOptionPane.showMessageDialog(null, "Encerrando Programa!");
