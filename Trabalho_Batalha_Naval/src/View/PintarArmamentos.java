@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +28,7 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	public int y = -1;
 	
 	private String nomeArmamentoSelecionado = "";
-	private int numeroArmamentoSelecionado = 1;
+	private int numeroArmamentoSelecionado = -1;
 	private boolean booleanArmamentoSelecionado = false;
 	private boolean existeErroParaConfirmarPosicionamento = false;
 	private boolean confirmarPosicionamento = false;
@@ -80,6 +81,8 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 	JLabel textNomeJogador1;
 	JLabel textNomeJogador2;
 	JLabel textAuxiliar;
+	JButton carregaPartida = new JButton("Carregar Partida");
+	JFileChooser fileChooser = new JFileChooser();
 	JButton botaoConfirmarArmamento = new JButton("Confirmar posição de armamento");
 	JButton botaoProximoJogador = new JButton("Próximo jogador");
 	JButton botaoComecarJogo = new JButton("Começar jogo");
@@ -115,6 +118,16 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
                 }
             }
         });
+		
+		carregaPartida.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				fileChooser = new JFileChooser();
+				int r = fileChooser.showOpenDialog(null);
+				if(fileChooser.APPROVE_OPTION == r) {
+					Control.getController().carregarPartida(framePai, fileChooser);
+				}
+			}
+		});
 		
 		botaoConfirmarArmamento.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
@@ -165,6 +178,26 @@ public class PintarArmamentos extends JPanel implements ObservadorAtaqueIF {
 		super.paintComponent(g);
 
 		setBackground(Color.lightGray);
+		
+		if(armamentosJogador1Posicionado == false && armamentosJogador2Posicionado == false && 
+				hidroAviao1Posicionado == false && hidroAviao2Posicionado == false && 
+				hidroAviao3Posicionado == false && hidroAviao4Posicionado == false && 
+				hidroAviao5Posicionado == false && submarino1Posicionado == false && 
+				submarino2Posicionado == false && submarino3Posicionado == false && 
+				submarino4Posicionado == false && destroyer1Posicionado == false && 
+				destroyer2Posicionado == false && destroyer3Posicionado == false && 
+				cruzador1Posicionado == false && cruzador2Posicionado == false && 
+				couracado1Posicionado == false) {
+			g.drawString("Enquanto a primeira embarcação não for posicionada", 30, 15);
+			g.drawString("ainda é possível carregar uma partida já existente", 40, 30);
+			carregaPartida.setBounds(95, 35, 140, 30);
+	        add(carregaPartida);	
+		}
+		else {
+			if(carregaPartida.isEnabled()) {
+				remove(carregaPartida);
+			}
+		}
 		
 		if(armamentosJogador1Posicionado == false && armamentosJogador2Posicionado == false) {
 			textNomeJogador1.setBounds(400, 20, 220, 30);
