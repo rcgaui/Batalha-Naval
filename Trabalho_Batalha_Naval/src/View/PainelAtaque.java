@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JMenuBar;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import Controller.Control;
 import Model.ObservadoAtaqueIF;
@@ -53,10 +54,14 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		salvarItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 filechooser = new JFileChooser();
+                filechooser.setFileFilter(new FileNameExtensionFilter("Text Files", "txt"));
                 int selecionado = filechooser.showSaveDialog(panel);
                 
                 if(selecionado == JFileChooser.APPROVE_OPTION) {
                     File file = filechooser.getSelectedFile();
+                    if (!file.getAbsolutePath().endsWith(".txt")) {
+                        file = new File(file.getAbsolutePath() + ".txt");
+                    }
                     Control.getController().salvarPartida(file);
                 } 
             }
