@@ -215,7 +215,7 @@ abstract class Armamentos {
 			case "Leste-Oeste":
 				for (int i = 0; i < this.tamanho; i++) {
 					tabuleiro.getCasas()[letra][numero - i].setEstadoCasa("!");
-					posicoes.add(tabuleiro.getCasas()[letra][numero - 1].getPosicao());
+					posicoes.add(tabuleiro.getCasas()[letra][numero - i].getPosicao());
 				}
 				this.casaTabuleiro = casaTabuleiro;
 				this.sentido = sentido;

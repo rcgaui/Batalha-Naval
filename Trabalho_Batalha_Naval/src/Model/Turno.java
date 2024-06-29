@@ -200,13 +200,12 @@ class Turno {
 				letra = casa.charAt(0) - 'A'; 
 				numero = Integer.parseInt(casa.substring(1)) - 1;
 				letraLinha = (char) ('A' + letra);
-		        coordenada =  "" + letraLinha + numero;
-		        
+				
 		        if(i >= 4 && i <= 8) {
-		        	armamentosj1.get(i).inserirArmamentoHidroAviao(tabuleiroJogador1, coordenada, letra, numero, sentido);	
+		        	armamentosj1.get(i).inserirArmamentoHidroAviao(tabuleiroJogador1, casa, letra, numero, sentido);	
 		        }
 		        else {
-		        	armamentosj1.get(i).inserirArmamento(tabuleiroJogador1, coordenada, letra, numero, sentido);
+		        	armamentosj1.get(i).inserirArmamento(tabuleiroJogador1, casa, letra, numero, sentido);
 		        }
 			}
 			
@@ -221,13 +220,12 @@ class Turno {
 				letra = casa.charAt(0) - 'A'; 
 				numero = Integer.parseInt(casa.substring(1)) - 1;
 				letraLinha = (char) ('A' + letra);
-		        coordenada =  "" + letraLinha + numero;
 		        
 		        if(i >= 4 && i <= 8) {
-		        	armamentosj2.get(i).inserirArmamentoHidroAviao(tabuleiroJogador2, coordenada, letra, numero, sentido);	
+		        	armamentosj2.get(i).inserirArmamentoHidroAviao(tabuleiroJogador2, casa, letra, numero, sentido);	
 		        }
 		        else {
-		        	armamentosj2.get(i).inserirArmamento(tabuleiroJogador2, coordenada, letra, numero, sentido);
+		        	armamentosj2.get(i).inserirArmamento(tabuleiroJogador2, casa, letra, numero, sentido);
 		        }
 			}
 			
