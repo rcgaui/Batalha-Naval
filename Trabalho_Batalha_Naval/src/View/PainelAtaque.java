@@ -62,6 +62,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		botaoTrocaTurno.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e)
 		    {
+		    	remove(textoAcao);
 		    	Control.getController().TrocaTurno();    	
 		    	telaBloqueio = true;
 		    	add(botaoComecarJogo);
@@ -73,6 +74,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		botaoComecarJogo.addActionListener(new ActionListener() {
 		    public void actionPerformed(ActionEvent e)
 		    {
+		    	remove(textoAcao);
 		    	telaBloqueio = false;
 		    	remove(botaoComecarJogo);
 		    	repaint();
@@ -137,6 +139,9 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		if(destroyed == null) {}
 		else
 		{
+			textoAcao.setText("Embarcação Destruida!");
+			textoAcao.setForeground(Color.red);
+			panel.add(textoAcao);
 			for(String posicao: destroyed)
 			{
 				destroiBarco(posicao);
@@ -153,9 +158,15 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 			if(estadocasa.equals("*")) //Atingido
 			{
 				this.corCasasJ2[letra][numero] = Color.orange;
+				textoAcao.setText("Embarcação Atingida!");
+				textoAcao.setForeground(Color.orange);
+				panel.add(textoAcao);
 			}
 			else if(estadocasa.equals("~")) //Agua
 			{
+				textoAcao.setText("Água Atingida!");
+				textoAcao.setForeground(Color.blue);
+				panel.add(textoAcao);
 				this.corCasasJ2[letra][numero] = Color.blue;
 			}
 			else {}
@@ -164,10 +175,16 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		{
 			if(estadocasa.equals("*")) //Atingido
 			{
+				textoAcao.setText("Embarcação Atingida!");
+				textoAcao.setForeground(Color.orange);
+				panel.add(textoAcao);
 				this.corCasasJ1[letra][numero] = Color.orange;
 			}
 			else if(estadocasa.equals("~")) //Agua
 			{
+				textoAcao.setText("Água Atingida!");
+				textoAcao.setForeground(Color.blue);
+				panel.add(textoAcao);
 				this.corCasasJ1[letra][numero] = Color.blue;
 			}
 			else {}
@@ -200,6 +217,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 		double largura = 300.0;
 		double altura = 300.0;
 		
+		textoAcao.setBounds(430, 0, 200, 200);
 		String nomeJ1 = "Tabuleiro de " + Control.getController().getJogadorName(1);
 		String nomeJ2 = "Tabuleiro de " + Control.getController().getJogadorName(2);
 		
@@ -252,9 +270,6 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 				g2d.draw(bordaQuadrados2);
 			}
 		}
-		
-		// Escrever Jlabel aqui		
-		g.drawString("Visão bloqueada", 455, 470);
 
 		// Bloqueios de visao
 		if(telaBloqueio == true)
