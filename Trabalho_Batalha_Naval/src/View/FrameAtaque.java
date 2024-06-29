@@ -20,7 +20,7 @@ public class FrameAtaque extends JFrame {
 		int y = (alturaDaResolucao / 2) - (ALTURA_PADRAO / 2);
 		setBounds(x, y, LARGURA_PADRAO, ALTURA_PADRAO);
 		
-		PainelAtaque painelAtaque = new PainelAtaque();
+		PainelAtaque painelAtaque = new PainelAtaque(this);
 		getContentPane().add(painelAtaque);
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
