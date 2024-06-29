@@ -210,6 +210,7 @@ class Turno {
 		        }
 			}
 			
+			trocaTurno();
 			buffered.readLine();
 			
 			for(int i = 0; i < 15; i++) // 15 embarcações J2
@@ -230,6 +231,7 @@ class Turno {
 		        }
 			}
 			
+			trocaTurno();
 			buffered.readLine();
 			
 			while(true) // J1 atirando no J2
@@ -242,6 +244,8 @@ class Turno {
 				numero = Integer.parseInt(linha.substring(1)) - 1;
 				tabuleiroJogador2.realizarTiro(letra, numero);
 			}
+			
+			trocaTurno();
 			
 			while(true) // J2 atirando no J1
 			{

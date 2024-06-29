@@ -85,8 +85,8 @@ public class ModelFacade {
 		destruidosJ1 = new ArrayList<>();
 		destruidosJ2 = new ArrayList<>();
 		turno = new Turno(J1, J2);
-		Control.getController().ComecarAtaque();
 		inicializarBarcos();
+		Control.getController().ComecarAtaque();
 		turno.carregarJogo(file.getSelectedFile().getAbsolutePath(), tabuleiroJ1, tabuleiroJ2, armamentosJ1, armamentosJ2);
 	}
 	

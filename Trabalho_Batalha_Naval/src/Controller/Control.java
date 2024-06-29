@@ -93,7 +93,10 @@ public class Control {
 	
 	public void irParaTelaInicial(JFrame frame)
 	{
-		frame.setVisible(false);
+		if(frame != null)
+		{
+			frame.setVisible(false);
+		}
 		janelaInicial = JanelaInicial.getInstance();
 		janelaInicial.setVisible(true);
 	}
