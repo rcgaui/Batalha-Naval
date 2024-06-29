@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -28,6 +29,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	JButton botaoComecarJogo = new JButton("Liberar Visão!");
 	JButton botaoTrocaTurno = new JButton("Trocar Turno");
 	JLabel textoAcao = new JLabel();
+	JFrame pai;
 	JPanel panel = this;
 	JMenuBar barra = new JMenuBar();
 	JMenu menu = new JMenu("Menu");
@@ -39,8 +41,9 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
 	int qntLetras = 15;
 	protected boolean telaBloqueio = true;
 	
-	PainelAtaque()
+	PainelAtaque(JFrame framePai)
 	{
+		pai = framePai;
 		Control.getController().registra(this);
 		corCasasJ1 = new Color[qntLetras][qntNumeros];
 		corCasasJ2 = new Color[qntLetras][qntNumeros];
@@ -126,6 +129,7 @@ public class PainelAtaque extends JPanel implements ObservadorAtaqueIF{
         				  if (escolha == JOptionPane.YES_OPTION) {
         			            JOptionPane.showMessageDialog(null, "Você escolheu continuar.");
         			            Control.getController().irParaTelaInicial(null);
+        			            pai.dispose();
         			        } else {
         			        	JOptionPane.showMessageDialog(null, "Encerrando Programa!");
         			        	System.exit(0);
