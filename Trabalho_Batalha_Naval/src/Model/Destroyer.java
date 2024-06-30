@@ -16,7 +16,8 @@ class Destroyer extends Armamentos {
 			return false;
 		}
 		else {
-			if(inserirArmamento(tabuleiro, casaTabuleiro, letra, numero, sentido))
+			int verificar = verificarSentido(tabuleiro, sentido, letra, numero);
+            if (verificar == 0 && inserirArmamento(tabuleiro, casaTabuleiro, letra, numero, sentido))
 			{
 				jogador.addDestroyer();
 				if (jogador.getQntDestroyers() == 3) {

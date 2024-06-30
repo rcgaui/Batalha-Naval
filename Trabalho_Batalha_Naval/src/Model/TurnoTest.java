@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TurnoTest{
 	private Turno turno;
@@ -15,6 +17,8 @@ public class TurnoTest{
     private Tabuleiro tabuleiroJogador2;
 	private Jogador jogador1;
 	private Jogador jogador2;
+	private ArrayList<Armamentos> armamentosJ1;
+    private ArrayList<Armamentos> armamentosJ2;
     
     
 	@Before
@@ -24,14 +28,8 @@ public class TurnoTest{
 		turno = new Turno(jogador1, jogador2);
         tabuleiroJogador1 = new Tabuleiro();
         tabuleiroJogador2 = new Tabuleiro();
-    }
-	
-	@After
-	public void tearDown() throws IOException {
-        File arquivo = new File("testSave.txt");
-        if (arquivo.exists()) {
-            arquivo.delete();
-        }
+        armamentosJ1 = new ArrayList<>();
+        armamentosJ2 = new ArrayList<>();
     }
 	
 	@Test
@@ -57,31 +55,22 @@ public class TurnoTest{
 		turno.setVezJogar(jogador1);
 		assertEquals("Após setVeJogar('Jogador 1') a vez deve ser do 'Jogador 1", jogador1, turno.getVezJogar());
 	}
-	/*
-	@Test
-	public void testSalvaJogo() {
-        assertTrue("O jogo deve ser salvo corretamente", turno.salvaJogo("testSave", tabuleiroJogador1, tabuleiroJogador2));
-
-        File arquivo = new File("testSave.txt");
-        assertTrue("O arquivo de salvamento deve existir", arquivo.exists());
-
-        try {
-            String conteudo = new String(Files.readAllBytes(arquivo.toPath()));
-            for (int i = 0; i < 15; i++) {
-                for (int j = 0; j < 15; j++) {
-                    assertTrue("O arquivo deve conter o estado das casas do jogador 1", conteudo.contains(tabuleiroJogador1.getCasas()[i][j].getEstadoCasa()));
-                    assertTrue("O arquivo deve conter o estado das casas do jogador 2", conteudo.contains(tabuleiroJogador2.getCasas()[i][j].getEstadoCasa()));
-                }
-            }
-        } catch (IOException e) {
-            fail("Erro ao ler o arquivo de salvamento");
-        }
-	}
 	
 	@Test
-	public void testCarregarJogo() {
-        testSalvaJogo();
-        assertTrue("O jogo deve ser carregado corretamente", turno.carregarJogo("testSave", tabuleiroJogador1, tabuleiroJogador2));
-        assertFalse("O jogo não deve ser carregado corretamente", turno.carregarJogo("arquivoInexistente", tabuleiroJogador1, tabuleiroJogador2));
-	}*/
+    public void testTrocaTurno() {
+        turno.trocaTurno();
+        assertEquals("Deve ser a vez do Jogador 2 após a troca de turno", jogador2, turno.getVezJogar());
+        turno.trocaTurno();
+        assertEquals("Deve ser a vez do Jogador 1 após a segunda troca de turno", jogador1, turno.getVezJogar());
+    }
+	
+	@Test
+    public void testTentativaTiro() {
+        turno.tentativaTiro();
+        assertEquals("Deve haver 2 tentativas restantes após uma tentativa", 2, turno.getTentativas());
+        turno.tentativaTiro();
+        assertEquals("Deve haver 1 tentativa restante após duas tentativas", 1, turno.getTentativas());
+        turno.tentativaTiro();
+        assertEquals("Não deve haver tentativas restantes após três tentativas", 0, turno.getTentativas());
+    }
 }

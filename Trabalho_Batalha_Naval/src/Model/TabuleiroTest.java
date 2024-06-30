@@ -23,15 +23,23 @@ public class TabuleiroTest {
     @Test
     public void testRealizarTiro() {
         String resultado = tabuleiro.realizarTiro(0,0);
-        assertNotNull("O resultado do tiro não deve ser nulo", resultado);
-        assertTrue("O resultado deve ser 'Embarcação atingida!', 'Água!', 'Já atingido!' ou 'Ataque inválido!'",
-        		resultado.equals("Embarcação atingida!") || resultado.equals("Água!") || resultado.equals("Já atingido!") || resultado.equals("Ataque inválido!"));
+        assertEquals("Água atingida!", resultado);
+        resultado = tabuleiro.realizarTiro(0, 0);
+        assertEquals("Já atingido! (Água)", resultado);
     }
     
     @Test
     public void testRealizarTiroErrado() {
         String resultado = tabuleiro.realizarTiro(15,15);
-        assertNotNull("O resultado do tiro não deve ser nulo", resultado);
         assertTrue("O resultado deve ser 'Coordenadas inválidas, tente novamente'", resultado.equals("Coordenadas inválidas, tente novamente"));
+    }
+    
+    @Test
+    public void testRealizarTiroEmbarcacao() {
+        tabuleiro.getCasas()[0][0].setEstadoCasa("!");
+        String resultado = tabuleiro.realizarTiro(0, 0);
+        assertEquals("Embarcação atingida!", resultado);
+        resultado = tabuleiro.realizarTiro(0, 0);
+        assertEquals("Já atingido! (Embarcação)", resultado);
     }
 }

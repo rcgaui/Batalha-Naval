@@ -38,7 +38,7 @@ public class CouracadoTeste {
 		Tabuleiro tab = new Tabuleiro();
 		Jogador jg = new Jogador("Jogador 1");
 		Couracado couracado = new Couracado();
-		assertFalse(couracado.posicionarArmamento(tab, "A1", "Sul-Norte", jg));
+        assertFalse(couracado.posicionarArmamento(tab, "A1", "Leste-Oeste", jg));
 	}
 	
 	@Test
@@ -49,6 +49,6 @@ public class CouracadoTeste {
 		Couracado couracado = new Couracado();
 		Submarino submarino = new Submarino();
 		assertTrue(submarino.posicionarArmamento(tab, "A1", "Norte-Sul", jg)); //Insere barco 1
-		assertFalse(couracado.posicionarArmamento(tab, "A5", "Leste-Oeste", jg)); // Nao insere barco 2
+		assertFalse(couracado.posicionarArmamento(tab, "A1", "Norte-Sul", jg)); // Nao insere barco 2
 	}
 }
